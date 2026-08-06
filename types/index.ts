@@ -21,7 +21,6 @@ export type Project = {
   status: ProjectStatus;
   featured: boolean;
   year: number;
-  image?: string;
   githubUrl?: string;
   liveUrl?: string;
   caseStudy: CaseStudySection[];

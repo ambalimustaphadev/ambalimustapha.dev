@@ -13,7 +13,7 @@ export function Footer() {
           <div>
             <Link
               href="/"
-              className="text-sm font-semibold tracking-tight text-foreground"
+              className="rounded-sm text-sm font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {SITE_NAME}
             </Link>

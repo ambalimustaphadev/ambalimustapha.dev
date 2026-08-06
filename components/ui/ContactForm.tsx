@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "submitting" | "success" | "error";
+type FieldName = "name" | "email" | "message";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -15,24 +16,31 @@ const MAX_MESSAGE_LENGTH = 5000;
 const fieldStyles =
   "w-full rounded-md border border-border bg-transparent px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-secondary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60";
 
-function validate(values: { name: string; email: string; message: string }) {
+function validate(
+  values: { name: string; email: string; message: string },
+): { field: FieldName; message: string } | null {
   if (values.name.trim().length < 2) {
-    return "Please enter your name.";
+    return { field: "name", message: "Please enter your name." };
   }
   if (!EMAIL_REGEX.test(values.email.trim())) {
-    return "Please enter a valid email address.";
+    return { field: "email", message: "Please enter a valid email address." };
   }
   if (values.message.trim().length < 10) {
-    return "Please write a short message (at least 10 characters).";
+    return {
+      field: "message",
+      message: "Please write a short message (at least 10 characters).",
+    };
   }
   return null;
 }
 
 export function ContactForm() {
   const formId = useId();
+  const errorId = `${formId}-error`;
   const [values, setValues] = useState({ name: "", email: "", message: "", company: "" });
   const [status, setStatus] = useState<Status>("idle");
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [errorField, setErrorField] = useState<FieldName | null>(null);
 
   const isSubmitting = status === "submitting";
   // React state updates are async/batched, so `isSubmitting` alone can't stop
@@ -47,13 +55,15 @@ export function ContactForm() {
     const validationError = validate(values);
     if (validationError) {
       setStatus("error");
-      setFeedback(validationError);
+      setFeedback(validationError.message);
+      setErrorField(validationError.field);
       return;
     }
 
     submitLockRef.current = true;
     setStatus("submitting");
     setFeedback(null);
+    setErrorField(null);
 
     try {
       const res = await fetch("/api/contact", {
@@ -106,6 +116,8 @@ export function ContactForm() {
     );
   }
 
+  const hasError = status === "error" && !!feedback;
+
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
       {/* Honeypot field — hidden from real users, catches simple bots */}
@@ -138,6 +150,8 @@ export function ContactForm() {
           value={values.name}
           onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
           className={fieldStyles}
+          aria-invalid={errorField === "name" ? true : undefined}
+          aria-describedby={errorField === "name" ? errorId : undefined}
         />
       </div>
 
@@ -157,6 +171,8 @@ export function ContactForm() {
           value={values.email}
           onChange={(e) => setValues((v) => ({ ...v, email: e.target.value }))}
           className={fieldStyles}
+          aria-invalid={errorField === "email" ? true : undefined}
+          aria-describedby={errorField === "email" ? errorId : undefined}
         />
       </div>
 
@@ -175,6 +191,8 @@ export function ContactForm() {
           value={values.message}
           onChange={(e) => setValues((v) => ({ ...v, message: e.target.value }))}
           className={fieldStyles}
+          aria-invalid={errorField === "message" ? true : undefined}
+          aria-describedby={errorField === "message" ? errorId : undefined}
         />
       </div>
 
@@ -189,8 +207,13 @@ export function ContactForm() {
         {isSubmitting ? "Sending…" : "Send message"}
       </button>
 
-      <p role="alert" aria-live="polite" className="min-h-5 text-sm text-red-600 dark:text-red-400">
-        {status === "error" && feedback}
+      <p
+        id={errorId}
+        role="alert"
+        aria-live="polite"
+        className="min-h-5 text-sm text-red-600 dark:text-red-400"
+      >
+        {hasError && feedback}
       </p>
     </form>
   );

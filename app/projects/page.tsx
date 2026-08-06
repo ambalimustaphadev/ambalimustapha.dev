@@ -30,7 +30,12 @@ export default function ProjectsPage() {
 
         <div className="mt-4">
           {primaryProjects.map((project, index) => (
-            <ProjectCard key={project.slug} project={project} index={index + 1} />
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              index={index + 1}
+              headingLevel="h2"
+            />
           ))}
         </div>
 

@@ -2,17 +2,17 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Project } from "@/types";
 
-function statusLabel(status: Project["status"]) {
-  return status;
-}
-
 export function ProjectCard({
   project,
   index,
+  headingLevel = "h3",
 }: {
   project: Project;
   index: number;
+  headingLevel?: "h2" | "h3";
 }) {
+  const Heading = headingLevel;
+
   return (
     <Link
       href={`/projects/${project.slug}`}
@@ -24,9 +24,9 @@ export function ProjectCard({
 
       <div>
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h3 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+          <Heading className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
             {project.title}
-          </h3>
+          </Heading>
           <span className="text-sm text-foreground-secondary">
             {project.category}
           </span>
@@ -53,7 +53,7 @@ export function ProjectCard({
 
       <div className="flex items-start justify-start sm:col-start-2 lg:col-start-3 lg:justify-end">
         <span className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground-secondary">
-          {statusLabel(project.status)}
+          {project.status}
         </span>
       </div>
     </Link>

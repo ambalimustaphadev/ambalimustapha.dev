@@ -267,7 +267,6 @@ export const projects: Project[] = [
       },
     ],
   },
-
   {
     title: "Go Backend Project",
     slug: "go-backend-project",

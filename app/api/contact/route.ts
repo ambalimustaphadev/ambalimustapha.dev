@@ -9,6 +9,52 @@ const MAX_EMAIL_LENGTH = 254; // RFC 5321 maximum mailbox length
 const MIN_MESSAGE_LENGTH = 10;
 const MAX_MESSAGE_LENGTH = 5000;
 
+// Lightweight in-memory rate limit: a few requests per IP per window. This
+// resets on cold start and isn't shared across serverless instances, but for
+// a low-traffic personal site it meaningfully slows down casual abuse of the
+// endpoint without needing an external service.
+const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const submissionsByIp = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (submissionsByIp.get(ip) ?? []).filter(
+    (t) => now - t < RATE_LIMIT_WINDOW_MS,
+  );
+
+  if (recent.length >= RATE_LIMIT_MAX) {
+    submissionsByIp.set(ip, recent);
+    return true;
+  }
+
+  recent.push(now);
+  submissionsByIp.set(ip, recent);
+
+  // Opportunistic cleanup so this map doesn't grow unbounded on a long-lived instance.
+  if (submissionsByIp.size > 500) {
+    for (const [key, timestamps] of submissionsByIp) {
+      if (timestamps.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) {
+        submissionsByIp.delete(key);
+      }
+    }
+  }
+
+  return false;
+}
+
+function getClientIp(request: Request): string {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  if (forwardedFor) return forwardedFor.split(",")[0].trim();
+  return request.headers.get("x-real-ip") ?? "unknown";
+}
+
+/** Strips control/newline characters so user input can't inject extra email headers or lines. */
+function sanitizeForHeader(value: string): string {
+  // eslint-disable-next-line no-control-regex
+  return value.replace(/[\r\n\t\x00-\x1f]+/g, " ").trim();
+}
+
 type ContactPayload = {
   name?: unknown;
   email?: unknown;
@@ -17,6 +63,14 @@ type ContactPayload = {
 };
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many messages sent recently. Please try again later." },
+      { status: 429 },
+    );
+  }
+
   let body: ContactPayload;
   try {
     body = await request.json();
@@ -82,7 +136,10 @@ export async function POST(request: Request) {
     );
   }
 
-  const trimmedName = name.trim();
+  // Defense in depth: email is already validated against a regex with no
+  // whitespace allowed, but the name is free text, so strip anything that
+  // could otherwise inject extra lines into the subject or email body.
+  const trimmedName = sanitizeForHeader(name);
   const trimmedEmail = email.trim();
   const trimmedMessage = message.trim();
 

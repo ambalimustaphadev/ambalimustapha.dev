@@ -13,9 +13,9 @@ export function Focus() {
   return (
     <section className="border-t border-border py-10 sm:py-14">
       <Container>
-        <p className="mb-5 text-sm font-medium text-foreground-secondary">
+        <h2 className="mb-5 text-sm font-medium text-foreground-secondary">
           What I&apos;m building around
-        </p>
+        </h2>
         <ul className="flex flex-wrap gap-2.5">
           {FOCUS_AREAS.map((area) => (
             <li

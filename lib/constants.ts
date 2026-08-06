@@ -4,7 +4,7 @@ export const SITE_NAME = "Mustapha Ambali";
 export const SITE_ROLE = "Software Developer · Mobile & Backend";
 export const SITE_URL = "https://ambalimustapha.dev";
 export const SITE_DESCRIPTION =
-  "Mustapha Ambali is a software developer building mobile applications and backend systems with Flutter, Python, Flask, and modern technologies.";
+  "Mustapha Ambali is a software developer building mobile applications and backend systems with Flutter, Python, Flask, and REST APIs.";
 
 export const NAV_LINKS: NavLink[] = [
   { label: "About", href: "/about" },
@@ -13,7 +13,8 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-// TODO: Replace with a real, verified email address before launch.
+// hello@ambalimustapha.dev forwards (via Porkbun) to the private inbox behind it.
+// The contact form sends here too — see app/api/contact/route.ts.
 export const CONTACT_EMAIL = "hello@ambalimustapha.dev";
 
 // TODO: Add the real LinkedIn URL once available.

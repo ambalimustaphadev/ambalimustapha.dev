@@ -9,7 +9,7 @@ export function Education() {
             Education
           </h2>
 
-          <div className="max-w-2xl">
+          <div className="max-w-xl">
             <h3 className="text-xl font-semibold text-foreground">
               B.Sc. Mass Communication
             </h3>
