@@ -1,7 +1,7 @@
 import type { NavLink, SocialLink } from "@/types";
 
 export const SITE_NAME = "Mustapha Ambali";
-export const SITE_ROLE = "Software Developer";
+export const SITE_ROLE = "Software Developer · Mobile & Backend";
 export const SITE_URL = "https://ambalimustapha.dev";
 export const SITE_DESCRIPTION =
   "Mustapha Ambali is a software developer building mobile applications and backend systems with Flutter, Python, Flask, and modern technologies.";

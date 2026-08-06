@@ -33,12 +33,11 @@ export function Writing({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" })
             ) : (
               <div>
                 <p className="text-base leading-relaxed text-foreground-secondary">
-                  I haven&apos;t published anything yet. When I write about
-                  backend development, Flutter, or lessons from building
-                  these projects, it will show up here.
+                  Notes from things I&apos;m building, breaking, fixing, and
+                  learning along the way.
                 </p>
                 <p className="mt-6 text-sm font-medium text-foreground-secondary">
-                  Topics I might write about
+                  Ideas for upcoming notes
                 </p>
                 <ul className="mt-3 flex flex-wrap gap-2.5">
                   {FUTURE_TOPICS.map((topic) => (

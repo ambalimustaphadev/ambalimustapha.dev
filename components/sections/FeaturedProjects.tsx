@@ -13,8 +13,9 @@ export function FeaturedProjects() {
             Selected work
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-foreground-secondary">
-            A few projects and experiments I&apos;m building — some finished
-            enough to inspect, others still taking shape.
+            A few things I&apos;ve been building, testing, and learning
+            from. Some are still in progress; others are developed enough
+            to dig into.
           </p>
         </div>
 

@@ -2,14 +2,14 @@ import type { ExperienceItem } from "@/types";
 
 export const experience: ExperienceItem[] = [
   {
-    title: "Software Development",
-    organization: "Independent / Personal Projects",
+    title: "Independent Software Developer",
+    period: "2024 — Present",
     summary: [
-      "Developing mobile applications with Flutter, including Fihone, a mobile security app currently in progress.",
-      "Building REST APIs and designing database models for backend projects.",
-      "Implementing authentication and working through the details of reliable system design.",
-      "Learning backend engineering in depth — API design, data modelling, and infrastructure basics like Docker.",
-      "Using Git and GitHub for version control across all projects.",
+      "Building mobile applications with Flutter, including Fihone (mobile security) and Regiforte (academy management), both currently in active development.",
+      "Building REST APIs and working through database design, authentication, validation, and API architecture.",
+      "Exploring backend engineering through Python, Flask, PostgreSQL, SQLAlchemy, Docker, and related tooling.",
+      "Using Git and GitHub to manage and document ongoing software projects.",
+      "Learning through building real projects rather than only following tutorials.",
     ],
   },
 ];

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { About } from "@/components/sections/About";
+import { Focus } from "@/components/sections/Focus";
 import { Experience } from "@/components/sections/Experience";
 import { Education } from "@/components/sections/Education";
 
@@ -13,6 +14,7 @@ export default function AboutPage() {
   return (
     <div className="pt-8">
       <About headingLevel="h1" />
+      <Focus />
       <Experience />
       <Education />
     </div>

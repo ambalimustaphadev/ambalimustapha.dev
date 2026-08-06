@@ -1,14 +1,5 @@
 import { Container } from "@/components/ui/Container";
 
-const FOCUS_AREAS = [
-  "Backend development",
-  "REST APIs",
-  "Database architecture",
-  "Authentication",
-  "Mobile applications",
-  "System design",
-];
-
 export function About({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
   const Heading = headingLevel;
 
@@ -20,54 +11,33 @@ export function About({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
             About
           </Heading>
 
-          <div className="max-w-2xl">
-            <div className="space-y-5 text-lg leading-relaxed text-foreground sm:text-xl">
-              <p>
-                I&apos;m Mustapha Ambali, a software developer with a
-                background in Mass Communication. I enjoy building software
-                that is practical, reliable, and designed to solve real
-                problems.
-              </p>
-              <p>
-                My work spans mobile application development and backend
-                engineering, with a growing focus on building scalable
-                backend systems. I enjoy designing REST APIs, structuring
-                databases, implementing secure authentication, and creating
-                services that are clean, maintainable, and built to perform
-                reliably.
-              </p>
-              <p>
-                I care about writing software that goes beyond simply
-                working. I pay close attention to architecture, code
-                quality, performance, and the small implementation details
-                that make applications easier to maintain and improve over
-                time. Whether I&apos;m building a mobile app or a backend
-                service, I approach every project with a focus on
-                simplicity, reliability, and long-term maintainability.
-              </p>
-              <p>
-                I&apos;m always looking for opportunities to build
-                meaningful products, solve challenging technical problems,
-                and contribute to teams that value thoughtful engineering
-                and continuous improvement.
-              </p>
-            </div>
-
-            <div className="mt-10">
-              <p className="mb-4 text-sm font-medium text-foreground-secondary">
-                Currently focused on
-              </p>
-              <ul className="flex flex-wrap gap-2.5">
-                {FOCUS_AREAS.map((area) => (
-                  <li
-                    key={area}
-                    className="rounded-full border border-border px-3.5 py-1.5 text-sm text-foreground-secondary"
-                  >
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="max-w-2xl space-y-5 text-lg leading-relaxed text-foreground sm:text-xl">
+            <p>
+              I&apos;m Mustapha Ambali, a software developer with a
+              background in Mass Communication. I moved from writing and
+              communication into software because I became increasingly
+              interested in how the things I used every day were actually
+              built.
+            </p>
+            <p>
+              These days, most of my time goes into building mobile
+              applications and learning the engineering behind reliable
+              backend systems. I work with Flutter, Python, Flask, REST
+              APIs, databases, authentication, and the usual problems that
+              appear once an application becomes more than just a screen.
+            </p>
+            <p>
+              I like software that is straightforward to understand, easy
+              to maintain, and dependable in the places that matter. I&apos;m
+              still learning, but I take the engineering seriously —
+              especially the decisions around architecture, data, security,
+              and how different parts of a system fit together.
+            </p>
+            <p>
+              I&apos;m interested in building useful products, working
+              through difficult technical problems, and continuing to
+              become a better engineer.
+            </p>
           </div>
         </div>
       </Container>

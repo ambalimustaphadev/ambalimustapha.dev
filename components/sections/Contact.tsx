@@ -1,8 +1,8 @@
+import { Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { SocialLinks } from "@/components/ui/SocialLinks";
-
-const fieldStyles =
-  "w-full rounded-md border border-border bg-transparent px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-secondary disabled:cursor-not-allowed disabled:opacity-60";
+import { Button } from "@/components/ui/Button";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
+import { CONTACT_EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/lib/constants";
 
 export function Contact({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
   const Heading = headingLevel;
@@ -10,83 +10,30 @@ export function Contact({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" })
   return (
     <section id="contact" className="border-t border-border py-20 sm:py-28">
       <Container>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <Heading className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              Let&apos;s build something useful.
-            </Heading>
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-foreground-secondary">
-              If you have a project, opportunity, or simply want to connect,
-              I&apos;d be happy to hear from you.
-            </p>
-            <SocialLinks className="mt-8" />
-          </div>
+        <div className="max-w-2xl">
+          <Heading className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+            Let&apos;s build something useful.
+          </Heading>
+          <p className="mt-5 text-lg leading-relaxed text-foreground-secondary">
+            Have a project in mind, an opportunity to discuss, or just want
+            to say hello? I&apos;d be happy to hear from you.
+          </p>
 
-          <div>
-            <form aria-describedby="contact-form-note" className="space-y-5">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-foreground"
-                >
-                  Name
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  disabled
-                  placeholder="Your name"
-                  className={fieldStyles}
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-sm font-medium text-foreground"
-                >
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  disabled
-                  placeholder="you@example.com"
-                  className={fieldStyles}
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="message"
-                  className="mb-2 block text-sm font-medium text-foreground"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  disabled
-                  placeholder="What are you working on?"
-                  className={fieldStyles}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled
-                className="inline-flex w-full items-center justify-center rounded-md bg-foreground px-5 py-2.5 text-sm font-medium text-background opacity-50 disabled:cursor-not-allowed sm:w-auto"
-              >
-                Send message
-              </button>
-              <p
-                id="contact-form-note"
-                className="text-sm text-foreground-secondary"
-              >
-                This form isn&apos;t connected yet — please reach out directly
-                by email for now.
-              </p>
-            </form>
+          <div className="mt-9 flex flex-wrap gap-4">
+            <Button href={`mailto:${CONTACT_EMAIL}`}>
+              <Mail size={16} strokeWidth={2} aria-hidden="true" />
+              Email
+            </Button>
+            <Button href={GITHUB_URL} variant="secondary">
+              <GithubIcon size={16} />
+              GitHub
+            </Button>
+            {LINKEDIN_URL && (
+              <Button href={LINKEDIN_URL} variant="secondary">
+                <LinkedinIcon size={16} />
+                LinkedIn
+              </Button>
+            )}
           </div>
         </div>
       </Container>

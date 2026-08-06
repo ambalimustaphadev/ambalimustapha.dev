@@ -27,7 +27,7 @@ export function Footer() {
           <p>
             © {year} {SITE_NAME}
           </p>
-          <p>Built with Next.js</p>
+          <p>Designed &amp; built with Next.js</p>
         </div>
       </Container>
     </footer>

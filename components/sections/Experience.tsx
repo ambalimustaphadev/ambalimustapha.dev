@@ -16,9 +16,11 @@ export function Experience() {
                 <h3 className="text-xl font-semibold text-foreground">
                   {item.title}
                 </h3>
-                <p className="mt-1 text-sm text-foreground-secondary">
-                  {item.organization}
-                </p>
+                {(item.organization || item.period) && (
+                  <p className="mt-1 text-sm text-foreground-secondary">
+                    {[item.organization, item.period].filter(Boolean).join(" · ")}
+                  </p>
+                )}
                 <ul className="mt-5 space-y-2.5">
                   {item.summary.map((line) => (
                     <li

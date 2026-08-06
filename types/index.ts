@@ -1,11 +1,22 @@
-export type ProjectStatus = "In development" | "Coming soon" | "Live";
+export type ProjectStatus =
+  | "In active development"
+  | "In development"
+  | "Completed"
+  | "Coming soon"
+  | "Live";
+
+/** One block of case-study content. Rendered in order; only sections with real content should be added. */
+export type CaseStudySection = {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+};
 
 export type Project = {
   title: string;
   slug: string;
   category: string;
   description: string;
-  longDescription: string;
   technologies: string[];
   status: ProjectStatus;
   featured: boolean;
@@ -13,7 +24,7 @@ export type Project = {
   image?: string;
   githubUrl?: string;
   liveUrl?: string;
-  features?: string[];
+  caseStudy: CaseStudySection[];
 };
 
 export type SkillGroup = {
@@ -23,7 +34,7 @@ export type SkillGroup = {
 
 export type ExperienceItem = {
   title: string;
-  organization: string;
+  organization?: string;
   period?: string;
   summary: string[];
 };

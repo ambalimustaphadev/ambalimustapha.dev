@@ -6,7 +6,7 @@ import { projects } from "@/data/projects";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Projects and experiments by Mustapha Ambali, spanning mobile applications built with Flutter and backend systems built with Flask and Go.",
+    "Projects by Mustapha Ambali, spanning mobile applications built with Flutter and backend systems built with Flask.",
 };
 
 export default function ProjectsPage() {
@@ -18,8 +18,9 @@ export default function ProjectsPage() {
             Selected work
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-foreground-secondary">
-            A few projects and experiments I&apos;m building — some finished
-            enough to inspect, others still taking shape.
+            A few things I&apos;ve been building, testing, and learning
+            from. Some are still in progress; others are developed enough
+            to dig into.
           </p>
         </div>
 

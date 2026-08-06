@@ -7,8 +7,8 @@ export const posts: WritingPost[] = [];
 export const FUTURE_TOPICS = [
   "Building a Flask REST API",
   "SQLAlchemy relationships, explained simply",
-  "Building Fihone",
+  "What I learned building Fihone",
   "Flutter architecture decisions",
-  "Moving from Flask to Go",
-  "Backend engineering lessons",
+  "Designing a wallet API",
+  "What I'm learning about backend engineering",
 ];

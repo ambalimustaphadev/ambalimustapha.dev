@@ -43,30 +43,24 @@ export function Hero() {
             variants={item}
             className="mb-5 text-sm text-foreground-secondary"
           >
-            Building software · Exploring backend engineering
+            {SITE_ROLE}
           </motion.p>
 
           <motion.h1
             variants={item}
-            className="text-[2.5rem] font-semibold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl"
+            className="text-4xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-5xl lg:text-6xl"
           >
-            Mustapha Ambali
+            I build mobile apps and backend systems that solve real problems.
           </motion.h1>
 
           <motion.p
             variants={item}
-            className="mt-3 text-xl font-medium text-foreground-secondary sm:text-2xl"
+            className="mt-6 max-w-xl text-base leading-relaxed text-foreground-secondary sm:text-lg"
           >
-            {SITE_ROLE}
-          </motion.p>
-
-          <motion.p
-            variants={item}
-            className="mt-6 max-w-2xl text-base leading-relaxed text-foreground-secondary sm:text-lg"
-          >
-            I build fast, intuitive mobile applications and scalable backend
-            systems with a focus on clean architecture, performance, and
-            exceptional user experiences.
+            I work mainly with Flutter and Python, building mobile
+            experiences, REST APIs, and the systems behind them. I&apos;m
+            especially interested in clean architecture, databases,
+            authentication, and the engineering that makes software reliable.
           </motion.p>
 
           <motion.div variants={item} className="mt-9 flex flex-wrap gap-4">

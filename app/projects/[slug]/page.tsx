@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProjectHero } from "@/components/project/ProjectHero";
-import { ProjectOverview } from "@/components/project/ProjectOverview";
+import { CaseStudySections } from "@/components/project/CaseStudySections";
 import { ProjectDetails } from "@/components/project/ProjectDetails";
+import { RelatedProject } from "@/components/project/RelatedProject";
 import { getProjectBySlug, projects } from "@/data/projects";
 
 type ProjectPageProps = {
@@ -40,8 +41,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   return (
     <div>
       <ProjectHero project={project} />
-      <ProjectOverview project={project} />
+      <CaseStudySections sections={project.caseStudy} />
       <ProjectDetails project={project} />
+      <RelatedProject currentSlug={project.slug} />
     </div>
   );
 }
