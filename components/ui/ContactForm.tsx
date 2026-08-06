@@ -1,12 +1,16 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useId, useRef, useState, type FormEvent } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_MESSAGE_LENGTH = 5000;
 
 const fieldStyles =
   "w-full rounded-md border border-border bg-transparent px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-secondary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60";
@@ -31,10 +35,14 @@ export function ContactForm() {
   const [feedback, setFeedback] = useState<string | null>(null);
 
   const isSubmitting = status === "submitting";
+  // React state updates are async/batched, so `isSubmitting` alone can't stop
+  // two near-simultaneous clicks from both slipping through before the first
+  // render disables the button. This ref is set synchronously instead.
+  const submitLockRef = useRef(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (isSubmitting) return;
+    if (submitLockRef.current) return;
 
     const validationError = validate(values);
     if (validationError) {
@@ -43,6 +51,7 @@ export function ContactForm() {
       return;
     }
 
+    submitLockRef.current = true;
     setStatus("submitting");
     setFeedback(null);
 
@@ -56,7 +65,10 @@ export function ContactForm() {
 
       if (!res.ok) {
         setStatus("error");
-        setFeedback(data.error || "Something went wrong. Please try again.");
+        setFeedback(
+          data.error ||
+            "Something went wrong while sending your message. Please try again or email me directly.",
+        );
         return;
       }
 
@@ -66,8 +78,10 @@ export function ContactForm() {
     } catch {
       setStatus("error");
       setFeedback(
-        "Something went wrong sending your message. Please try again or email me directly.",
+        "Something went wrong while sending your message. Please try again or email me directly.",
       );
+    } finally {
+      submitLockRef.current = false;
     }
   }
 
@@ -77,7 +91,7 @@ export function ContactForm() {
         role="status"
         className="rounded-md border border-border px-5 py-6 text-base text-foreground"
       >
-        <p className="font-medium">Thanks — your message is on its way.</p>
+        <p className="font-medium">Message sent. Thanks for reaching out.</p>
         <p className="mt-1 text-sm text-foreground-secondary">
           I&apos;ll get back to you as soon as I can.
         </p>
@@ -117,6 +131,7 @@ export function ContactForm() {
           name="name"
           type="text"
           required
+          maxLength={MAX_NAME_LENGTH}
           autoComplete="name"
           disabled={isSubmitting}
           placeholder="Your name"
@@ -135,6 +150,7 @@ export function ContactForm() {
           name="email"
           type="email"
           required
+          maxLength={MAX_EMAIL_LENGTH}
           autoComplete="email"
           disabled={isSubmitting}
           placeholder="you@example.com"
@@ -153,6 +169,7 @@ export function ContactForm() {
           name="message"
           rows={4}
           required
+          maxLength={MAX_MESSAGE_LENGTH}
           disabled={isSubmitting}
           placeholder="What are you working on?"
           value={values.message}

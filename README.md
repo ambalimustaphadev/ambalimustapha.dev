@@ -42,9 +42,18 @@ The contact form sends email via [Resend](https://resend.com). Copy
 - `RESEND_API_KEY` — from [resend.com/api-keys](https://resend.com/api-keys).
   Required for the form to actually send mail. Server-only, never exposed to
   the browser.
-- `RESEND_FROM_EMAIL` — optional. Leave unset to use Resend's shared
-  `onboarding@resend.dev` test address, or set it once you've verified
+- `CONTACT_FROM_EMAIL` — optional. Leave unset to use Resend's shared
+  `onboarding@resend.dev` sandbox address, or set it once you've verified
   `ambalimustapha.dev` in Resend (e.g. `contact@ambalimustapha.dev`).
+- `CONTACT_TO_EMAIL` — optional. Defaults to `hello@ambalimustapha.dev`
+  (already set in `lib/constants.ts`); only set this if submissions should go
+  somewhere else.
+
+Submissions are sent to `hello@ambalimustapha.dev`, which Porkbun forwards to
+the private Gmail address behind it — that Gmail address is never referenced
+anywhere in the codebase or on the public site. The visitor's own email is
+set as the message's Reply-To, so replying from Gmail goes straight back to
+them.
 
 Without `RESEND_API_KEY` set, the site still builds and runs — the contact
 form shows a clear error asking the visitor to email directly instead of
@@ -116,9 +125,9 @@ npm run start
 
 1. Push this repository to GitHub.
 2. Import the repository into [Vercel](https://vercel.com/new).
-3. Deploy — add `RESEND_API_KEY` (and `RESEND_FROM_EMAIL` if you've verified a
-   domain) in Project Settings → Environment Variables so the contact form
-   can send email in production.
+3. Deploy — add `RESEND_API_KEY` (and `CONTACT_FROM_EMAIL` if you've verified
+   a domain in Resend) in Project Settings → Environment Variables so the
+   contact form can send email in production.
 4. In the Vercel project settings, add the custom domain `ambalimustapha.dev`.
 5. Configure DNS at your domain registrar per Vercel's instructions (A/CNAME
    records shown in the Vercel dashboard).
