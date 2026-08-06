@@ -51,6 +51,23 @@ export function Hero() {
               Mustapha <span className="text-accent">Ambali</span>
             </motion.h1>
 
+            <motion.div variants={item} className="relative mx-auto mt-5 w-[200px] sm:hidden">
+              <div
+                aria-hidden="true"
+                className="absolute left-1/2 top-1/2 -z-10 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_50%_45%,var(--color-accent),transparent_68%)] opacity-30 blur-3xl"
+              />
+              <div className="relative aspect-[9/8] w-full overflow-hidden">
+                <Image
+                  src="/images/port-pic.png"
+                  alt="Portrait of Mustapha Ambali"
+                  fill
+                  priority
+                  sizes="200px"
+                  className="object-cover object-[center_82%] [mask-image:radial-gradient(ellipse_62%_68%_at_50%_50%,black_40%,transparent_95%)] [-webkit-mask-image:radial-gradient(ellipse_62%_68%_at_50%_50%,black_40%,transparent_95%)]"
+                />
+              </div>
+            </motion.div>
+
             <motion.p
               variants={item}
               className="mt-5 max-w-lg text-base leading-relaxed text-foreground-secondary sm:text-lg"
@@ -60,9 +77,18 @@ export function Hero() {
               software that solves real problems.
             </motion.p>
 
-            <motion.div variants={item} className="mt-7 flex flex-wrap gap-4">
-              <Button href="/projects">View My Projects</Button>
-              <Button href="/contact" variant="secondary">
+            <motion.div
+              variants={item}
+              className="mt-7 flex flex-wrap max-[379px]:flex-col gap-4 max-[379px]:gap-3"
+            >
+              <Button href="/projects" className="max-[379px]:w-full min-[380px]:max-sm:flex-1">
+                View My Projects
+              </Button>
+              <Button
+                href="/contact"
+                variant="secondary"
+                className="max-[379px]:w-full min-[380px]:max-sm:flex-1"
+              >
                 Contact Me
               </Button>
             </motion.div>
@@ -71,7 +97,7 @@ export function Hero() {
               <SocialLinks />
             </motion.div>
 
-            <motion.div variants={item} className="mt-10">
+            <motion.div variants={item} className="mt-8 sm:mt-10">
               <p className="text-xs font-medium uppercase tracking-wider text-foreground-secondary">
                 Technologies I work with
               </p>
@@ -104,7 +130,7 @@ export function Hero() {
             initial={shouldReduceMotion ? "visible" : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-            className="relative mx-auto w-full max-w-sm lg:max-w-lg"
+            className="relative mx-auto hidden w-full max-w-sm sm:block lg:max-w-lg"
           >
             <div
               aria-hidden="true"
