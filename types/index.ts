@@ -20,6 +20,8 @@ export type Project = {
   technologies: string[];
   status: ProjectStatus;
   featured: boolean;
+  /** Shown as one of the curated picks on the homepage Featured Projects section. */
+  homepageFeatured?: boolean;
   year: number;
   /** Path to a real screenshot, e.g. "/images/projects/fihone.png". Falls back to a styled placeholder when unset. */
   image?: string;

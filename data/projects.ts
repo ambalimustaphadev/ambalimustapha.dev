@@ -2,15 +2,52 @@ import type { Project } from "@/types";
 
 export const projects: Project[] = [
   {
+    title: "Mustapha Ambali",
+    slug: "portfolio",
+    category: "Developer Portfolio",
+    description:
+      "A modern portfolio showcasing my work as a software developer, built with Next.js, TypeScript, and a strong focus on performance, accessibility, and clean design.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    status: "Live",
+    featured: true,
+    homepageFeatured: true,
+    year: 2026,
+    image: "/images/DevPort1.jpg",
+    highlight:
+      "Used CSS masking instead of a bounding box so the hero portrait blends directly into the page background rather than sitting in a card.",
+    caseStudy: [
+      {
+        heading: "Overview",
+        paragraphs: [
+          "This site is where I present my work — built with Next.js on the App Router, styled with Tailwind CSS, and deployed on Vercel. The goal was a portfolio that felt premium and considered rather than a generic template: consistent spacing and typography, a design system built around my own brand colors, and content that stays honest about what's finished versus still in progress.",
+        ],
+      },
+      {
+        heading: "Engineering",
+        paragraphs: [
+          "The contact form is backed by a Resend-powered API route with server-side validation, a honeypot field, and IP-based rate limiting, rather than a form that just looks functional. Theming (light, dark, system) is handled with next-themes, and motion throughout uses Framer Motion, kept deliberately subtle — fades and small lifts rather than anything flashy.",
+        ],
+      },
+      {
+        heading: "Current status",
+        paragraphs: [
+          "Live and actively maintained. I keep refining sections as my projects and experience evolve.",
+        ],
+      },
+    ],
+  },
+  {
     title: "Fihone",
     slug: "fihone",
-    category: "Mobile Security Platform",
+    category: "Mobile Security App",
     description:
-      "A mobile security application I'm building to help people monitor and protect their devices. The project brings together authentication, device registration, location services, activity monitoring, and the backend systems needed to support them.",
+      "A mobile security platform designed to protect devices through secure authentication, activity monitoring, and intelligent device management.",
     technologies: ["Flutter", "Dart", "Backend API", "Authentication", "Location services"],
     status: "In active development",
     featured: true,
+    homepageFeatured: true,
     year: 2026,
+    image: "/images/Fihone1.png",
     highlight:
       "Built the mobile client and backend as separate systems from day one, keeping auth and device data off the device.",
     caseStudy: [
@@ -70,13 +107,23 @@ export const projects: Project[] = [
   {
     title: "Regiforte",
     slug: "regiforte",
-    category: "Academy Management · Presence",
+    category: "Academy Management App",
     description:
-      "A mobile academy management app focused on student presence, digital identity, QR scanning, and a smoother attendance experience for coding schools and bootcamps.",
-    technologies: ["Flutter", "Dart"],
+      "A mobile platform that simplifies student presence, attendance, and academy operations through QR technology and an offline-first approach.",
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Flask",
+      "PostgreSQL",
+      "QR Scanning",
+      "Offline-first",
+      "REST API",
+    ],
     status: "In active development",
     featured: true,
+    homepageFeatured: true,
     year: 2026,
+    image: "/images/Regiforte1.png",
     highlight:
       "Designed offline-first so a presence scan never fails just because the phone has no signal.",
     caseStudy: [
@@ -205,9 +252,9 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: "Financial / Wallet API",
+    title: "Wallet API",
     slug: "financial-wallet-api",
-    category: "Backend · REST API",
+    category: "Backend Service",
     description:
       "A backend project for handling users, wallets, transactions, transfers, authentication, and account management. I built it as a way to work through the backend concerns that appear once you move beyond simple CRUD APIs.",
     technologies: [
@@ -299,6 +346,16 @@ export const projects: Project[] = [
     ],
   },
 ];
+
+/** The three curated picks shown on the homepage, in this exact order. */
+const HOMEPAGE_ORDER = ["regiforte", "fihone", "portfolio"];
+
+/** Curated homepage projects — always these three, always in this order. */
+export function getHomepageProjects(): Project[] {
+  return HOMEPAGE_ORDER.map((slug) => projects.find((project) => project.slug === slug)).filter(
+    (project): project is Project => Boolean(project),
+  );
+}
 
 /** Projects with real, in-progress work — shown with full case-study cards. */
 export function getPrimaryProjects(): Project[] {
