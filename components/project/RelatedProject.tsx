@@ -10,7 +10,7 @@ export function RelatedProject({ currentSlug }: { currentSlug: string }) {
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <div className="border-t border-border py-16 sm:py-20">
+    <div className="border-t border-border py-10 sm:py-14">
       <Container>
         <Link
           href={`/projects/${next.slug}`}
@@ -18,7 +18,7 @@ export function RelatedProject({ currentSlug }: { currentSlug: string }) {
         >
           <div>
             <p className="text-sm text-foreground-secondary">Next project</p>
-            <p className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+            <p className="mt-2 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
               {next.title}
             </p>
           </div>

@@ -11,7 +11,7 @@ const FOCUS_AREAS = [
 
 export function Focus() {
   return (
-    <section className="border-t border-border py-16 sm:py-20">
+    <section className="border-t border-border py-10 sm:py-14">
       <Container>
         <p className="mb-5 text-sm font-medium text-foreground-secondary">
           What I&apos;m building around

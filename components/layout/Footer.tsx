@@ -7,9 +7,9 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border py-12">
+    <footer className="border-t border-border py-10">
       <Container>
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <Link
               href="/"
@@ -23,11 +23,11 @@ export function Footer() {
           <SocialLinks />
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-xs text-foreground-secondary sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-2 border-t border-border pt-6 text-xs text-foreground-secondary sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {SITE_NAME}
           </p>
-          <p>Designed &amp; built with Next.js</p>
+          <p>Built with Next.js</p>
         </div>
       </Container>
     </footer>

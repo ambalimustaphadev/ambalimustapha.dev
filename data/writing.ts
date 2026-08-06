@@ -10,5 +10,6 @@ export const FUTURE_TOPICS = [
   "What I learned building Fihone",
   "Flutter architecture decisions",
   "Designing a wallet API",
-  "What I'm learning about backend engineering",
+  "Moving from Flask to Go",
+  "Backend engineering lessons",
 ];

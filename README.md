@@ -6,6 +6,7 @@ Router. Deployed at [ambalimustapha.dev](https://ambalimustapha.dev).
 ## Features
 
 - Home, About, Work (projects + case studies), Writing, and Contact pages
+- A working contact form (`app/api/contact/route.ts`) that sends real email via Resend
 - Light / dark / system theme, persisted, with no flash on load
 - Project case studies driven by structured data (`data/projects.ts`)
 - SEO: metadata, Open Graph + Twitter images (generated), sitemap, robots.txt,
@@ -22,6 +23,7 @@ Router. Deployed at [ambalimustapha.dev](https://ambalimustapha.dev).
 - [Tailwind CSS](https://tailwindcss.com) v4
 - [Framer Motion](https://www.framer.com/motion/) for entrance/interaction animation
 - [Lucide React](https://lucide.dev) for icons
+- [Resend](https://resend.com) for the contact form's email delivery
 
 ## Getting started
 
@@ -34,8 +36,21 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Environment variables
 
-None are required to run the site today. See `.env.example` — it's reserved
-for when the contact form or a backend is connected later.
+The contact form sends email via [Resend](https://resend.com). Copy
+`.env.example` to `.env.local` and fill in:
+
+- `RESEND_API_KEY` — from [resend.com/api-keys](https://resend.com/api-keys).
+  Required for the form to actually send mail. Server-only, never exposed to
+  the browser.
+- `RESEND_FROM_EMAIL` — optional. Leave unset to use Resend's shared
+  `onboarding@resend.dev` test address, or set it once you've verified
+  `ambalimustapha.dev` in Resend (e.g. `contact@ambalimustapha.dev`).
+
+Without `RESEND_API_KEY` set, the site still builds and runs — the contact
+form shows a clear error asking the visitor to email directly instead of
+silently failing.
+
+On Vercel: add both variables in Project Settings → Environment Variables.
 
 ## Project structure
 
@@ -45,6 +60,7 @@ app/                  Routes (App Router)
   contact/             /contact
   projects/            /projects and /projects/[slug]
   writing/             /writing
+  api/contact/         POST route that sends the contact form via Resend
   layout.tsx           Root layout, fonts, metadata, JSON-LD
   page.tsx             Homepage (composes all sections)
   sitemap.ts           /sitemap.xml
@@ -100,7 +116,9 @@ npm run start
 
 1. Push this repository to GitHub.
 2. Import the repository into [Vercel](https://vercel.com/new).
-3. Deploy — no environment variables are required for the initial version.
+3. Deploy — add `RESEND_API_KEY` (and `RESEND_FROM_EMAIL` if you've verified a
+   domain) in Project Settings → Environment Variables so the contact form
+   can send email in production.
 4. In the Vercel project settings, add the custom domain `ambalimustapha.dev`.
 5. Configure DNS at your domain registrar per Vercel's instructions (A/CNAME
    records shown in the Vercel dashboard).

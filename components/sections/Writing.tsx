@@ -6,14 +6,14 @@ export function Writing({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" })
   const Heading = headingLevel;
 
   return (
-    <section id="writing" className="border-t border-border py-20 sm:py-28">
+    <section id="writing" className="border-t border-border py-14 sm:py-20">
       <Container>
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,280px)_1fr] lg:gap-16">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,280px)_1fr] lg:gap-16">
           <Heading className="text-sm font-medium uppercase tracking-wider text-foreground-secondary">
             Writing
           </Heading>
 
-          <div className="max-w-2xl">
+          <div className="max-w-xl">
             {posts.length > 0 ? (
               <ul className="space-y-6">
                 {posts.map((post) => (
@@ -33,11 +33,13 @@ export function Writing({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" })
             ) : (
               <div>
                 <p className="text-base leading-relaxed text-foreground-secondary">
-                  Notes from things I&apos;m building, breaking, fixing, and
-                  learning along the way.
+                  I haven&apos;t published anything here yet. When I have
+                  something worth sharing about a project, a technical
+                  problem, or something I&apos;ve learned, I&apos;ll put it
+                  here.
                 </p>
-                <p className="mt-6 text-sm font-medium text-foreground-secondary">
-                  Ideas for upcoming notes
+                <p className="mt-5 text-sm font-medium text-foreground-secondary">
+                  Things I might write about
                 </p>
                 <ul className="mt-3 flex flex-wrap gap-2.5">
                   {FUTURE_TOPICS.map((topic) => (

@@ -1,40 +1,44 @@
-import { Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
-import { CONTACT_EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/lib/constants";
+import { ContactForm } from "@/components/ui/ContactForm";
+import { CONTACT_EMAIL, GITHUB_URL } from "@/lib/constants";
 
 export function Contact({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
   const Heading = headingLevel;
 
   return (
-    <section id="contact" className="border-t border-border py-20 sm:py-28">
+    <section id="contact" className="border-t border-border py-14 sm:py-20">
       <Container>
-        <div className="max-w-2xl">
-          <Heading className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            Let&apos;s build something useful.
-          </Heading>
-          <p className="mt-5 text-lg leading-relaxed text-foreground-secondary">
-            Have a project in mind, an opportunity to discuss, or just want
-            to say hello? I&apos;d be happy to hear from you.
-          </p>
-
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Button href={`mailto:${CONTACT_EMAIL}`}>
-              <Mail size={16} strokeWidth={2} aria-hidden="true" />
-              Email
-            </Button>
-            <Button href={GITHUB_URL} variant="secondary">
-              <GithubIcon size={16} />
-              GitHub
-            </Button>
-            {LINKEDIN_URL && (
-              <Button href={LINKEDIN_URL} variant="secondary">
-                <LinkedinIcon size={16} />
-                LinkedIn
-              </Button>
-            )}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <Heading className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              Have something you&apos;re working on?
+            </Heading>
+            <p className="mt-4 max-w-md text-base leading-relaxed text-foreground-secondary sm:text-lg">
+              Whether it&apos;s a project, an opportunity, or just a
+              technical conversation, I&apos;d be happy to hear from you.
+            </p>
+            <p className="mt-6 text-sm text-foreground-secondary">
+              Prefer email? Reach me directly at{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+              >
+                {CONTACT_EMAIL}
+              </a>{" "}
+              or find me on{" "}
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+              >
+                GitHub
+              </a>
+              .
+            </p>
           </div>
+
+          <ContactForm />
         </div>
       </Container>
     </section>

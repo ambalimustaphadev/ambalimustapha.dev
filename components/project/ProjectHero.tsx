@@ -6,7 +6,7 @@ import type { Project } from "@/types";
 
 export function ProjectHero({ project }: { project: Project }) {
   return (
-    <div className="border-b border-border py-16 sm:py-20">
+    <div className="border-b border-border py-12 sm:py-16">
       <Container>
         <Link
           href="/projects"
@@ -16,7 +16,7 @@ export function ProjectHero({ project }: { project: Project }) {
           All work
         </Link>
 
-        <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-foreground-secondary">
+        <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-foreground-secondary">
           <span>{project.category}</span>
           <span aria-hidden="true">·</span>
           <span>{project.year}</span>
@@ -27,15 +27,15 @@ export function ProjectHero({ project }: { project: Project }) {
           </span>
         </div>
 
-        <h1 className="mt-5 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
           {project.title}
         </h1>
 
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-secondary">
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-foreground-secondary sm:text-lg">
           {project.description}
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center gap-4">
+        <div className="mt-6 flex flex-wrap items-center gap-4">
           {project.githubUrl ? (
             <a
               href={project.githubUrl}

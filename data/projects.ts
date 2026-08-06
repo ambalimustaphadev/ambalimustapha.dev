@@ -268,13 +268,47 @@ export const projects: Project[] = [
     ],
   },
 
-  // Go backend project intentionally omitted from the active list until real work exists.
+  {
+    title: "Go Backend Project",
+    slug: "go-backend-project",
+    category: "Backend · REST API",
+    description:
+      "A future backend project exploring Go, after building REST APIs in Python and Flask.",
+    technologies: ["Go", "PostgreSQL", "REST API", "Docker"],
+    status: "Coming soon",
+    featured: true,
+    year: 2026,
+    caseStudy: [
+      {
+        heading: "Overview",
+        paragraphs: [
+          "I want to build a backend project in Go after spending time with Flask, mainly to see how Go's standard library and type system shape API design differently. Nothing has been built yet — this is a planned project, not a project in progress.",
+        ],
+      },
+      {
+        heading: "Current status",
+        paragraphs: [
+          "Coming soon. Details will be added once work actually begins.",
+        ],
+      },
+    ],
+  },
 ];
+
+/** Projects with real, in-progress work — shown with full case-study cards. */
+export function getPrimaryProjects(): Project[] {
+  return projects.filter(
+    (project) => project.featured && project.status !== "Coming soon",
+  );
+}
+
+/** Planned projects with no real work yet — shown de-emphasized. */
+export function getFutureProjects(): Project[] {
+  return projects.filter(
+    (project) => project.featured && project.status === "Coming soon",
+  );
+}
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
-}
-
-export function getFeaturedProjects(): Project[] {
-  return projects.filter((project) => project.featured);
 }
