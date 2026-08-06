@@ -3,29 +3,38 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fafaf9;
-  --foreground: #171717;
-  --foreground-secondary: #595959;
-  --border: #e5e5e5;
-  --accent: #4f46e5;
+  --background: #f8f9fb;
+  --surface: #ffffff;
+  --surface-hover: #f1f4f9;
+  --foreground: #10151f;
+  --foreground-secondary: #5b6472;
+  --border: #e4e7ec;
+  --accent: #1d4ed8;
+  --accent-soft: #1d4ed814;
   --accent-foreground: #ffffff;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #f5f5f5;
-  --foreground-secondary: #a3a3a3;
-  --border: #262626;
-  --accent: #818cf8;
-  --accent-foreground: #0a0a0a;
+  --background: #0a0e1a;
+  --surface: #111826;
+  --surface-hover: #161f30;
+  --foreground: #f5f7fa;
+  --foreground-secondary: #94a1b5;
+  --border: #1f2937;
+  --accent: #5b8ef5;
+  --accent-soft: #5b8ef51f;
+  --accent-foreground: #0a0e1a;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
   --color-foreground: var(--foreground);
   --color-foreground-secondary: var(--foreground-secondary);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
   --color-accent-foreground: var(--accent-foreground);
 
   --font-sans: var(--font-inter);
@@ -56,4 +65,12 @@ body {
 ::selection {
   background: var(--color-accent);
   color: var(--color-accent-foreground);
+}
+
+.bg-grid-fade {
+  background-image: linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent);
 }

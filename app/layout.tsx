@@ -69,7 +69,16 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-background text-foreground">
+      <body className="relative flex min-h-full flex-col bg-background text-foreground">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+        >
+          <div className="absolute left-1/2 top-0 h-[44rem] w-[80rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,var(--color-accent),transparent_65%)] opacity-[0.10] blur-3xl" />
+          <div className="absolute left-[8%] top-[38%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.05] blur-3xl" />
+          <div className="absolute right-[6%] top-[68%] h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.06] blur-3xl" />
+          <div className="absolute left-1/2 top-[92%] h-[36rem] w-[70rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,var(--color-accent),transparent_65%)] opacity-[0.07] blur-3xl" />
+        </div>
         <Script
           id="person-jsonld"
           type="application/ld+json"

@@ -7,9 +7,11 @@ export const SITE_DESCRIPTION =
   "Mustapha Ambali is a software developer building mobile applications and backend systems with Flutter, Python, Flask, and REST APIs.";
 
 export const NAV_LINKS: NavLink[] = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Work", href: "/projects" },
-  { label: "Writing", href: "/writing" },
+  { label: "Projects", href: "/projects" },
+  { label: "Skills", href: "/#tools" },
+  { label: "Experience", href: "/#experience" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -17,8 +19,15 @@ export const NAV_LINKS: NavLink[] = [
 // The contact form sends here too — see app/api/contact/route.ts.
 export const CONTACT_EMAIL = "hello@ambalimustapha.dev";
 
-// TODO: Add the real LinkedIn URL once available.
-export const LINKEDIN_URL: string | null = null;
+export const LOCATION = "Nigeria";
+
+// Used to compute "years building" on the About page — bump if this changes.
+export const CAREER_START_YEAR = 2024;
+
+export const AVAILABILITY = "Open to freelance/contract work";
+
+export const LINKEDIN_URL: string | null =
+  "https://www.linkedin.com/in/mustapha-ambali-2943aa305";
 
 export const GITHUB_URL = "https://github.com/ambalimustaphadev";
 

@@ -11,6 +11,8 @@ export const projects: Project[] = [
     status: "In active development",
     featured: true,
     year: 2026,
+    highlight:
+      "Built the mobile client and backend as separate systems from day one, keeping auth and device data off the device.",
     caseStudy: [
       {
         heading: "Overview",
@@ -75,6 +77,8 @@ export const projects: Project[] = [
     status: "In active development",
     featured: true,
     year: 2026,
+    highlight:
+      "Designed offline-first so a presence scan never fails just because the phone has no signal.",
     caseStudy: [
       {
         heading: "Overview",
@@ -218,6 +222,8 @@ export const projects: Project[] = [
     status: "In development",
     featured: true,
     year: 2026,
+    highlight:
+      "Modeled wallets and transactions as related entities so a transfer updates both sides consistently — never left to the client.",
     caseStudy: [
       {
         heading: "Overview",

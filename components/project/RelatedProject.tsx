@@ -10,11 +10,11 @@ export function RelatedProject({ currentSlug }: { currentSlug: string }) {
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <div className="border-t border-border py-10 sm:py-14">
+    <div className="border-t border-border py-12 sm:py-16">
       <Container>
         <Link
           href={`/projects/${next.slug}`}
-          className="group flex items-center justify-between gap-4"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-surface px-6 py-6 transition-colors duration-200 hover:border-accent/40 sm:px-8 sm:py-8"
         >
           <div>
             <p className="text-sm text-foreground-secondary">Next project</p>

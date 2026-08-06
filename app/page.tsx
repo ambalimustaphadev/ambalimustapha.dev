@@ -12,11 +12,11 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <FeaturedProjects />
       <About />
       <Focus />
-      <FeaturedProjects />
-      <Skills />
       <Experience />
+      <Skills />
       <Education />
       <Writing />
       <Contact />

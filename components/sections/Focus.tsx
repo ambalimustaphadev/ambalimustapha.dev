@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/Container";
 
-const FOCUS_AREAS = [
+export const FOCUS_AREAS = [
   "Backend development",
   "REST APIs",
   "Database design",
@@ -11,7 +11,7 @@ const FOCUS_AREAS = [
 
 export function Focus() {
   return (
-    <section className="border-t border-border py-10 sm:py-14">
+    <section className="py-10 sm:py-14">
       <Container>
         <h2 className="mb-5 text-sm font-medium text-foreground-secondary">
           What I&apos;m building around
@@ -20,7 +20,7 @@ export function Focus() {
           {FOCUS_AREAS.map((area) => (
             <li
               key={area}
-              className="rounded-full border border-border px-3.5 py-1.5 text-sm text-foreground-secondary"
+              className="rounded-full border border-accent-soft bg-accent-soft px-3.5 py-1.5 text-sm font-medium text-accent"
             >
               {area}
             </li>

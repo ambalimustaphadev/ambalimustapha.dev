@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/utils";
 import type { CaseStudySection } from "@/types";
 
@@ -8,13 +9,11 @@ export function CaseStudySections({ sections }: { sections: CaseStudySection[] }
       {sections.map((section, index) => (
         <div
           key={section.heading}
-          className={cn("py-10 sm:py-14", index > 0 && "border-t border-border")}
+          className={cn("py-12 sm:py-16", index > 0 && "border-t border-border")}
         >
           <Container>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,280px)_1fr] lg:gap-16">
-              <h2 className="text-sm font-medium uppercase tracking-wider text-foreground-secondary">
-                {section.heading}
-              </h2>
+              <SectionHeading>{section.heading}</SectionHeading>
 
               <div className="max-w-xl space-y-4">
                 {section.paragraphs?.map((paragraph) => (

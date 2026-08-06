@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { Container } from "@/components/ui/Container";
+import { Download, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { NAV_LINKS, RESUME_PATH, SITE_NAME } from "@/lib/constants";
@@ -14,17 +14,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 8);
-    }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -42,61 +32,71 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
 
+  function isActive(href: string) {
+    return !href.includes("#") && pathname === href;
+  }
+
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b transition-colors duration-300",
-        scrolled
-          ? "border-border bg-background/80 backdrop-blur-md"
-          : "border-transparent bg-background/0",
-      )}
-    >
-      <Container>
-        <nav className="flex h-16 items-center justify-between" aria-label="Primary">
+    <header className="sticky top-0 z-50 border-b border-border/40 bg-background">
+      <div className="mx-auto w-full max-w-[87.5rem] px-5 sm:px-8 lg:px-10 xl:px-12">
+        <nav
+          className="grid h-20 grid-cols-[auto_1fr_auto] items-center gap-4"
+          aria-label="Primary"
+        >
           <Link
             href="/"
-            className="text-sm font-semibold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+            className="group flex items-center gap-3.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            {SITE_NAME}
+            <Image
+              src="/branding/ma-logo.png"
+              alt=""
+              width={36}
+              height={36}
+              priority
+              className="rounded-[0.55rem] shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-105"
+            />
+            <span className="text-sm font-semibold tracking-tight text-foreground">
+              {SITE_NAME}
+            </span>
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
-            <ul className="flex items-center gap-6">
+          <div className="hidden items-center justify-center md:flex">
+            <ul className="flex items-center gap-8">
               {NAV_LINKS.map((link) => {
-                const active = pathname === link.href;
+                const active = isActive(link.href);
                 return (
                   <li key={link.href}>
                     <Link
                       href={link.href}
                       className={cn(
-                        "group relative py-1 text-sm transition-colors duration-200",
+                        "text-sm font-medium transition-colors duration-200",
                         active
-                          ? "text-foreground"
-                          : "text-foreground-secondary hover:text-foreground",
+                          ? "text-accent"
+                          : "text-foreground hover:text-accent",
                       )}
                       aria-current={active ? "page" : undefined}
                     >
                       {link.label}
-                      <span
-                        className={cn(
-                          "absolute -bottom-0.5 left-0 h-px bg-accent transition-all duration-200",
-                          active ? "w-full" : "w-0 group-hover:w-full",
-                        )}
-                      />
                     </Link>
                   </li>
                 );
               })}
             </ul>
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
-              <Button href={RESUME_PATH} variant="secondary" className="px-4 py-2 text-sm">
-                Resume
-              </Button>
-            </div>
           </div>
 
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
+            <Button
+              href={RESUME_PATH}
+              variant="secondary"
+              className="border-accent text-accent hover:bg-accent-soft hover:text-accent"
+            >
+              Download CV
+              <Download size={16} strokeWidth={2} aria-hidden="true" />
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2 justify-self-end md:hidden">
             <ThemeToggle />
             <button
               type="button"
@@ -110,7 +110,7 @@ export function Navbar() {
             </button>
           </div>
         </nav>
-      </Container>
+      </div>
 
       <AnimatePresence>
         {menuOpen && (
@@ -122,36 +122,40 @@ export function Navbar() {
             transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: "easeInOut" }}
             className="overflow-hidden border-b border-border bg-background md:hidden"
           >
-            <Container>
+            <div className="mx-auto w-full max-w-[87.5rem] px-5 sm:px-8 lg:px-10 xl:px-12">
               <ul className="flex flex-col gap-1 py-4">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setMenuOpen(false)}
-                      className={cn(
-                        "block rounded-md px-2 py-3 text-base transition-colors duration-200",
-                        pathname === link.href
-                          ? "text-foreground"
-                          : "text-foreground-secondary hover:text-foreground",
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {NAV_LINKS.map((link) => {
+                  const active = isActive(link.href);
+                  return (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        onClick={() => setMenuOpen(false)}
+                        className={cn(
+                          "block rounded-lg px-3 py-3 text-base transition-colors duration-200",
+                          active
+                            ? "bg-accent-soft text-accent"
+                            : "text-foreground hover:bg-surface-hover hover:text-accent",
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
                 <li className="pt-2">
                   <Button
                     href={RESUME_PATH}
                     variant="secondary"
-                    className="w-full"
+                    className="w-full border-accent text-accent hover:bg-accent-soft hover:text-accent"
                     onClick={() => setMenuOpen(false)}
                   >
-                    Resume
+                    Download CV
+                    <Download size={16} strokeWidth={2} aria-hidden="true" />
                   </Button>
                 </li>
               </ul>
-            </Container>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

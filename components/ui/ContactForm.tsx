@@ -14,7 +14,7 @@ const MAX_EMAIL_LENGTH = 254;
 const MAX_MESSAGE_LENGTH = 5000;
 
 const fieldStyles =
-  "w-full rounded-md border border-border bg-transparent px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-secondary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60";
+  "w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-foreground-secondary transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60";
 
 function validate(
   values: { name: string; email: string; message: string },
@@ -97,21 +97,20 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div
-        role="status"
-        className="rounded-md border border-border px-5 py-6 text-base text-foreground"
-      >
-        <p className="font-medium">Message sent. Thanks for reaching out.</p>
-        <p className="mt-1 text-sm text-foreground-secondary">
-          I&apos;ll get back to you as soon as I can.
-        </p>
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="mt-4 text-sm font-medium text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
-          Send another message
-        </button>
+      <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
+        <div role="status" className="text-base text-foreground">
+          <p className="font-medium">Message sent. Thanks for reaching out.</p>
+          <p className="mt-1 text-sm text-foreground-secondary">
+            I&apos;ll get back to you as soon as I can.
+          </p>
+          <button
+            type="button"
+            onClick={() => setStatus("idle")}
+            className="mt-4 text-sm font-medium text-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            Send another message
+          </button>
+        </div>
       </div>
     );
   }
@@ -119,7 +118,11 @@ export function ContactForm() {
   const hasError = status === "error" && !!feedback;
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      className="space-y-5 rounded-2xl border border-border bg-surface p-6 sm:p-8"
+    >
       {/* Honeypot field — hidden from real users, catches simple bots */}
       <div className="absolute left-[-9999px]" aria-hidden="true">
         <label htmlFor={`${formId}-company`}>Company</label>
@@ -200,7 +203,7 @@ export function ContactForm() {
         type="submit"
         disabled={isSubmitting}
         className={cn(
-          "inline-flex w-full items-center justify-center gap-2 rounded-md bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto",
+          "inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-medium text-accent-foreground transition-opacity duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto",
         )}
       >
         {isSubmitting && <Loader2 size={16} className="animate-spin" aria-hidden="true" />}

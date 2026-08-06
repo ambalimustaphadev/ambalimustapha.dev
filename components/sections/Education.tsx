@@ -1,15 +1,14 @@
 import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export function Education() {
   return (
-    <section id="education" className="border-t border-border py-14 sm:py-20">
+    <section id="education" className="py-16 sm:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,280px)_1fr] lg:gap-16">
-          <h2 className="text-sm font-medium uppercase tracking-wider text-foreground-secondary">
-            Education
-          </h2>
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,280px)_1fr] lg:gap-16">
+          <SectionHeading>Education</SectionHeading>
 
-          <div className="max-w-xl">
+          <div className="max-w-xl rounded-2xl border border-border bg-surface p-6 sm:p-8">
             <h3 className="text-xl font-semibold text-foreground">
               B.Sc. Mass Communication
             </h3>

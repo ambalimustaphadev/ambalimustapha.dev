@@ -15,20 +15,20 @@ export default function ProjectsPage() {
   const futureProjects = getFutureProjects();
 
   return (
-    <div className="py-14 sm:py-20">
+    <div className="py-16 sm:py-24">
       <Container>
         <div className="max-w-2xl">
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-            Selected work
+            All Projects
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-foreground-secondary sm:text-lg">
+          <p className="mt-5 text-base leading-relaxed text-foreground-secondary sm:text-lg">
             A few things I&apos;ve been building, testing, and learning
             from. Some are still in progress; others are developed enough
             to dig into.
           </p>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-10 flex flex-col gap-6">
           {primaryProjects.map((project, index) => (
             <ProjectCard
               key={project.slug}
@@ -40,7 +40,7 @@ export default function ProjectsPage() {
         </div>
 
         {futureProjects.length > 0 && (
-          <div className="mt-2 max-w-2xl">
+          <div className="mt-6 max-w-2xl space-y-3">
             {futureProjects.map((project) => (
               <FutureProjectRow key={project.slug} project={project} />
             ))}

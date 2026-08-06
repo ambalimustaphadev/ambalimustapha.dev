@@ -21,6 +21,10 @@ export type Project = {
   status: ProjectStatus;
   featured: boolean;
   year: number;
+  /** Path to a real screenshot, e.g. "/images/projects/fihone.png". Falls back to a styled placeholder when unset. */
+  image?: string;
+  /** One-line engineering decision surfaced on the project card. */
+  highlight?: string;
   githubUrl?: string;
   liveUrl?: string;
   caseStudy: CaseStudySection[];
