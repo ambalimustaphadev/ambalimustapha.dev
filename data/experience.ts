@@ -6,7 +6,7 @@ export const experience: ExperienceItem[] = [
     organization: "Pediforte Coding Academy",
     period: "2026 — Present",
     description:
-      "Building an attendance and academy management app for Pediforte Coding Academy, with QR check-ins and offline support.",
+      "Building an attendance and academy management app with QR check-ins and offline support.",
   },
   {
     title: "Fihone — Mobile Security App",
@@ -19,10 +19,5 @@ export const experience: ExperienceItem[] = [
     period: "2024 — Present",
     description:
       "Building mobile apps and backend systems with Flutter, Python, and PostgreSQL.",
-  },
-  {
-    title: "Freelance Projects",
-    period: "2024 — Present",
-    description: "Freelance work for clients — mostly backend APIs and small web projects.",
   },
 ];

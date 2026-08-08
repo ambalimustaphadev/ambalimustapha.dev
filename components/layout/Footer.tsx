@@ -3,20 +3,20 @@ import { ArrowUp } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { SocialLinks } from "@/components/ui/SocialLinks";
-import { GITHUB_URL, RESUME_PATH } from "@/lib/constants";
+import { RESUME_PATH } from "@/lib/constants";
 
 const NAVIGATION_LINKS = [
-  { label: "About", href: "/about" },
+  { label: "Home", href: "/" },
+  { label: "About Me", href: "/about" },
   { label: "Projects", href: "/projects" },
-  { label: "Skills", href: "/#tools" },
   { label: "Experience", href: "/#experience" },
+  { label: "Skills", href: "/#tools" },
   { label: "Contact", href: "/contact" },
 ];
 
 const RESOURCE_LINKS = [
+  { label: "Download CV", href: RESUME_PATH },
   { label: "Writing", href: "/writing" },
-  { label: "GitHub", href: GITHUB_URL },
-  { label: "Resume", href: RESUME_PATH },
 ];
 
 export function Footer() {
@@ -29,14 +29,12 @@ export function Footer() {
         className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
       />
       <Container>
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-[1.3fr_1fr_1fr]">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
             <Logo size={38} />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-foreground-secondary">
-              Software developer building reliable, maintainable mobile
-              applications and backend systems.
+              Software developer building mobile apps and backend systems.
             </p>
-            <SocialLinks className="mt-5" />
           </div>
 
           <div>
@@ -75,6 +73,13 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wider text-foreground-secondary">
+              Connect
+            </p>
+            <SocialLinks className="mt-4 flex-col items-start gap-2.5" />
           </div>
         </div>
 
