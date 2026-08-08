@@ -41,7 +41,7 @@ export type ExperienceItem = {
   title: string;
   organization?: string;
   period?: string;
-  summary: string[];
+  description: string;
 };
 
 export type WritingPost = {

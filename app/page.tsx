@@ -7,19 +7,38 @@ import { Experience } from "@/components/sections/Experience";
 import { Education } from "@/components/sections/Education";
 import { Writing } from "@/components/sections/Writing";
 import { Contact } from "@/components/sections/Contact";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <FeaturedProjects />
-      <About />
-      <Focus />
-      <Experience />
-      <Skills />
-      <Education />
-      <Writing />
-      <Contact />
+      <ScrollReveal intensity="strong">
+        <Hero />
+      </ScrollReveal>
+      <ScrollReveal intensity="strong">
+        <FeaturedProjects />
+      </ScrollReveal>
+      <ScrollReveal intensity="strong">
+        <About />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Focus />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Experience />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Skills />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Education />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Writing />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Contact />
+      </ScrollReveal>
     </>
   );
 }

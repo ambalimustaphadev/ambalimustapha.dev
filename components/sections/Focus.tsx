@@ -6,7 +6,6 @@ export const FOCUS_AREAS = [
   "Database design",
   "Authentication",
   "Mobile applications",
-  "System design",
 ];
 
 export function Focus() {
