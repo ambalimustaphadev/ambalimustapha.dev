@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ProjectHero } from "@/components/project/ProjectHero";
-import { CaseStudySections } from "@/components/project/CaseStudySections";
-import { RelatedProject } from "@/components/project/RelatedProject";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { ProjectDetails } from "@/components/project/ProjectDetails";
 import { getProjectBySlug, projects } from "@/data/projects";
+import { pageMetadata } from "@/lib/metadata";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -23,10 +23,15 @@ export async function generateMetadata({
     return { title: "Project not found" };
   }
 
-  return {
+  return pageMetadata({
     title: project.title,
     description: project.description,
-  };
+    path: `/projects/${project.slug}`,
+    type: "article",
+    image: project.image
+      ? { url: project.image, alt: project.imageAlt ?? `${project.title} screenshot` }
+      : undefined,
+  });
 }
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
@@ -38,10 +43,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div>
-      <ProjectHero project={project} />
-      <CaseStudySections sections={project.caseStudy} />
-      <RelatedProject currentSlug={project.slug} />
+    <div className="project-details inner">
+      <Breadcrumb title={project.title} trail={[{ label: "Projects", href: "/projects" }]} />
+      <ProjectDetails project={project} />
     </div>
   );
 }

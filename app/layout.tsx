@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Script from "next/script";
+import { Rajdhani, Rubik } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { ScrollTop } from "@/components/layout/ScrollTop";
+import { ChatWidget } from "@/components/layout/ChatWidget";
+import { TemplateEffects } from "@/components/layout/TemplateEffects";
 import {
   GITHUB_URL,
   LINKEDIN_URL,
@@ -12,10 +14,26 @@ import {
   SITE_ROLE,
   SITE_URL,
 } from "@/lib/constants";
-import "./globals.css";
+// Reeni template styles, in the template's original order: vendor CSS first,
+// then the compiled SCSS. styles/vendor/odometer.css is the template's copy of
+// odometer's default theme without the IE `*property` hacks, which Turbopack's
+// CSS parser rejects — so the npm theme file is intentionally not imported.
+import "@/styles/vendor/fontawesome.css";
+import "@/styles/vendor/odometer.css";
+import "@/styles/vendor/animate.min.css";
+import "@/styles/vendor/bootstrap.min.css";
+import "@/styles/scss/main.scss";
 
-const inter = Inter({
-  variable: "--font-inter",
+const rajdhani = Rajdhani({
+  variable: "--font-rajdhani",
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const rubik = Rubik({
+  variable: "--font-rubik",
+  style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -27,9 +45,9 @@ export const metadata: Metadata = {
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  alternates: {
-    canonical: SITE_URL,
-  },
+  // No canonical here: a canonical in the root layout is inherited by every
+  // page, which pointed /about, /projects/* etc. at the homepage. Each page
+  // sets its own `alternates.canonical` instead.
   openGraph: {
     type: "website",
     url: SITE_URL,
@@ -65,42 +83,40 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${rajdhani.variable} ${rubik.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="relative flex min-h-full flex-col bg-background text-foreground">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-        >
-          <div className="absolute left-1/2 top-0 h-[44rem] w-[80rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,var(--color-accent),transparent_65%)] opacity-[0.10] blur-3xl" />
-          <div className="absolute left-[8%] top-[38%] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.05] blur-3xl" />
-          <div className="absolute right-[6%] top-[68%] h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.06] blur-3xl" />
-          <div className="absolute left-1/2 top-[92%] h-[36rem] w-[70rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,var(--color-accent),transparent_65%)] opacity-[0.07] blur-3xl" />
-        </div>
-        <Script
+      <body>
+        {/* A plain <script> (Next.js' JSON-LD recommendation) so the structured
+            data is in the server-rendered HTML; `<` is escaped against injection. */}
+        <script
           id="person-jsonld"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
-        <a
-          href="#main-content"
-          className="fixed left-4 top-4 z-[100] -translate-y-20 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform duration-200 focus:translate-y-0"
-        >
+        <a href="#main-content" className="skip-link">
           Skip to content
         </a>
+        {/* Demo 09 is dark-only, so the theme is forced to the template's default
+            (dark) styling. A stored "light" preference from the previous site is
+            ignored. Re-enabling a light theme would mean dropping `forcedTheme`
+            (the template's `.tmp-white-version` styles are still available). */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          value={{ light: "tmp-white-version", dark: "tmp-dark-version" }}
+          forcedTheme="dark"
           disableTransitionOnChange
         >
-          <Navbar />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          {/* No accent wrapper: Demo 09 uses the template's default pink (#FF014F). */}
+          <SiteHeader />
+          <main id="main-content">{children}</main>
+          <SiteFooter />
+          <ScrollTop />
+          <ChatWidget />
+          <TemplateEffects />
         </ThemeProvider>
       </body>
     </html>

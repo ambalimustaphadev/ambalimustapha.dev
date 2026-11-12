@@ -1,0 +1,1402 @@
+// Portfolio-specific additions on top of the Reeni template.
+// The template's own files stay untouched so they can be diffed against the
+// purchased source; everything specific to this site lives here.
+
+// ---------------------------------------------------------------------------
+// Fonts — Rajdhani / Rubik are self-hosted through next/font (app/layout.tsx),
+// which exposes them as CSS variables on <html>.
+// ---------------------------------------------------------------------------
+:root {
+  --font-primary: var(--font-rajdhani), "Rajdhani", sans-serif;
+  --font-secondary: var(--font-rubik), "Rubik", sans-serif;
+}
+
+// ---------------------------------------------------------------------------
+// Light theme. The template applies `.tmp-white-version` to a wrapper <div>;
+// next-themes applies it to <html>, so <body> (which the template paints with
+// --color-secondary) needs the same white background the wrapper had.
+// ---------------------------------------------------------------------------
+html.tmp-white-version body {
+  background: #ffffff;
+}
+
+// ---------------------------------------------------------------------------
+// Accessibility: skip link (hidden until focused).
+// ---------------------------------------------------------------------------
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 10000;
+  padding: 10px 18px;
+  border-radius: 6px;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+
+  &:focus {
+    transform: translateY(0);
+    color: #ffffff;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Logo: MA mark + wordmark in place of the template's Reeni logo image.
+// ---------------------------------------------------------------------------
+.ambali-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-heading);
+
+  &:hover {
+    color: var(--color-heading);
+  }
+
+  .ambali-logo__mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    transition: var(--transition);
+  }
+
+  &:hover .ambali-logo__mark {
+    transform: scale(1.05);
+  }
+
+  .ambali-logo__name {
+    font-family: var(--font-primary);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
+
+.footer-area .logo .ambali-logo {
+  justify-content: center;
+}
+
+.ambali-footer-social {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+// ---------------------------------------------------------------------------
+// Back-to-top is a <button> here (a <div> in the template) for keyboard use.
+// ---------------------------------------------------------------------------
+button.scrollToTop {
+  padding: 0;
+  border: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Keyboard focus for the template's links and buttons.
+// ---------------------------------------------------------------------------
+.skip-link:focus-visible,
+.ambali-logo:focus-visible,
+.tmp-mainmenu a:focus-visible,
+.social-link a:focus-visible,
+.tmp-btn:focus-visible,
+.hamberger-menu:focus-visible,
+.close-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+// ---------------------------------------------------------------------------
+// Hero (Demo 09: tmp-banner-one-area style-2)
+// The template paints this banner with one photograph (bg-image-3.jpg: a lit
+// subject on black). Here the same composition is layered: a near-black
+// studio backdrop, the unedited portrait cut-out with its edges masked into
+// the dark, and a left-hand overlay that keeps the text legible.
+// ---------------------------------------------------------------------------
+.tmp-banner-one-area.style-2.ambali-hero {
+  position: relative;
+  isolation: isolate;
+  background-color: #040404;
+  background-image: radial-gradient(
+    ellipse 40% 60% at 65% 42%,
+    rgba(120, 128, 150, 0.14),
+    transparent 70%
+  );
+
+  > .container {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Cinematic close-up like the template's bg-image-3.jpg: the portrait is
+// rendered at ~1.5x the banner height so the face fills the centre-right, and
+// the shoulders run off the bottom edge. The box keeps the photo's own aspect
+// ratio and is centred on the face (50% across, ~45% down the photo).
+.ambali-hero__photo {
+  position: absolute;
+  z-index: 0;
+  top: -25%;
+  height: 150%;
+  aspect-ratio: 997 / 1577;
+  left: 65%;
+  transform: translateX(-50%);
+
+  img {
+    object-fit: cover;
+    // Oval feathering centred on the face: the head stays solid while the
+    // cut-out edges, shoulders and shirt dissolve into the black.
+    -webkit-mask-image: radial-gradient(
+      ellipse 36% 30% at 50% 46%,
+      #000 46%,
+      rgba(0, 0, 0, 0.5) 68%,
+      transparent 92%
+    );
+    mask-image: radial-gradient(
+      ellipse 36% 30% at 50% 46%,
+      #000 46%,
+      rgba(0, 0, 0, 0.5) 68%,
+      transparent 92%
+    );
+  }
+}
+
+// Dark overlay: deep on the text side and fading across the face (the text
+// overlaps the face's shadow side, as in the template), plus a fade at the
+// bottom into the page background.
+.ambali-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(3, 3, 3, 0.9) 0%, rgba(3, 3, 3, 0.62) 30%, rgba(3, 3, 3, 0.12) 52%, rgba(3, 3, 3, 0) 62%),
+    linear-gradient(to top, #060606 0%, rgba(6, 6, 6, 0) 24%);
+}
+
+// The template colours every <span> in this title with the accent (only the
+// typed role is a span there), so the line wrappers reset to heading colour.
+.banner-one-main-wrapper .inner .title .ambali-hero__line {
+  color: var(--color-heading);
+}
+
+@media (min-width: 992px) {
+  .ambali-hero__line {
+    white-space: nowrap;
+  }
+}
+
+// Narrower desktops: nudge the face right so the one-line name stays on the
+// face's shadow side, as in the template.
+@media (min-width: 992px) and (max-width: 1399px) {
+  .ambali-hero__photo {
+    left: 69%;
+  }
+}
+
+// Below the desktop breakpoint the text stacks over the photo, as the
+// template's background image does; the close-up sits behind it, dimmed.
+@media (max-width: 991px) {
+  .ambali-hero__photo {
+    top: -12%;
+    height: 150%;
+    left: 60%;
+    opacity: 0.6;
+  }
+
+  .ambali-hero__overlay {
+    background:
+      linear-gradient(90deg, rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.5) 60%, rgba(3, 3, 3, 0.2) 100%),
+      linear-gradient(to top, #060606 0%, rgba(6, 6, 6, 0) 30%);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Project images & placeholders (no stock photography)
+// ---------------------------------------------------------------------------
+.ambali-project-image {
+  aspect-ratio: 1920 / 1572;
+  height: auto;
+  object-fit: cover;
+}
+
+.ambali-project-placeholder {
+  aspect-ratio: 1920 / 1572;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.12), transparent 55%),
+    linear-gradient(135deg, var(--color-primary) 0%, #1b1460 100%);
+  color: #ffffff;
+  text-align: center;
+  padding: 24px;
+}
+
+.ambali-project-placeholder__mark {
+  font-family: var(--font-primary);
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.ambali-project-placeholder__label {
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.ambali-status-tag {
+  color: var(--color-primary);
+}
+
+// ---------------------------------------------------------------------------
+// Skills — brand marks inside the template's round icon frame
+// ---------------------------------------------------------------------------
+.ambali-skill-icon {
+  width: 30px;
+  height: 30px;
+}
+
+// ---------------------------------------------------------------------------
+// Contact form states (the template used toasts; the form reports inline)
+// ---------------------------------------------------------------------------
+.ambali-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.ambali-form-error {
+  min-height: 24px;
+  margin: 16px 0 0;
+  font-size: 15px;
+  color: var(--color-danger);
+}
+
+.ambali-form-success {
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+
+  .ambali-form-success__title {
+    margin-bottom: 6px;
+    font-family: var(--font-primary);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .ambali-form-success__text {
+    margin-bottom: 24px;
+  }
+}
+
+.contact-form .input-field[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.ambali-blog-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+// ---------------------------------------------------------------------------
+// Inner pages
+// ---------------------------------------------------------------------------
+.ambali-page-intro {
+  max-width: 720px;
+}
+
+.ambali-project-meta {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+// Placeholders inside the template's fixed-height image boxes.
+.portfoli-card-img .ambali-project-placeholder {
+  display: flex !important;
+  height: 100%;
+}
+
+// Project detail banner: screenshots are shown whole (they are phone mock-ups
+// and laptop shots) inside the template's wide 1290×560 frame.
+.ambali-project-hero {
+  margin-bottom: 50px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--color-gray-2);
+  aspect-ratio: 1290 / 560;
+
+  .ambali-project-hero__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    aspect-ratio: auto;
+  }
+
+  .ambali-project-placeholder {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  @media (max-width: 767px) {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.ambali-case-study-section {
+  margin-top: 40px;
+
+  .mini-title {
+    margin-bottom: 16px;
+  }
+}
+
+.project-details-info a {
+  color: var(--color-primary);
+}
+
+.ambali-project-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 60px;
+}
+
+.ambali-writing-empty .tag-items ul {
+  flex-wrap: wrap;
+}
+
+.ambali-post-date {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--color-primary);
+}
+
+.ambali-not-found {
+  text-align: center;
+
+  .ambali-not-found__code {
+    margin: 10px 0 0;
+    font-family: var(--font-primary);
+    font-size: clamp(96px, 16vw, 180px);
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--color-primary);
+  }
+
+  .ambali-not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+  }
+}
+
+// Non-link tags get the same pill look the template gives its <a> tags.
+.tag-items ul li span.tag-item {
+  display: inline-block;
+  border-radius: 500px;
+  border: 2px solid var(--color-border);
+  color: var(--color-gray);
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  padding: 5px 15px;
+
+  &.ambali-status-tag {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Floating chat button (template Chat.jsx). The template hides the toggle
+// checkbox with display:none, which makes it unreachable by keyboard; it is
+// visually hidden instead and its focus ring is shown on the round button.
+// ---------------------------------------------------------------------------
+.ready-chatting-option #click {
+  display: block;
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ready-chatting-option #click:focus-visible ~ label {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.ready-chatting-option .wrapper .chat-box button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+// ---------------------------------------------------------------------------
+// Services & pricing (homepage #pricing) — the template's price-plan-card,
+// adapted for project-based services: title, "Starting at" price, summary,
+// features and an enquiry CTA. Cards in a row share one height.
+// ---------------------------------------------------------------------------
+.ambali-services-pricing {
+  .ambali-service-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--color-border);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      border-color: rgba(255, 1, 79, 0.35);
+      transform: translateY(-4px);
+    }
+
+    // Keep the button at the bottom however long the feature list is.
+    .tmp-button-here {
+      margin-top: auto;
+    }
+
+    .check-box {
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+  }
+
+  // Featured card: a quiet accent edge, not a different card style.
+  .ambali-service-card--featured {
+    border-color: rgba(255, 1, 79, 0.45);
+  }
+
+  .ambali-service-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .ambali-service-card__title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+  .ambali-service-card__badge {
+    flex-shrink: 0;
+    padding: 4px 12px;
+    border: 1px solid var(--color-primary);
+    border-radius: 500px;
+    color: var(--color-primary);
+    font-family: var(--font-secondary);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .ambali-service-card__from {
+    margin-bottom: 2px;
+    color: var(--color-gray);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .main-price {
+    color: var(--color-heading);
+    font-family: var(--font-primary);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .ambali-service-card__desc {
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .ambali-services-pricing__note {
+    max-width: 760px;
+    margin: 40px auto 0;
+    color: var(--color-gray);
+    font-size: 15px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 575px) {
+  .ambali-services-pricing .ambali-service-card__title {
+    font-size: 22px;
+  }
+}
+
+// ===========================================================================
+// Mobile & tablet refinements. Each rule is scoped to one section and sits
+// inside a max-width query, so desktop rendering is unchanged.
+// Breakpoints follow Bootstrap/the template: 991px (lg), 767px (md), 575px (sm).
+// ===========================================================================
+
+// Mobile menu (shown below xl): ~45px tap targets instead of 25px, same rhythm.
+.mobile-menu-onepage {
+  .tmp-mainmenu li {
+    padding: 0;
+
+    a {
+      padding: 10px 0;
+    }
+  }
+
+  // Short screens (e.g. landscape phones): let the panel scroll.
+  .inner {
+    overflow-y: auto;
+  }
+}
+
+
+@media (max-width: 767px) {
+  // About: the "years" card was ~260px tall for two lines.
+  .about-us-left-content-wrap .years-of-experience-card {
+    padding: 28px 24px;
+
+    .card-title {
+      font-size: 52px;
+      line-height: 1.1;
+    }
+
+    .card-para {
+      font-size: 22px;
+      line-height: 1.3;
+    }
+  }
+
+  // Counters: 2×2 grid (see Facts.tsx) with tighter gutters and cards.
+  .counter-funfacts-area {
+    .row.g-5 {
+      --bs-gutter-x: 1rem;
+      --bs-gutter-y: 1rem;
+    }
+
+    .counter-card {
+      padding: 22px 10px;
+
+      .counter-title {
+        font-size: 38px;
+        line-height: 46px;
+      }
+
+      .counter-para {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  // Skills: the facts section's bottom gap already separates the panel, so
+  // the template's extra 70px top margin only added empty space.
+  .my-skill-area-style-two.mt--70 {
+    margin-top: 0 !important;
+  }
+
+  .my-skill-area-style-two .tpm-custom-box-bg {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+
+@media (max-width: 575px) {
+  // Skills: compact icon-left cards instead of tall centred ones.
+  .my-skill-card-style-two .my-skill-card {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 2px;
+    padding: 18px 20px;
+    text-align: left;
+
+    .card-icon {
+      grid-row: span 2;
+      width: 52px;
+      height: 52px;
+    }
+
+    .card-title {
+      margin-top: 0;
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    .card-para {
+      margin-top: 0;
+      text-align: left;
+    }
+  }
+
+  // The template spaces these columns 30px apart; 14px suits the compact cards.
+  .my-skill-card-style-two > [class*="col-"] {
+    margin-top: 14px;
+  }
+
+  // Portfolio filters: keep the four pills on one row on phones.
+  .latest-portfolio-tabs-area .nav {
+    gap: 8px;
+
+    .nav-link {
+      padding: 6px 14px;
+      font-size: 15px;
+    }
+  }
+
+  // Services & pricing cards: less padding, slightly smaller price.
+  .ambali-services-pricing {
+    .ambali-service-card {
+      padding: 24px 20px;
+    }
+
+    .main-price {
+      font-size: 40px;
+    }
+
+    .ambali-service-card .check-box {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  }
+
+  // Project detail: technologies in two columns rather than seven rows.
+  .check-box-wrap.ambali-tech-list ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Experience timeline (Education & Experience section). Keeps the template's
+// .experience-content typography; adds a thin timeline, date pills, a card
+// for independent work and compact links to its projects.
+// ---------------------------------------------------------------------------
+.experiences-wrap-left-content .ambali-timeline {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 30px;
+  list-style: none;
+
+  // The rail
+  &::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .ambali-timeline__item {
+    position: relative;
+    margin: 0 0 36px;
+    padding: 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .ambali-timeline__dot {
+    position: absolute;
+    left: -30px;
+    top: 8px;
+    width: 13px;
+    height: 13px;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    background: var(--color-secondary);
+  }
+
+  // Current employment: filled marker.
+  .ambali-timeline__item--employment .ambali-timeline__dot {
+    background: var(--color-primary);
+  }
+
+  .ambali-timeline__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 16px;
+  }
+
+  .ambali-timeline__period {
+    flex-shrink: 0;
+    padding: 2px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 500px;
+    color: var(--color-gray);
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    line-height: 24px;
+    white-space: nowrap;
+  }
+
+  .experience-content .ex-para {
+    margin-top: 10px;
+    margin-bottom: 0;
+    line-height: 28px;
+  }
+
+  // Independent work sits apart from roles: a quiet card around the entry.
+  .ambali-timeline__item--independent {
+    padding: 22px 22px 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    background: var(--color-gray-2);
+
+    .ambali-timeline__dot {
+      top: 30px;
+    }
+  }
+}
+
+.ambali-exp-projects {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.ambali-exp-project {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-secondary);
+  color: var(--color-heading);
+  transition: border-color 0.3s ease;
+
+  i {
+    flex-shrink: 0;
+    color: var(--color-gray);
+    font-size: 14px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-primary);
+    color: var(--color-heading);
+
+    i {
+      color: var(--color-primary);
+      transform: translateX(3px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.ambali-exp-project__text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+  min-width: 0;
+}
+
+.ambali-exp-project__name {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.ambali-exp-project__summary {
+  color: var(--color-gray);
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@media (max-width: 575px) {
+  .experiences-wrap-left-content .ambali-timeline {
+    padding-left: 24px;
+
+    &::before {
+      left: 5px;
+    }
+
+    .ambali-timeline__dot {
+      left: -24px;
+      width: 11px;
+      height: 11px;
+    }
+
+    .ambali-timeline__item {
+      margin-bottom: 28px;
+    }
+
+    .ambali-timeline__item--independent {
+      padding: 18px 16px 20px;
+
+      .ambali-timeline__dot {
+        top: 26px;
+      }
+    }
+
+    .experience-content .ex-name {
+      font-size: 22px;
+      line-height: 28px;
+    }
+
+    // Date always on its own line under the organisation on phones.
+    .ambali-timeline__head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  // On narrow screens the summary sits under the name.
+  .ambali-exp-project__text {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// "What I Provide For You" capability cards. Keeps the template's
+// about-us-card (icon, title, text); adds a footer with technology labels and
+// links to the projects that demonstrate each capability. Cards in a row
+// share one height, with the footer aligned to the bottom.
+// ---------------------------------------------------------------------------
+.about-us-section-card .ambali-capability-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: rgba(255, 1, 79, 0.3);
+  }
+
+  .card-head {
+    align-items: center;
+  }
+
+  .card-para {
+    margin-bottom: 0;
+  }
+}
+
+.ambali-capability-card__footer {
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.ambali-tech-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+    padding: 3px 11px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-body);
+    font-family: var(--font-secondary);
+    font-size: 13px;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+}
+
+.ambali-capability-card__projects {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 14px;
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  line-height: 20px;
+
+  a {
+    // ~32px tall tap target without looking like a button.
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--color-heading);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 1, 79, 0.45);
+    text-underline-offset: 4px;
+    transition: color 0.3s ease, text-decoration-color 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--color-primary);
+      text-decoration-color: var(--color-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+}
+
+.ambali-capability-card__projects-label {
+  color: var(--color-gray);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 575px) {
+  #service .about-us-section-card.row {
+    --bs-gutter-y: 1.25rem;
+  }
+
+  .about-us-section-card .ambali-capability-card {
+    padding: 22px 20px;
+  }
+
+  .ambali-capability-card__footer {
+    padding-top: 18px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Education & Experience layout: one centred content column (no portrait).
+// On desktop, the education card and every timeline entry share a two-column
+// rhythm — a narrow meta column (label, organisation, date, role) and a body
+// column (description, project links) whose left edges line up.
+// ---------------------------------------------------------------------------
+.education-experience .ambali-edu-exp {
+  max-width: 1040px;
+  margin: 0 auto;
+
+  .experiences-wrapper {
+    margin-top: 64px;
+  }
+
+  // The template pads this column for a two-column layout; here it is full width.
+  .experiences-wrap-left-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .education-experience .ambali-edu-exp {
+    // Grid widths are chosen so every body column starts 348px from the
+    // content edge (card padding + meta column + 48px gap).
+    .ambali-edu-card {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      column-gap: 48px;
+      align-items: center;
+      padding: 36px 40px;
+
+      .edu-para {
+        margin-top: 0;
+      }
+    }
+
+    .ambali-timeline .ambali-timeline__item {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      column-gap: 48px;
+      margin-bottom: 48px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // Organisation above its date in the meta column.
+    .ambali-timeline__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .ambali-timeline__meta .ex-title {
+      margin-top: 8px;
+    }
+
+    // First line of the description aligns with the organisation name.
+    .ambali-timeline__body {
+      padding-top: 28px;
+    }
+
+    .experience-content .ex-para {
+      margin-top: 0;
+    }
+
+    // 30px rail + 24px padding + 266px + 28px gap = body at 348px, like the
+    // entries above, with room for "Independent Software Developer" on one line.
+    .ambali-timeline .ambali-timeline__item.ambali-timeline__item--independent {
+      grid-template-columns: 266px minmax(0, 1fr);
+      column-gap: 28px;
+      padding: 28px 30px 28px 24px;
+
+      .ambali-timeline__dot {
+        top: 36px;
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Writing: blog cards (homepage + /writing) and the article page.
+// ---------------------------------------------------------------------------
+.ambali-blog-card {
+  .ambali-blog-card__image {
+    aspect-ratio: 1640 / 1176;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .ambali-blog-card__excerpt {
+    display: -webkit-box;
+    margin: 10px 0 22px;
+    overflow: hidden;
+    color: var(--color-gray);
+    font-family: var(--font-secondary);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+}
+
+$ambali-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+.ambali-article {
+  .ambali-article__header {
+    padding-top: 160px;
+
+    @media (max-width: 991px) {
+      padding-top: 130px;
+    }
+  }
+
+  .ambali-article__intro,
+  .ambali-article__content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .ambali-article__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-gray);
+    font-family: var(--font-secondary);
+    font-size: 14px;
+
+    a {
+      color: var(--color-primary);
+    }
+
+    i {
+      font-size: 11px;
+    }
+  }
+
+  .ambali-article__title {
+    margin: 16px 0 20px;
+    color: var(--color-heading);
+    font-family: var(--font-primary);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .ambali-article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    color: var(--color-gray);
+    font-family: var(--font-secondary);
+    font-size: 15px;
+  }
+
+  .ambali-article__author {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-heading);
+  }
+
+  .ambali-article__avatar {
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+
+  .ambali-article__cover {
+    max-width: 1040px;
+    margin: 40px auto 56px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
+  }
+
+  .ambali-article__content {
+    padding-bottom: 110px;
+  }
+}
+
+.ambali-article__body {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-secondary);
+
+  p,
+  li {
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  p {
+    margin: 0 0 24px;
+  }
+
+  h2,
+  h3 {
+    color: var(--color-heading);
+    font-family: var(--font-primary);
+    font-weight: 700;
+    scroll-margin-top: 110px;
+  }
+
+  h2 {
+    margin: 56px 0 18px;
+    font-size: 32px;
+    line-height: 1.25;
+  }
+
+  h3 {
+    margin: 36px 0 12px;
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 28px;
+    padding-left: 22px;
+
+    li {
+      margin: 0 0 12px;
+      padding-left: 4px;
+
+      &::marker {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  strong {
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  code {
+    padding: 0.12em 0.4em;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.07);
+    color: #ffd2dd;
+    font-family: $ambali-mono;
+    font-size: 0.86em;
+  }
+
+  .ambali-article__code {
+    margin: 32px 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: #0c0c10;
+
+    figcaption {
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-gray);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px 20px;
+      overflow-x: auto;
+      background: transparent;
+      tab-size: 2;
+
+      &:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: -2px;
+      }
+    }
+
+    pre code {
+      padding: 0;
+      background: none;
+      color: #e8e8ee;
+      font-size: 14.5px;
+      line-height: 1.65;
+      white-space: pre;
+    }
+  }
+}
+
+.ambali-article__footer {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+
+  .ambali-article__byline {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    p {
+      margin: 0;
+      color: var(--color-gray);
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--color-heading);
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 1, 79, 0.5);
+      text-underline-offset: 3px;
+    }
+  }
+
+  .ambali-article__related {
+    margin: 40px 0;
+
+    h2 {
+      margin-bottom: 16px;
+      color: var(--color-heading);
+      font-family: var(--font-primary);
+      font-size: 22px;
+    }
+
+    ul {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      margin: 0;
+    }
+
+    a {
+      display: block;
+      padding: 16px 18px;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      transition: border-color 0.3s ease;
+
+      &:hover,
+      &:focus-visible {
+        border-color: var(--color-primary);
+      }
+    }
+  }
+
+  .ambali-article__related-category {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--color-primary);
+    font-family: var(--font-secondary);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ambali-article__related-title {
+    display: block;
+    color: var(--color-heading);
+    font-family: var(--font-primary);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 575px) {
+  .ambali-article__body {
+    p,
+    li {
+      font-size: 17px;
+    }
+
+    h2 {
+      margin-top: 44px;
+      font-size: 26px;
+    }
+
+    h3 {
+      font-size: 21px;
+    }
+
+    .ambali-article__code pre code {
+      font-size: 13px;
+    }
+  }
+
+  .ambali-article .ambali-article__cover {
+    margin: 28px auto 40px;
+
+    img {
+      border-radius: 14px;
+    }
+  }
+}

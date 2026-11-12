@@ -2,36 +2,176 @@ import type { Project } from "@/types";
 
 export const projects: Project[] = [
   {
-    title: "Mustapha Ambali",
-    slug: "portfolio",
-    category: "Developer Portfolio",
+    title: "Sabimate",
+    slug: "sabimate",
+    disciplines: ["Mobile", "Backend"],
+    category: "AI Study Abroad Assistant",
     description:
-      "A modern portfolio showcasing my work as a software developer, built with Next.js, TypeScript, and a strong focus on performance, accessibility, and clean design.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    status: "Live",
+      "An intelligent study-abroad companion helping students navigate international education opportunities through personalized AI assistance.",
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "OpenAI API",
+    ],
+    status: "In active development",
     featured: true,
-    homepageFeatured: true,
     year: 2026,
-    image: "/images/DevPort1.jpg",
+    image: "/images/Sabimate1.png",
+    imageAlt: "Sabimate logo with the tagline \"Know before you go\" on a dark teal background",
     highlight:
-      "Used CSS masking instead of a bounding box so the hero portrait blends directly into the page background rather than sitting in a card.",
+      "Built the AI agent on a dedicated backend with persistent student context, keeping research behind feature flags and Redis-enforced quotas.",
     caseStudy: [
       {
         heading: "Overview",
         paragraphs: [
-          "This site is where I present my work — built with Next.js on the App Router, styled with Tailwind CSS, and deployed on Vercel. The goal was a portfolio that felt premium and considered rather than a generic template: consistent spacing and typography, a design system built around my own brand colors, and content that stays honest about what's finished versus still in progress.",
+          "Sabimate is an AI-powered education guidance platform designed to help students make better-informed decisions about studying abroad. Choosing where and what to study means weighing admission requirements, countries, costs, scholarships and eligibility at the same time — and that information is spread across dozens of sources.",
+          "Instead of sending students through a maze of pages, Sabimate is built around a conversation. A student describes their academic background, budget and preferred destinations once during onboarding, and the assistant uses that profile to give answers that fit their situation rather than generic advice.",
         ],
       },
       {
-        heading: "Engineering",
+        heading: "What I built",
+        bullets: [
+          "Flutter mobile app for Android and iOS, using Riverpod and go_router",
+          "Email and password accounts with email verification and password reset",
+          "Multi-step student onboarding: education, grades and grading scale, language tests, preferred countries, budget range, funding and scholarship preferences",
+          "Chat with streamed assistant replies (server-sent events), rendered as markdown with follow-up suggestions",
+          "Persistent conversations, messages and assistant generations",
+          "An assistant pipeline that assembles each reply from the student's profile and conversation history",
+          "A research engine that plans searches, reads official pages and returns cited sources",
+          "Source and citation display in the chat interface",
+          "FastAPI backend with PostgreSQL, Alembic migrations and Redis",
+          "Containerised development environment and automated CI",
+        ],
+      },
+      {
+        heading: "The problem",
         paragraphs: [
-          "The contact form is backed by a Resend-powered API route with server-side validation, a honeypot field, and IP-based rate limiting, rather than a form that just looks functional. Theming (light, dark, system) is handled with next-themes, and motion throughout uses Framer Motion, kept deliberately subtle — fades and small lifts rather than anything flashy.",
+          "International education decisions involve more than finding a university. Students need to know whether their academic profile is competitive, which countries match their preferences, what they should budget for and which opportunities are worth pursuing.",
+          "The answers exist, but they're scattered across university websites, scholarship portals and government pages, and each assumes you already know what to look for. Sabimate brings that into one assistant that understands the student's context and helps them work through their options in plain conversation.",
+        ],
+      },
+      {
+        heading: "Engineering and architecture",
+        paragraphs: [
+          "The mobile app is built in Flutter and talks to a Python backend written with FastAPI. The backend owns everything that matters for trust and continuity: accounts and sessions, student profiles and preferences, conversations and messages, and the orchestration of every assistant reply. PostgreSQL stores that state through async SQLAlchemy, with schema changes managed by Alembic migrations, and Redis backs the rate limits and usage quotas.",
+          "All model calls go through a single provider adapter built on the OpenAI Responses API, with separate fast, standard and reasoning tiers configured per environment. Application code never calls a model directly, which keeps prompts, retries and timeouts in one place and makes the provider replaceable.",
+          "Normal conversational replies and research are deliberately separate paths. When research is enabled, a planner on the fast tier decides what to search for, the search runs through OpenAI's hosted web search, and official pages can be read through a hardened fetcher before the evidence is screened. Citations are validated before they reach the student, so a source only appears if it actually supports the answer.",
+          "The backend is organised into modules with enforced layer boundaries (checked with import-linter), strict type checking with mypy, and roughly 240 test files covering units and integration against real PostgreSQL and Redis, with fakes standing in for the model and search providers.",
+        ],
+      },
+      {
+        heading: "Challenges",
+        paragraphs: [
+          "Personalisation is only useful if the assistant reliably uses the student's actual profile. Assembling the right context for every reply — profile, preferences and recent conversation — without bloating each request took careful design of the context-assembly step.",
+          "Research is valuable but expensive and harder to keep accurate, so it needed its own controls: a daily research quota enforced atomically in Redis, idempotent per-search accounting, and validation that every cited source genuinely backs what the assistant says. Reply volume is rate-limited per user as well, and the limiter fails closed rather than letting traffic through if Redis is unavailable.",
+          "Streaming replies over server-sent events while also persisting each message and generation meant the backend and the Flutter client had to agree precisely on message state, including what happens when a stream is interrupted.",
+        ],
+      },
+      {
+        heading: "Technical decisions",
+        paragraphs: [
+          "Flutter gives one codebase for Android and iOS while the product is still taking shape. FastAPI provides a typed, structured Python backend that fits naturally alongside the AI tooling, and PostgreSQL holds user and conversation data that has to persist reliably.",
+          "Model access lives behind one dedicated provider adapter rather than being scattered through the codebase, and every assistant and research capability sits behind its own feature flag. That lets each capability be switched on independently once it has been tested, while keeping cost and scope under control.",
+          "Presentation, business logic and AI orchestration are kept in clearly separate layers, so new capabilities can be added to the assistant without reworking the app or the data model.",
         ],
       },
       {
         heading: "Current status",
         paragraphs: [
-          "Live and actively maintained. I keep refining sections as my projects and experience evolve.",
+          "Sabimate is in active development. Accounts, email verification, the full student onboarding, persisted conversations with streamed replies and source display are built end to end, and the backend is deployed with automated migrations.",
+          "The assistant and research engine are built and tested but remain behind feature flags while they're configured and evaluated for production, so they aren't publicly available yet. Saved items, billing, social sign-in and notifications are still to come, and the curated programme and scholarship data that will feed personalised recommendations is being assembled. Sabimate doesn't claim partnerships with universities or guarantee admissions or scholarships.",
+        ],
+      },
+    ],
+  },
+  {
+    title: "FinAssist",
+    slug: "finassist",
+    disciplines: ["Mobile", "Backend"],
+    category: "AI Financial Assistant",
+    description:
+      "Making financial decisions easier to understand through intelligent assistance and practical financial tools.",
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Python",
+      "Flask",
+      "REST API",
+      "AI integration",
+      "Riverpod",
+      "Firebase Cloud Messaging",
+    ],
+    status: "In development",
+    featured: true,
+    year: 2026,
+    image: "/images/FinAssist1.png",
+    imageAlt: "FinAssist logo on a dark green background",
+    highlight:
+      "Kept the numbers deterministic: the backend calculates, and the assistant receives the result as structured context to explain it rather than recompute it.",
+    caseStudy: [
+      {
+        heading: "Overview",
+        paragraphs: [
+          "FinAssist is an AI-powered financial assistant that pairs practical financial tools with a conversational assistant. Instead of leaving people to interpret a number on their own, it lets them run a calculation and then ask what that result actually means for them.",
+          "The app combines an AI chat experience, a backend-calculated currency converter and a tracker for recurring subscriptions. The central idea is simple: reliable calculations come from code, and the AI's job is to explain them clearly and answer follow-up questions.",
+        ],
+      },
+      {
+        heading: "What I built",
+        bullets: [
+          "Flutter mobile app using Riverpod for state management",
+          "Account registration and sign-in with JWT access and refresh tokens",
+          "AI chat assistant powered through a Python Flask backend",
+          "Server-side conversation history with a secure local cache on the device",
+          "Attaching documents and images to a chat message",
+          "Currency converter calculated on the backend, with a supported-currency list",
+          "\"Ask FinAssist\": handing a tool result into chat as structured context",
+          "Subscription tracker: add, edit and remove subscriptions with renewal schedules and totals",
+          "Push notifications with Firebase Cloud Messaging",
+          "Profile and preference management",
+        ],
+      },
+      {
+        heading: "The problem",
+        paragraphs: [
+          "Plenty of apps give you a calculator. Far fewer help you understand the answer. A conversion rate or a monthly total is just a figure until you know what it implies for your plans, and most people are left to work that out alone.",
+          "FinAssist aims to close that gap by keeping the tools and the explanation in one place, so someone can calculate, understand and ask a follow-up question without switching between disconnected apps.",
+        ],
+      },
+      {
+        heading: "Engineering and architecture",
+        paragraphs: [
+          "The Flutter app handles the interface: chat, the tools, the subscription tracker, input forms and result cards. It talks to a Python Flask backend over a REST API, behind a repository layer so screens depend on interfaces rather than on HTTP details.",
+          "Financial figures are never produced by the AI. The currency converter sends explicit inputs to the backend, the backend performs the conversion using an external exchange-rate source, and the app displays exactly what the API returns, including which source supplied the rate.",
+          "When a user taps \"Ask FinAssist\" on a result, the app packages it as a versioned, structured tool context — the tool name, the inputs and the backend's result — and attaches it to the existing conversation. The assistant receives the user's question together with that context, so it can explain the figures the tool produced and answer follow-ups instead of calculating its own numbers.",
+          "Conversations are stored on the server and cached locally in secure storage, documents can be uploaded and attached to a message, and push notifications are delivered through Firebase Cloud Messaging. The app is covered by around 380 tests, including the hand-off from tools into chat.",
+        ],
+      },
+      {
+        heading: "Challenges",
+        paragraphs: [
+          "Passing a calculation into chat had to be precise. The context needed a stable, versioned shape that both sides understand, and it had to attach to the user's current conversation rather than starting a separate chatbot for every tool.",
+          "Keeping the app's inputs consistent with what the backend calculates — formats, currencies and validation — mattered more than in a typical form, because the explanation is only as trustworthy as the figure behind it.",
+          "Designing a simple interface around several features (chat, tools and tracking) without making any of them feel bolted on took a few iterations, and led to trimming the set of tools to the ones that were genuinely ready.",
+        ],
+      },
+      {
+        heading: "Technical decisions",
+        paragraphs: [
+          "Calculations run as deterministic backend services with explicit inputs instead of relying on a language model for arithmetic, which keeps the numbers predictable and testable. The AI is reserved for what it's good at: explaining results in plain language.",
+          "Rather than building a separate chatbot for each tool, every tool hands its result into the same conversational experience through a shared, structured context. Flutter keeps a single codebase for Android and iOS, and Flask keeps the backend lightweight while the product evolves.",
+        ],
+      },
+      {
+        heading: "Current status",
+        paragraphs: [
+          "FinAssist is in development. Chat with conversation history, document attachments, the currency converter with \"Ask FinAssist\", the subscription tracker and push notifications are built in the app.",
+          "Loan, savings, affordability, debt-payoff and investment-growth calculators were prototyped and are being reworked before they return, and a financial dashboard and document analysis are still planned. FinAssist is not a bank, investment platform or licensed financial adviser, and its projections and explanations are not financial advice.",
         ],
       },
     ],
@@ -39,6 +179,7 @@ export const projects: Project[] = [
   {
     title: "Fihone",
     slug: "fihone",
+    disciplines: ["Mobile", "Backend"],
     category: "Mobile Security App",
     description:
       "A mobile security platform designed to protect devices through secure authentication, activity monitoring, and intelligent device management.",
@@ -105,8 +246,45 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: "Mustapha Ambali",
+    slug: "portfolio",
+    disciplines: ["Web"],
+    category: "Developer Portfolio",
+    description:
+      "A modern portfolio showcasing my work as a software developer, built with Next.js, TypeScript, and a strong focus on performance, accessibility, and clean design.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    status: "Live",
+    featured: true,
+    homepageFeatured: true,
+    year: 2026,
+    image: "/images/DevPort1.jpg",
+    highlight:
+      "Used CSS masking instead of a bounding box so the hero portrait blends directly into the page background rather than sitting in a card.",
+    caseStudy: [
+      {
+        heading: "Overview",
+        paragraphs: [
+          "This site is where I present my work — built with Next.js on the App Router, styled with Tailwind CSS, and deployed on Vercel. The goal was a portfolio that felt premium and considered rather than a generic template: consistent spacing and typography, a design system built around my own brand colors, and content that stays honest about what's finished versus still in progress.",
+        ],
+      },
+      {
+        heading: "Engineering",
+        paragraphs: [
+          "The contact form is backed by a Resend-powered API route with server-side validation, a honeypot field, and IP-based rate limiting, rather than a form that just looks functional. Theming (light, dark, system) is handled with next-themes, and motion throughout uses Framer Motion, kept deliberately subtle — fades and small lifts rather than anything flashy.",
+        ],
+      },
+      {
+        heading: "Current status",
+        paragraphs: [
+          "Live and actively maintained. I keep refining sections as my projects and experience evolve.",
+        ],
+      },
+    ],
+  },
+  {
     title: "Regiforte",
     slug: "regiforte",
+    disciplines: ["Mobile", "Backend"],
     category: "Academy Management App",
     description:
       "A mobile platform that simplifies student presence, attendance, and academy operations through QR technology and an offline-first approach.",
@@ -254,6 +432,7 @@ export const projects: Project[] = [
   {
     title: "Wallet API",
     slug: "financial-wallet-api",
+    disciplines: ["Backend"],
     category: "Backend Service",
     description:
       "A backend project for handling users, wallets, transactions, transfers, authentication, and account management. I built it as a way to work through the backend concerns that appear once you move beyond simple CRUD APIs.",
@@ -323,6 +502,7 @@ export const projects: Project[] = [
   {
     title: "Go Backend Project",
     slug: "go-backend-project",
+    disciplines: ["Backend"],
     category: "Backend · REST API",
     description:
       "A future backend project exploring Go, after building REST APIs in Python and Flask.",

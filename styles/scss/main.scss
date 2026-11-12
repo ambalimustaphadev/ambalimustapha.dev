@@ -1,0 +1,12 @@
+@use "sass:meta";
+
+// Vendor CSS (Font Awesome, odometer, animate, Bootstrap) is imported from
+// app/layout.tsx in the template's original order — Sass would otherwise emit
+// plain-CSS @import rules for .css files instead of bundling them.
+
+// Reeni template styles
+@include meta.load-css("style.scss");
+@include meta.load-css("custom.scss");
+
+// Portfolio-specific additions (kept separate from the template's own files)
+@include meta.load-css("ambali.scss");

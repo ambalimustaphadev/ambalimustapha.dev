@@ -1,40 +1,35 @@
-import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
-import { Skills } from "@/components/sections/Skills";
-import { Experience } from "@/components/sections/Experience";
-import { Education } from "@/components/sections/Education";
-import { Writing } from "@/components/sections/Writing";
-import { Contact } from "@/components/sections/Contact";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import type { Metadata } from "next";
+import { Hero } from "@/components/home/Hero";
+import { Services } from "@/components/home/Services";
+import { About } from "@/components/home/About";
+import { Facts } from "@/components/home/Facts";
+import { Skills } from "@/components/home/Skills";
+import { EducationExperience } from "@/components/home/EducationExperience";
+import { Portfolio } from "@/components/home/Portfolio";
+import { Pricing } from "@/components/home/Pricing";
+import { Contact } from "@/components/home/Contact";
+import { LatestWriting } from "@/components/home/LatestWriting";
+import { projects } from "@/data/projects";
 
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+// Demo 17 section order (app/(homes)/index-17/page.jsx), with the template's
+// Education & Experience section added after Skills.
 export default function HomePage() {
   return (
     <>
-      <ScrollReveal intensity="strong">
-        <Hero />
-      </ScrollReveal>
-      <ScrollReveal intensity="strong">
-        <FeaturedProjects />
-      </ScrollReveal>
-      <ScrollReveal intensity="strong">
-        <About />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Experience />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Skills />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Education />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Writing />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Contact />
-      </ScrollReveal>
+      <Hero />
+      <Services />
+      <About parentClass="about-us-area tmp-section-gapBottom" />
+      <Facts />
+      <Skills />
+      <EducationExperience />
+      <Portfolio projects={projects} />
+      <Pricing parentClass="our-price-plan-area tmp-section-gapBottom" />
+      <Contact parentClass="get-in-touch-area" />
+      <LatestWriting parentClass="blog-and-news-are tmp-section-gapTop" />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
 import { projects } from "@/data/projects";
+import { posts } from "@/data/writing";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = ["", "/about", "/projects", "/writing", "/contact"].map(
@@ -15,5 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 
-  return [...staticRoutes, ...projectRoutes];
+  const postRoutes = posts.map((post) => ({
+    url: `${SITE_URL}/writing/${post.slug}`,
+    lastModified: new Date(`${post.date}T00:00:00Z`),
+  }));
+
+  return [...staticRoutes, ...projectRoutes, ...postRoutes];
 }

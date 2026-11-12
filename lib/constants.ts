@@ -6,13 +6,17 @@ export const SITE_URL = "https://ambalimustapha.dev";
 export const SITE_DESCRIPTION =
   "Mustapha Ambali is a software developer building mobile applications and backend systems with Flutter, Python, Flask, and REST APIs.";
 
+// Mirrors the Demo 17 one-page menu. On "/" each item scrolls to its section
+// (with scroll-spy); on other pages it is a normal link to `href`.
 export const NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Skills", href: "/#tools" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Contact", href: "/contact" },
+  { label: "Home", href: "/", sectionId: "home" },
+  { label: "About", href: "/about", sectionId: "about" },
+  { label: "Services", href: "/#service", sectionId: "service" },
+  { label: "Portfolio", href: "/projects", sectionId: "portfolio" },
+  { label: "Resume", href: "/about#resume", sectionId: "resume" },
+  { label: "Pricing", href: "/#pricing", sectionId: "pricing" },
+  { label: "Writing", href: "/writing", sectionId: "blog" },
+  { label: "Contact", href: "/contact", sectionId: "contacts" },
 ];
 
 // hello@ambalimustapha.dev forwards (via Porkbun) to the private inbox behind it.

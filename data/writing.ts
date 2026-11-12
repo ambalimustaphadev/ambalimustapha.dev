@@ -1,10 +1,58 @@
 import type { WritingPost } from "@/types";
+import { content as flutterArticle } from "@/data/articles/building-flutter-apps-people-can-depend-on";
+import { content as agentsArticle } from "@/data/articles/beyond-the-chatbot-engineering-ai-agents";
+import { content as engineeringArticle } from "@/data/articles/writing-code-is-not-the-same-as-building-software";
 
-// No posts published yet. Adding entries here makes them show up on the
-// Writing section and /writing page automatically — but each post also needs
-// an app/writing/[slug]/page.tsx route to actually render, which doesn't
-// exist yet since there's no content to build it against.
-export const posts: WritingPost[] = [];
+// Published articles, newest first. Each post renders at /writing/[slug] and
+// is picked up by the homepage "Latest Blog" section, /writing and the sitemap.
+export const posts: WritingPost[] = [
+  {
+    title:
+      "Building a Flutter App Is Easy. Building One People Can Depend On Is the Real Challenge.",
+    slug: "building-flutter-apps-people-can-depend-on",
+    excerpt:
+      "A polished Flutter screen proves you can build an interface. Whether people can depend on the app is decided elsewhere — in state, failures, sessions, connectivity and everything that happens after the demo.",
+    date: "2026-11-12",
+    category: "Mobile Development",
+    cover: {
+      src: "/images/blog/flutter-mobile-engineering.webp",
+      alt: "Illustration of a smartphone showing a mobile app interface, surrounded by connected interface panels on a dark background with pink accent light",
+      width: 1640,
+      height: 1176,
+    },
+    content: flutterArticle,
+  },
+  {
+    title: "Beyond the Chatbot: What It Really Takes to Engineer an AI Agent",
+    slug: "beyond-the-chatbot-engineering-ai-agents",
+    excerpt:
+      "Calling a language model takes a few lines of code. Building something that uses one reliably — with context, tools, validation and limits — is an engineering problem. Here's how I approach it.",
+    date: "2026-11-12",
+    category: "AI & Agentic Engineering",
+    cover: {
+      src: "/images/blog/ai-agent-engineering.webp",
+      alt: "Illustration of a central processing core connected by lines to tool and data nodes, representing an AI agent orchestrating tools, on a dark background with pink accents",
+      width: 1640,
+      height: 1176,
+    },
+    content: agentsArticle,
+  },
+  {
+    title: "Writing Code Is Not the Same as Building Software",
+    slug: "writing-code-is-not-the-same-as-building-software",
+    excerpt:
+      "Getting code to run is the start, not the finish. The difference between a programmer and an engineer shows up in the questions you ask before, during and long after the code compiles.",
+    date: "2026-11-12",
+    category: "Software Engineering",
+    cover: {
+      src: "/images/blog/software-engineering.webp",
+      alt: "Illustration of a developer workspace with a code editor, an architecture diagram and a terminal window on a dark background with pink accent light",
+      width: 1640,
+      height: 1176,
+    },
+    content: engineeringArticle,
+  },
+];
 
 export const FUTURE_TOPICS = [
   "Building a Flask REST API",
