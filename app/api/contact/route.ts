@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { CONTACT_EMAIL } from "@/lib/constants";
+import {
+  buildContactNotificationHtml,
+  buildContactNotificationText,
+} from "@/lib/email/contact-notification";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -151,6 +155,11 @@ export async function POST(request: Request) {
   const toAddress = process.env.CONTACT_TO_EMAIL || CONTACT_EMAIL;
 
   const resend = new Resend(apiKey);
+  const notification = {
+    name: trimmedName,
+    email: trimmedEmail,
+    message: trimmedMessage,
+  };
 
   try {
     const { error } = await resend.emails.send({
@@ -158,18 +167,9 @@ export async function POST(request: Request) {
       to: toAddress,
       replyTo: trimmedEmail,
       subject: `New message from your portfolio — ${trimmedName}`,
-      text: [
-        "New message from your portfolio",
-        "",
-        "Name:",
-        trimmedName,
-        "",
-        "Email:",
-        trimmedEmail,
-        "",
-        "Message:",
-        trimmedMessage,
-      ].join("\n"),
+      // All user input is HTML-escaped inside the template builder.
+      html: buildContactNotificationHtml(notification),
+      text: buildContactNotificationText(notification),
     });
 
     if (error) {
