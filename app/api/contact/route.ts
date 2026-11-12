@@ -146,7 +146,7 @@ export async function POST(request: Request) {
   // Sender must be a verified Resend domain/address. Falls back to Resend's
   // shared sandbox address until a custom domain is verified.
   const fromAddress = process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev";
-  // Recipient defaults to the site's public contact address (hello@ambalimustapha.dev),
+  // Recipient defaults to the site's public contact address (contact@ambalimustapha.dev),
   // overridable via env if ever needed.
   const toAddress = process.env.CONTACT_TO_EMAIL || CONTACT_EMAIL;
 

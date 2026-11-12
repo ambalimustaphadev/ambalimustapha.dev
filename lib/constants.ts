@@ -19,9 +19,9 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Contact", href: "/contact", sectionId: "contacts" },
 ];
 
-// hello@ambalimustapha.dev forwards (via Porkbun) to the private inbox behind it.
+// contact@ambalimustapha.dev forwards (via Porkbun) to the private inbox behind it.
 // The contact form sends here too — see app/api/contact/route.ts.
-export const CONTACT_EMAIL = "hello@ambalimustapha.dev";
+export const CONTACT_EMAIL = "contact@ambalimustapha.dev";
 
 export const LOCATION = "Nigeria";
 

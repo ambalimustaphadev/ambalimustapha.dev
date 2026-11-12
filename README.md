@@ -45,11 +45,11 @@ The contact form sends email via [Resend](https://resend.com). Copy
 - `CONTACT_FROM_EMAIL` — optional. Leave unset to use Resend's shared
   `onboarding@resend.dev` sandbox address, or set it once you've verified
   `ambalimustapha.dev` in Resend (e.g. `contact@ambalimustapha.dev`).
-- `CONTACT_TO_EMAIL` — optional. Defaults to `hello@ambalimustapha.dev`
+- `CONTACT_TO_EMAIL` — optional. Defaults to `contact@ambalimustapha.dev`
   (already set in `lib/constants.ts`); only set this if submissions should go
   somewhere else.
 
-Submissions are sent to `hello@ambalimustapha.dev`, which Porkbun forwards to
+Submissions are sent to `contact@ambalimustapha.dev`, which Porkbun forwards to
 the private Gmail address behind it — that Gmail address is never referenced
 anywhere in the codebase or on the public site. The visitor's own email is
 set as the message's Reply-To, so replying from Gmail goes straight back to
