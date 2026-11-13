@@ -8,13 +8,15 @@ export const SITE_DESCRIPTION =
 
 // Mirrors the Demo 17 one-page menu. On "/" each item scrolls to its section
 // (with scroll-spy); on other pages it is a normal link to `href`.
+// Keep this in the same order as the sections in app/page.tsx. Packages &
+// pricing (#pricing) live inside the Services section, so "/#pricing" still
+// works and that block highlights as "Services".
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/", sectionId: "home" },
   { label: "About", href: "/about", sectionId: "about" },
   { label: "Services", href: "/#service", sectionId: "service" },
   { label: "Portfolio", href: "/projects", sectionId: "portfolio" },
   { label: "Resume", href: "/about#resume", sectionId: "resume" },
-  { label: "Pricing", href: "/#pricing", sectionId: "pricing" },
   { label: "Writing", href: "/writing", sectionId: "blog" },
   { label: "Contact", href: "/contact", sectionId: "contacts" },
 ];

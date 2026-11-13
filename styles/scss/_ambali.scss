@@ -543,6 +543,33 @@ button.scrollToTop {
   }
 }
 
+// Packages block inside the homepage Services section: separated from the
+// capability cards by the theme's section rhythm (120 / 80 / 60px).
+.ambali-service-packages {
+  margin-top: 120px;
+
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    margin-top: 80px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    margin-top: 60px;
+  }
+
+  // Narrow card columns — four across (≥1400px, see ServicePackages.tsx) and
+  // two across on tablets (768–991px): slightly tighter padding and titles so
+  // "Development" next to the Featured badge and the CTA labels don't break.
+  @media (min-width: 1400px), (min-width: 768px) and (max-width: 991px) {
+    .ambali-service-card {
+      padding: 32px 24px;
+    }
+
+    .ambali-service-card__title {
+      font-size: 22px;
+    }
+  }
+}
+
 // ===========================================================================
 // Mobile & tablet refinements. Each rule is scoped to one section and sits
 // inside a max-width query, so desktop rendering is unchanged.

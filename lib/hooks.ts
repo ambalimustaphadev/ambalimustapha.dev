@@ -44,9 +44,12 @@ export function usePrefersReducedMotion() {
 }
 
 /**
- * Scroll-spy used by the Demo 17 one-page menu: returns the id of the section
- * currently crossing the middle of the viewport. `sectionIds` must be stable
- * (e.g. a module-level constant).
+ * Scroll-spy used by the Demo 17 one-page menu: returns the id of the lowest
+ * tracked section whose top has passed the middle of the viewport, so sections
+ * that aren't in the menu (facts, skills) keep the item above them
+ * highlighted in both scroll directions. At the very bottom of the page the
+ * last section wins, even if it is too short to reach the middle.
+ * `sectionIds` must be stable (e.g. a module-level constant).
  */
 export function useScrollSpy(sectionIds: readonly string[], enabled: boolean) {
   const [active, setActive] = useState<string | null>(null);
@@ -54,21 +57,37 @@ export function useScrollSpy(sectionIds: readonly string[], enabled: boolean) {
   useEffect(() => {
     if (!enabled) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-50% 0px" },
-    );
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const middle = window.innerHeight / 2;
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      let current: string | null = null;
+      let currentTop = -Infinity;
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (!element) continue;
+        const top = element.getBoundingClientRect().top;
+        if ((top <= middle || atBottom) && top > currentTop) {
+          current = id;
+          currentTop = top;
+        }
+      }
+      setActive(current);
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
 
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
   }, [sectionIds, enabled]);
 
   return enabled ? (active ?? sectionIds[0] ?? null) : null;
