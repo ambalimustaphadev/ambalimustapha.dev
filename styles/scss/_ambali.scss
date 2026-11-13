@@ -276,6 +276,20 @@ button.scrollToTop {
   }
 }
 
+// Phones: the text column spans the full width, so the face sits directly
+// behind the description. Dim the portrait a little further (same position),
+// and trim the template's 100px bottom padding so the About card follows the
+// call to action more closely.
+@media (max-width: 767px) {
+  .ambali-hero__photo {
+    opacity: 0.48;
+  }
+
+  .tmp-banner-one-area.style-2.ambali-hero {
+    padding-bottom: 76px;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Project images & placeholders (no stock photography)
 // ---------------------------------------------------------------------------
@@ -866,7 +880,7 @@ i.ambali-skill-icon {
 @media (max-width: 767px) {
   // About: the "years" card was ~260px tall for two lines.
   .about-us-left-content-wrap .years-of-experience-card {
-    padding: 28px 24px;
+    padding: 20px 24px;
 
     .card-title {
       font-size: 52px;

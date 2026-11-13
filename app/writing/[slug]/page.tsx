@@ -75,7 +75,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <div className="ambali-article__meta">
               <span className="ambali-article__author">
                 <Image
-                  src="/branding/ma-logo.png"
+                  src="/branding/ma-logo-dark.png"
                   alt=""
                   width={32}
                   height={32}
@@ -111,7 +111,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <footer className="ambali-article__footer">
             <div className="ambali-article__byline">
               <Image
-                src="/branding/ma-logo.png"
+                src="/branding/ma-logo-dark.png"
                 alt=""
                 width={48}
                 height={48}
