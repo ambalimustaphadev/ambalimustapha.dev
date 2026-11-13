@@ -86,10 +86,13 @@ export function ServicePackages({
             </div>
           ))}
         </div>
+        {/* Exclusions confirmed by Mustapha: hosting, ongoing maintenance,
+            app-store fees and third-party API costs aren't in starting prices. */}
         <p className="ambali-services-pricing__note tmp-scroll-trigger tmp-fade-in animation-order-3">
-          All prices are starting estimates. Final project costs depend on scope, technical
-          requirements and complexity. Get in touch to discuss your project and receive a
-          tailored quotation.
+          Starting prices cover a clearly scoped first version. The final quote depends on
+          features, integrations, design work and timeline, and is agreed before work begins.
+          Ongoing maintenance and third-party costs such as hosting, app-store fees and API
+          usage aren&apos;t included in the starting price.
         </p>
       </div>
     </section>

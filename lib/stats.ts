@@ -1,20 +1,11 @@
 import { CAREER_START_YEAR } from "@/lib/constants";
-import { getPrimaryProjects, projects } from "@/data/projects";
-import { skills } from "@/data/skills";
+import { getPrimaryProjects } from "@/data/projects";
 
-// Every number shown in the counters is derived from the site's own data, so
-// the figures stay accurate as projects and skills are updated.
+// Every figure shown on the site is derived from the site's own data, so the
+// numbers stay accurate and identical everywhere they appear.
 
-/** Years since CAREER_START_YEAR (the "years building" figure). */
-export const YEARS_BUILDING = Math.max(1, new Date().getFullYear() - CAREER_START_YEAR);
+/** The year I started building software (Pediforte training, 2024). */
+export const BUILDING_SINCE = CAREER_START_YEAR;
 
-/** Projects with real work behind them (excludes "Coming soon"). */
-export const PROJECTS_WITH_WORK = getPrimaryProjects().length;
-
-/** Distinct technologies listed in data/skills.ts. */
-export const TECHNOLOGY_COUNT = new Set(skills.flatMap((group) => group.items)).size;
-
-/** Apps currently "In active development". */
-export const APPS_IN_ACTIVE_DEVELOPMENT = projects.filter(
-  (project) => project.status === "In active development",
-).length;
+/** Projects with real work and a case study — exactly the cards on /projects. */
+export const DOCUMENTED_PROJECTS = getPrimaryProjects().length;

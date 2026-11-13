@@ -89,7 +89,7 @@ export function MobileMenu({ open, onClose, isActive, onNavigate }: MobileMenuPr
             ))}
           </ul>
           <div className="social-wrapper mt--40">
-            <span className="subtitle">find with me</span>
+            <span className="subtitle">Find me on</span>
             <SocialIcons />
           </div>
         </div>

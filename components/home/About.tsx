@@ -2,20 +2,22 @@ import Image from "next/image";
 import { Odometer } from "@/components/ui/Odometer";
 import { TmpButton } from "@/components/ui/TmpButton";
 import { RESUME_PATH } from "@/lib/constants";
-import { PROJECTS_WITH_WORK, YEARS_BUILDING } from "@/lib/stats";
+import { BUILDING_SINCE, DOCUMENTED_PROJECTS } from "@/lib/stats";
 
+// Two principles with distinct jobs: how the system is structured, and how it
+// behaves when things go wrong.
 const CARDS = [
   {
     icon: "/assets/images/about/logo-1.svg",
-    title: "Clean Architecture",
+    title: "Architecture That Lasts",
     description:
-      "Structured, maintainable code, with mobile clients and backend services kept cleanly separated.",
+      "Clear boundaries between the app, the API and the data, so new features slot in without rewrites.",
   },
   {
     icon: "/assets/images/about/logo-2.svg",
-    title: "Dependable Systems",
+    title: "Reliability by Default",
     description:
-      "Validation, error handling and security treated as core behaviour — software that solves real problems.",
+      "Validation, error handling, tests and offline behaviour designed in from the start, not patched in later.",
   },
 ];
 
@@ -35,10 +37,8 @@ export function About({
           <div className="col-lg-6">
             <div className="about-us-left-content-wrap bg-vactor-one">
               <div className="years-of-experience-card tmp-scroll-trigger tmp-fade-in animation-order-1">
-                <h2 className="counter card-title">
-                  <Odometer value={YEARS_BUILDING} /> +
-                </h2>
-                <p className="card-para">years building software</p>
+                <p className="counter card-title">Since {BUILDING_SINCE}</p>
+                <p className="card-para">building software</p>
               </div>
               <div className="design-card tmp-scroll-trigger tmp-fade-in animation-order-2">
                 <div className="design-card-img">
@@ -47,8 +47,11 @@ export function About({
                   </div>
                 </div>
                 <div className="card-info">
-                  <h3 className="card-title">Mobile &amp; Backend</h3>
-                  <p className="card-para">{PROJECTS_WITH_WORK} Projects</p>
+                  {/* A label, not a heading: it sits before the section's h2. */}
+                  <p className="card-title h3 ambali-design-card__title">Mobile &amp; Backend</p>
+                  <p className="card-para">
+                    <Odometer value={DOCUMENTED_PROJECTS} /> projects with case studies
+                  </p>
                 </div>
               </div>
             </div>
@@ -64,10 +67,10 @@ export function About({
                   &amp; Backend Systems
                 </h2>
                 <p className="description tmp-scroll-trigger tmp-fade-in animation-order-3">
-                  I&apos;m a software developer with a background in Mass Communication. I build
-                  practical mobile applications and backend systems with Flutter, Python, and
-                  PostgreSQL. I care about clean architecture, dependable systems, and software
-                  that solves real problems.
+                  I&apos;m a software developer who builds Flutter apps and the Python backends
+                  behind them — APIs, databases and the logic that has to be right. I came to
+                  engineering from Mass Communication, so I care as much about understanding the
+                  problem and explaining the solution as I do about the code.
                 </p>
               </div>
               <div className="about-us-section-card row g-5">

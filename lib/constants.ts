@@ -4,7 +4,7 @@ export const SITE_NAME = "Mustapha Ambali";
 export const SITE_ROLE = "Software Developer · Mobile & Backend";
 export const SITE_URL = "https://ambalimustapha.dev";
 export const SITE_DESCRIPTION =
-  "Mustapha Ambali is a software developer building mobile applications and backend systems with Flutter, Python, Flask, and REST APIs.";
+  "Mustapha Ambali is a software developer specialising in mobile and backend engineering: Flutter apps, Python APIs and PostgreSQL, with experience integrating AI into real products.";
 
 // Mirrors the Demo 17 one-page menu. On "/" each item scrolls to its section
 // (with scroll-spy); on other pages it is a normal link to `href`.

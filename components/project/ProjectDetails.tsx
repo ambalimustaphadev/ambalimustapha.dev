@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { ProjectThumb } from "@/components/ui/ProjectThumb";
 import { TmpButton } from "@/components/ui/TmpButton";
-import { projects } from "@/data/projects";
+import { getPrimaryProjects } from "@/data/projects";
 import type { Project } from "@/types";
 
 function CheckList({ items, className }: { items: string[]; className?: string }) {
@@ -22,15 +23,23 @@ function CheckList({ items, className }: { items: string[]; className?: string }
   );
 }
 
-function nextProject(current: Project) {
-  const index = projects.findIndex((project) => project.slug === current.slug);
-  if (index === -1 || projects.length < 2) return null;
-  return projects[(index + 1) % projects.length];
+/**
+ * Up to two listed projects that share a discipline (Mobile/Backend/Web) with
+ * the current one, falling back to other listed projects. Never includes
+ * unlisted entries such as planned projects.
+ */
+function relatedProjects(current: Project, limit = 2): Project[] {
+  const others = getPrimaryProjects().filter((project) => project.slug !== current.slug);
+  const shared = others.filter((project) =>
+    project.disciplines?.some((discipline) => current.disciplines?.includes(discipline)),
+  );
+  const rest = others.filter((project) => !shared.includes(project));
+  return [...shared, ...rest].slice(0, limit);
 }
 
 /** Reeni project details layout (components/projects/ProjectDetails.jsx) for a case study. */
 export function ProjectDetails({ project }: { project: Project }) {
-  const next = nextProject(project);
+  const related = relatedProjects(project);
 
   return (
     <div className="project-details-area-wrapper tmp-section-gap">
@@ -50,6 +59,7 @@ export function ProjectDetails({ project }: { project: Project }) {
             <div className="project-details-content-wrap">
               <h2 className="title">{project.title}</h2>
               <p className="docs">{project.description}</p>
+              <h3 className="mini-title">Tech stack</h3>
               <CheckList items={project.technologies} className="ambali-tech-list" />
 
               {project.caseStudy.map((section) => (
@@ -112,11 +122,30 @@ export function ProjectDetails({ project }: { project: Project }) {
             </aside>
           </div>
         </div>
+        {related.length > 0 && (
+          <section className="ambali-related-projects" aria-labelledby="related-projects-title">
+            <h2 className="mini-title" id="related-projects-title">
+              Related projects
+            </h2>
+            <ul className="ambali-exp-projects">
+              {related.map((item) => (
+                <li key={item.slug}>
+                  <Link className="ambali-exp-project" href={`/projects/${item.slug}`}>
+                    <span className="ambali-exp-project__text">
+                      <span className="ambali-exp-project__name">{item.title}</span>
+                      <span className="ambali-exp-project__summary">{item.category}</span>
+                    </span>
+                    <i className="fa-sharp fa-regular fa-arrow-right" aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         <div className="ambali-project-nav">
           <TmpButton href="/projects" className="btn-border">
             All Projects
           </TmpButton>
-          {next && <TmpButton href={`/projects/${next.slug}`}>{`Next: ${next.title}`}</TmpButton>}
         </div>
       </div>
     </div>

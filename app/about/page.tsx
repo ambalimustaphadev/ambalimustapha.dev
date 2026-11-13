@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { About } from "@/components/home/About";
+import { AboutStory } from "@/components/about/AboutStory";
 import { Services } from "@/components/home/Services";
 import { Skills } from "@/components/home/Skills";
 import { Facts } from "@/components/home/Facts";
@@ -11,7 +12,7 @@ import { Contact } from "@/components/home/Contact";
 export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
-    "Mustapha Ambali is a software developer with a background in Mass Communication, focused on mobile applications and backend systems.",
+    "How Mustapha Ambali moved from Mass Communication into software development, and how he builds mobile apps and backend systems today.",
   path: "/about",
 });
 
@@ -22,6 +23,7 @@ export default function AboutPage() {
     <div className="about inner">
       <Breadcrumb title="About Me" />
       <About parentClass="about-us-area tmp-section-gap" cta="cv" />
+      <AboutStory />
       <Services />
       <Facts />
       <Skills />

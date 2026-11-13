@@ -1,19 +1,6 @@
 import Image from "next/image";
 import { TmpButton } from "@/components/ui/TmpButton";
-import { Typer } from "@/components/ui/Typer";
 import { SITE_NAME } from "@/lib/constants";
-
-// Each role carries its own article ("An AI…"), so the whole phrase types in.
-const ROLES = [
-  "A Mobile Application Developer.",
-  "A Backend Engineer.",
-  "An AI Application Developer.",
-  "A Full-Stack Developer.",
-] as const;
-
-// Stable text for assistive technology; the typed phrase is decorative.
-const ROLES_SUMMARY =
-  "a mobile application developer, backend engineer, AI application developer and full-stack developer.";
 
 /**
  * Demo 09 hero (components/homes/home-9/Hero.jsx): full-height cinematic
@@ -43,28 +30,23 @@ export function Hero() {
           <div className="row align-items-center">
             <div className="col-lg-6 order-lg-1">
               <div className="inner">
+                {/* Specialisation first, then name and role: one clear identity
+                    instead of a rotation of overlapping job titles. */}
                 <span className="sub-title tmp-scroll-trigger tmp-fade-in animation-order-1">
-                  Hello
+                  Mobile &amp; Backend Engineering
                 </span>
                 <h1 className="title tmp-scroll-trigger tmp-fade-in animation-order-2">
                   {/* Each line is kept whole on wide screens so the heading reads
                       as the template's two lines despite the longer name. */}
                   <span className="ambali-hero__line">I&rsquo;m {SITE_NAME}</span> <br />
-                  <span className="visually-hidden">, {ROLES_SUMMARY}</span>
-                  {/* Role line is sized so the longest phrase fits beside the
-                      portrait and within phones (see .ambali-hero__role). */}
-                  <span className="ambali-hero__line ambali-hero__role" aria-hidden="true">
-                    <span className="header-caption">
-                      <span className="cd-headline clip is-full-width">
-                        <Typer strings={ROLES} />
-                      </span>
-                    </span>
+                  {/* Inner span picks up the template's accent colour for title spans. */}
+                  <span className="ambali-hero__line ambali-hero__role">
+                    <span>Software Developer</span>
                   </span>
                 </h1>
                 <p className="disc tmp-scroll-trigger tmp-fade-in animation-order-3">
-                  I build intelligent digital products, from high-performance mobile applications to
-                  scalable backend systems and AI-powered solutions. I turn complex ideas into
-                  reliable software designed to solve real problems.
+                  I build reliable mobile applications and the scalable backend systems behind
+                  them, with hands-on experience integrating AI capabilities into real products.
                 </p>
                 <div className="button-area-banner-one tmp-scroll-trigger tmp-fade-in animation-order-4">
                   <TmpButton href="/projects">View Portfolio</TmpButton>

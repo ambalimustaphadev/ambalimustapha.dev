@@ -18,33 +18,33 @@ export const services: Service[] = [
   {
     title: "Mobile App Development",
     description:
-      "Cross-platform mobile apps in Flutter and Dart, with API integration, authentication, device features, QR scanning and offline-first behaviour — built on maintainable architecture and predictable state management.",
+      "One Flutter codebase for Android and iOS, with sign-in, API integration, device features and offline-first behaviour — structured so the app stays maintainable as it grows.",
     iconClass: "fa-regular fa-mobile",
     technologies: ["Flutter", "Dart", "Riverpod", "GoRouter"],
-    projectSlugs: ["fihone", "sabimate", "finassist"],
+    projectSlugs: ["sabimate", "finassist", "regiforte"],
   },
   {
     title: "Backend Engineering & REST APIs",
     description:
-      "Backend services and REST APIs in Python with FastAPI and Flask: authentication, request validation, error handling and the service logic that mobile and web clients depend on.",
+      "The Python services and REST APIs your apps depend on: authentication, request validation, clear error handling and business logic kept on the server, where it can be trusted and tested.",
     iconClass: "fa-regular fa-server",
     technologies: ["Python", "FastAPI", "Flask", "REST APIs"],
-    projectSlugs: ["sabimate", "finassist", "fihone"],
+    projectSlugs: ["sabimate", "finassist", "financial-wallet-api"],
   },
   {
-    title: "Databases, Security & Infrastructure",
+    title: "Databases & Infrastructure",
     description:
-      "Relational data models in PostgreSQL with SQLAlchemy, hashed passwords and token-based access control, plus Redis and Docker where an application needs them for rate limiting, caching or consistent environments.",
+      "Data that stays consistent: relational models in PostgreSQL with SQLAlchemy and managed migrations, plus Redis for rate limits and quotas and Docker for repeatable environments.",
     iconClass: "fa-regular fa-database",
     technologies: ["PostgreSQL", "SQLAlchemy", "Redis", "Docker"],
-    projectSlugs: ["sabimate", "finassist"],
+    projectSlugs: ["sabimate", "financial-wallet-api"],
   },
   {
-    title: "AI Integration & Agentic Engineering",
+    title: "AI Integration",
     description:
-      "Integrating language models into products through the backend: context-aware assistants, conversational interfaces, structured context passed to the model, and tool-using workflows such as planned web research with cited sources.",
+      "AI features added through the backend, where they can be controlled: assistants grounded in each user's data, streamed replies, and calculations kept in code with the model explaining the result.",
     iconClass: "fa-regular fa-brain",
-    technologies: ["OpenAI API", "Python", "FastAPI", "AI Workflows"],
+    technologies: ["OpenAI API", "Python", "FastAPI", "Streaming"],
     projectSlugs: ["sabimate", "finassist"],
   },
 ];

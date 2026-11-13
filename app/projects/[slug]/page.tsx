@@ -23,8 +23,8 @@ export async function generateMetadata({
     return { title: "Project not found" };
   }
 
-  return pageMetadata({
-    title: project.title,
+  const metadata = pageMetadata({
+    title: `${project.title}: ${project.category}`,
     description: project.description,
     path: `/projects/${project.slug}`,
     type: "article",
@@ -32,6 +32,9 @@ export async function generateMetadata({
       ? { url: project.image, alt: project.imageAlt ?? `${project.title} screenshot` }
       : undefined,
   });
+  // Unlisted entries (planned projects with no work yet) stay reachable but
+  // aren't offered to search engines.
+  return project.featured ? metadata : { ...metadata, robots: { index: false, follow: true } };
 }
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {

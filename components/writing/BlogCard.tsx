@@ -7,7 +7,7 @@ import type { WritingPost } from "@/types";
 /** Article card in the template's blog-card-style-two design (homepage + /writing). */
 export function BlogCard({ post, animationOrder = 1 }: { post: WritingPost; animationOrder?: number }) {
   const href = `/writing/${post.slug}`;
-  const [day, month] = formatPostDate(post.date).split(" ");
+  const [day, month, year] = formatPostDate(post.date).split(" ");
 
   return (
     <article
@@ -27,7 +27,7 @@ export function BlogCard({ post, animationOrder = 1 }: { post: WritingPost; anim
           </Link>
         </div>
         <span>
-          <time dateTime={post.date}>{`${day} ${month.slice(0, 3)}`}</time>
+          <time dateTime={post.date}>{`${day} ${month.slice(0, 3)} ${year}`}</time>
         </span>
       </div>
       <div className="blog-content-wrap">

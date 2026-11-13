@@ -19,6 +19,8 @@ export const servicePackages: ServicePackage[] = [
   {
     slug: "flutter-mobile",
     title: "Flutter Mobile Development",
+    // The featured package matches the site's positioning (mobile first).
+    featured: true,
     startingPrice: 800,
     billing: "Per Project",
     description:
@@ -71,7 +73,6 @@ export const servicePackages: ServicePackage[] = [
     ],
     cta: "Discuss Your AI Project",
     enquiry: "AI Agent Development enquiry",
-    featured: true,
   },
   {
     slug: "web",

@@ -52,6 +52,14 @@ export function FilterableProjectListing({
           {`Showing ${filtered.length} ${filtered.length === 1 ? "project" : "projects"}`}
         </p>
       </div>
+      {filtered.length === 0 && (
+        <p className="ambali-projects-empty">
+          No {activeCategory.toLowerCase()} projects to show yet.{" "}
+          <button type="button" onClick={() => setActiveCategory("All")}>
+            View all projects
+          </button>
+        </p>
+      )}
     </>
   );
 

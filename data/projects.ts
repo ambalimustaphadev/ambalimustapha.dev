@@ -5,16 +5,18 @@ export const projects: Project[] = [
     title: "Sabimate",
     slug: "sabimate",
     disciplines: ["Mobile", "Backend"],
-    category: "AI Study Abroad Assistant",
+    category: "Study-Abroad Guidance App",
     description:
-      "An intelligent study-abroad companion helping students navigate international education opportunities through personalized AI assistance.",
+      "A Flutter app and FastAPI backend that help students plan studying abroad, with an AI assistant grounded in each student's own profile.",
+    // Order matters: cards show the first three, so mobile and backend lead.
     technologies: [
       "Flutter",
-      "Dart",
-      "Python",
       "FastAPI",
       "PostgreSQL",
       "Redis",
+      "Dart",
+      "Python",
+      "Riverpod",
       "Docker",
       "OpenAI API",
     ],
@@ -34,6 +36,13 @@ export const projects: Project[] = [
         ],
       },
       {
+        heading: "The problem",
+        paragraphs: [
+          "International education decisions involve more than finding a university. Students need to know whether their academic profile is competitive, which countries match their preferences, what they should budget for and which opportunities are worth pursuing.",
+          "The answers exist, but they're scattered across university websites, scholarship portals and government pages, and each assumes you already know what to look for. Sabimate brings that into one assistant that understands the student's context and helps them work through their options in plain conversation.",
+        ],
+      },
+      {
         heading: "What I built",
         bullets: [
           "Flutter mobile app for Android and iOS, using Riverpod and go_router",
@@ -46,13 +55,6 @@ export const projects: Project[] = [
           "Source and citation display in the chat interface",
           "FastAPI backend with PostgreSQL, Alembic migrations and Redis",
           "Containerised development environment and automated CI",
-        ],
-      },
-      {
-        heading: "The problem",
-        paragraphs: [
-          "International education decisions involve more than finding a university. Students need to know whether their academic profile is competitive, which countries match their preferences, what they should budget for and which opportunities are worth pursuing.",
-          "The answers exist, but they're scattered across university websites, scholarship portals and government pages, and each assumes you already know what to look for. Sabimate brings that into one assistant that understands the student's context and helps them work through their options in plain conversation.",
         ],
       },
       {
@@ -93,18 +95,19 @@ export const projects: Project[] = [
     title: "FinAssist",
     slug: "finassist",
     disciplines: ["Mobile", "Backend"],
-    category: "AI Financial Assistant",
+    category: "Personal Finance App",
     description:
-      "Making financial decisions easier to understand through intelligent assistance and practical financial tools.",
+      "A Flutter app backed by a Flask REST API that runs financial calculations on the server, then lets an AI assistant explain the results.",
     technologies: [
       "Flutter",
-      "Dart",
-      "Python",
       "Flask",
       "REST API",
-      "AI integration",
+      "Dart",
+      "Python",
       "Riverpod",
+      "JWT authentication",
       "Firebase Cloud Messaging",
+      "AI integration",
     ],
     status: "In development",
     featured: true,
@@ -122,6 +125,13 @@ export const projects: Project[] = [
         ],
       },
       {
+        heading: "The problem",
+        paragraphs: [
+          "Plenty of apps give you a calculator. Far fewer help you understand the answer. A conversion rate or a monthly total is just a figure until you know what it implies for your plans, and most people are left to work that out alone.",
+          "FinAssist aims to close that gap by keeping the tools and the explanation in one place, so someone can calculate, understand and ask a follow-up question without switching between disconnected apps.",
+        ],
+      },
+      {
         heading: "What I built",
         bullets: [
           "Flutter mobile app using Riverpod for state management",
@@ -134,13 +144,6 @@ export const projects: Project[] = [
           "Subscription tracker: add, edit and remove subscriptions with renewal schedules and totals",
           "Push notifications with Firebase Cloud Messaging",
           "Profile and preference management",
-        ],
-      },
-      {
-        heading: "The problem",
-        paragraphs: [
-          "Plenty of apps give you a calculator. Far fewer help you understand the answer. A conversion rate or a monthly total is just a figure until you know what it implies for your plans, and most people are left to work that out alone.",
-          "FinAssist aims to close that gap by keeping the tools and the explanation in one place, so someone can calculate, understand and ask a follow-up question without switching between disconnected apps.",
         ],
       },
       {
@@ -180,9 +183,10 @@ export const projects: Project[] = [
     title: "Fihone",
     slug: "fihone",
     disciplines: ["Mobile", "Backend"],
-    category: "Mobile Security App",
+    category: "Device Security App",
+    imageAlt: "Fihone app screens showing the shield logo, a device location map and the app's splash screen",
     description:
-      "A mobile security platform designed to protect devices through secure authentication, activity monitoring, and intelligent device management.",
+      "A Flutter app with its own backend API for device registration, activity monitoring and security controls, keeping sensitive logic off the device.",
     technologies: ["Flutter", "Dart", "Backend API", "Authentication", "Location services"],
     status: "In active development",
     featured: true,
@@ -200,19 +204,19 @@ export const projects: Project[] = [
         ],
       },
       {
+        heading: "The problem",
+        paragraphs: [
+          "Most people have no easy way to see what's actually happening on their devices, or to act quickly if a device is lost, misused, or behaving unexpectedly. That kind of visibility tends to be scattered across manufacturer apps, carrier tools, or nothing at all.",
+          "Fihone is my attempt at pulling that into one place — a mobile app that treats device security as something you can actually check in on, not just something you hope is fine.",
+        ],
+      },
+      {
         heading: "What I built",
         bullets: [
           "Device monitoring and security controls",
           "Device registration and tracking",
           "Activity monitoring",
           "User authentication",
-        ],
-      },
-      {
-        heading: "The problem",
-        paragraphs: [
-          "Most people have no easy way to see what's actually happening on their devices, or to act quickly if a device is lost, misused, or behaving unexpectedly. That kind of visibility tends to be scattered across manufacturer apps, carrier tools, or nothing at all.",
-          "Fihone is my attempt at pulling that into one place — a mobile app that treats device security as something you can actually check in on, not just something you hope is fine.",
         ],
       },
       {
@@ -246,31 +250,53 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: "Mustapha Ambali",
+    title: "ambalimustapha.dev",
     slug: "portfolio",
     disciplines: ["Web"],
-    category: "Developer Portfolio",
+    category: "Portfolio Website",
     description:
-      "A modern portfolio showcasing my work as a software developer, built with Next.js, TypeScript, and a strong focus on performance, accessibility, and clean design.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      "This site: a statically generated Next.js and TypeScript app with a validated, rate-limited contact API that delivers branded email through Resend.",
+    technologies: ["Next.js", "TypeScript", "React", "SCSS", "Resend"],
     status: "Live",
     featured: true,
-    homepageFeatured: true,
     year: 2026,
     image: "/images/DevPort1.jpg",
+    imageAlt: "The ambalimustapha.dev homepage displayed on a laptop screen",
+    liveUrl: "https://ambalimustapha.dev",
+    githubUrl: "https://github.com/ambalimustaphadev/ambalimustapha.dev",
     highlight:
-      "Used CSS masking instead of a bounding box so the hero portrait blends directly into the page background rather than sitting in a card.",
+      "The contact form posts to a server route that validates input, rate-limits by IP, filters bots with a honeypot and escapes every field before any email is sent.",
     caseStudy: [
       {
         heading: "Overview",
         paragraphs: [
-          "This site is where I present my work — built with Next.js on the App Router, styled with Tailwind CSS, and deployed on Vercel. The goal was a portfolio that felt premium and considered rather than a generic template: consistent spacing and typography, a design system built around my own brand colors, and content that stays honest about what's finished versus still in progress.",
+          "This site is where I present my work. It's built with Next.js on the App Router, React and strict TypeScript, styled with SCSS and deployed on Vercel. Every page except the contact endpoint is generated statically at build time, so visitors are served prerendered HTML.",
+          "Content lives in typed data files rather than in components: projects, case studies, articles, skills and experience. The figures shown on the site, such as the project count, are calculated from that same data, so they can't drift out of date.",
+        ],
+      },
+      {
+        heading: "What I built",
+        bullets: [
+          "A server-side contact API (Next.js route handler) that sends email through Resend",
+          "Input validation with length limits, a honeypot field and per-IP rate limiting",
+          "A branded HTML notification email with HTML escaping and a plain-text fallback",
+          "Project, case study and article pages generated from typed content",
+          "Filterable project listing and a homepage menu that highlights the section in view",
+          "Per-page canonical URLs, Open Graph and Twitter metadata, a sitemap and structured data",
         ],
       },
       {
         heading: "Engineering",
         paragraphs: [
-          "The contact form is backed by a Resend-powered API route with server-side validation, a honeypot field, and IP-based rate limiting, rather than a form that just looks functional. Theming (light, dark, system) is handled with next-themes, and motion throughout uses Framer Motion, kept deliberately subtle — fades and small lifts rather than anything flashy.",
+          "The contact form is a real backend feature rather than a form that only looks functional. The route handler checks every field on the server, rejects oversized input, quietly drops submissions that fill the hidden honeypot and limits each IP address to three messages every ten minutes. The visitor's name is stripped of control characters and every field is HTML-escaped before it goes into the email, which closes off header injection and markup injection.",
+          "The notification email is built from table-based markup with inline styles so it renders consistently in Gmail, sets the visitor as the Reply-To address and carries a unique reference header so separate enquiries don't collapse into one thread.",
+          "Search and sharing metadata is generated per page: each route has its own canonical URL, title, description and social preview, and articles publish BlogPosting structured data.",
+        ],
+      },
+      {
+        heading: "Accessibility",
+        paragraphs: [
+          "The site includes a skip link, visible keyboard focus styles and screen-reader feedback for the contact form. Scrolling and typing animations respect the reduced-motion setting, and decorative images are hidden from assistive technology while informative ones carry descriptive alt text.",
         ],
       },
       {
@@ -284,24 +310,19 @@ export const projects: Project[] = [
   {
     title: "Regiforte",
     slug: "regiforte",
-    disciplines: ["Mobile", "Backend"],
-    category: "Academy Management App",
+    // Mobile only for now: the case study lists backend integration as planned,
+    // not built, so no backend technologies or discipline are claimed.
+    disciplines: ["Mobile"],
+    category: "Attendance & Presence App",
     description:
-      "A mobile platform that simplifies student presence, attendance, and academy operations through QR technology and an offline-first approach.",
-    technologies: [
-      "Flutter",
-      "Dart",
-      "Flask",
-      "PostgreSQL",
-      "QR Scanning",
-      "Offline-first",
-      "REST API",
-    ],
+      "An offline-first Flutter app that records student presence with QR-based digital IDs, designed so a scan never fails for lack of signal.",
+    technologies: ["Flutter", "Dart", "QR scanning", "Offline-first"],
     status: "In active development",
     featured: true,
-    homepageFeatured: true,
     year: 2026,
     image: "/images/Regiforte1.png",
+    imageAlt:
+      "Regiforte app screens showing the splash screen, a QR check-in credential and a visit history with a weekly trend chart",
     highlight:
       "Designed offline-first so a presence scan never fails just because the phone has no signal.",
     caseStudy: [
@@ -433,9 +454,9 @@ export const projects: Project[] = [
     title: "Wallet API",
     slug: "financial-wallet-api",
     disciplines: ["Backend"],
-    category: "Backend Service",
+    category: "Wallet & Transactions API",
     description:
-      "A backend project for handling users, wallets, transactions, transfers, authentication, and account management. I built it as a way to work through the backend concerns that appear once you move beyond simple CRUD APIs.",
+      "A Flask and PostgreSQL REST API for users, wallets and transfers, with JWT authentication, validated input and consistent transaction records.",
     technologies: [
       "Python",
       "Flask",
@@ -508,7 +529,9 @@ export const projects: Project[] = [
       "A future backend project exploring Go, after building REST APIs in Python and Flask.",
     technologies: ["Go", "PostgreSQL", "REST API", "Docker"],
     status: "Coming soon",
-    featured: true,
+    // Not listed or counted: nothing has been built yet (see the overview).
+    // The page stays reachable but is excluded from the sitemap and indexing.
+    featured: false,
     year: 2026,
     caseStudy: [
       {
@@ -542,13 +565,6 @@ export function getHomepageProjects(): Project[] {
 export function getPrimaryProjects(): Project[] {
   return projects.filter(
     (project) => project.featured && project.status !== "Coming soon",
-  );
-}
-
-/** Planned projects with no real work yet — shown de-emphasized. */
-export function getFutureProjects(): Project[] {
-  return projects.filter(
-    (project) => project.featured && project.status === "Coming soon",
   );
 }
 

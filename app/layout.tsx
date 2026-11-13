@@ -66,13 +66,40 @@ export const metadata: Metadata = {
   },
 };
 
-const personJsonLd = {
+// Only facts stated elsewhere on the site (education, experience, skills).
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: SITE_NAME,
-  jobTitle: SITE_ROLE,
-  url: SITE_URL,
-  sameAs: [GITHUB_URL, LINKEDIN_URL].filter((url): url is string => Boolean(url)),
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: SITE_NAME,
+      jobTitle: SITE_ROLE,
+      description: SITE_DESCRIPTION,
+      url: SITE_URL,
+      image: `${SITE_URL}/images/port-pic.png`,
+      knowsAbout: [
+        "Mobile application development",
+        "Flutter",
+        "Backend engineering",
+        "Python",
+        "REST APIs",
+        "PostgreSQL",
+        "AI integration",
+      ],
+      alumniOf: { "@type": "CollegeOrUniversity", name: "Adekunle Ajasin University" },
+      sameAs: [GITHUB_URL, LINKEDIN_URL].filter((url): url is string => Boolean(url)),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      description: SITE_DESCRIPTION,
+      inLanguage: "en",
+      publisher: { "@id": `${SITE_URL}/#person` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -94,7 +121,7 @@ export default function RootLayout({
           id="person-jsonld"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
         <a href="#main-content" className="skip-link">

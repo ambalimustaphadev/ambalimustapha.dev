@@ -33,7 +33,7 @@ export function Contact({
                       <i className="fa-solid fa-envelope" aria-hidden="true" />
                     </span>
                     <div className="ft-link-wrap">
-                      <h4 className="link-title">E-mail:</h4>
+                      <p className="link-title">E-mail:</p>
                       <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
                     </div>
                   </li>
@@ -42,7 +42,7 @@ export function Contact({
                       <i className="fa-solid fa-location-dot" aria-hidden="true" />
                     </span>
                     <div className="ft-link-wrap">
-                      <h4 className="link-title">Location:</h4>
+                      <p className="link-title">Location:</p>
                       <div>{LOCATION}</div>
                     </div>
                   </li>
@@ -51,7 +51,7 @@ export function Contact({
                       <i className="fa-solid fa-clock" aria-hidden="true" />
                     </span>
                     <div className="ft-link-wrap">
-                      <h4 className="link-title">Availability:</h4>
+                      <p className="link-title">Availability:</p>
                       <div>{AVAILABILITY}</div>
                     </div>
                   </li>

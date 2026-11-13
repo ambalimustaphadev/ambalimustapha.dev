@@ -11,7 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  const projectRoutes = projects.map((project) => ({
+  // Listed projects only; unlisted (planned) entries are noindex.
+  const projectRoutes = projects.filter((project) => project.featured).map((project) => ({
     url: `${SITE_URL}/projects/${project.slug}`,
     lastModified: new Date(),
   }));

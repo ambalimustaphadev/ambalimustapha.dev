@@ -3,22 +3,22 @@ import { pageMetadata } from "@/lib/metadata";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { FilterableProjectListing } from "@/components/project/FilterableProjectListing";
 import { TmpButton } from "@/components/ui/TmpButton";
-import { getFutureProjects, getPrimaryProjects } from "@/data/projects";
+import { getPrimaryProjects } from "@/data/projects";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Work",
+  title: "Projects & Case Studies",
   description:
-    "Projects by Mustapha Ambali, spanning mobile applications built with Flutter and backend systems built with Flask.",
+    "Mobile applications, backend systems and APIs built by Mustapha Ambali, with case studies covering the problem, architecture and technical decisions behind each one.",
   path: "/projects",
 });
 
 export default function ProjectsPage() {
-  // Projects with real work first, then planned ones — same order as before.
-  const projects = [...getPrimaryProjects(), ...getFutureProjects()];
+  // Every listed project (planned, unbuilt ones are not listed).
+  const projects = getPrimaryProjects();
 
   return (
     <div className="project inner">
-      <Breadcrumb title="Projects & Case Studies" />
+      <Breadcrumb title="Engineering Work & Case Studies" />
       {/* Intro, filters and grid share one section so the page flows without
           stacked section gaps (spacing: .ambali-projects-listing). */}
       <FilterableProjectListing
@@ -30,8 +30,9 @@ export default function ProjectsPage() {
               <span className="subtitle">My Work</span>
             </div>
             <p className="description section-sm tmp-scroll-trigger tmp-fade-in animation-order-2">
-              Explore the applications, platforms and backend systems I&apos;ve engineered, from
-              mobile experiences to AI-powered products and scalable APIs.
+              Mobile applications, backend systems and APIs I&apos;ve designed and engineered.
+              Each case study covers the problem, the architecture and the technical decisions
+              behind the work.
             </p>
           </div>
         }

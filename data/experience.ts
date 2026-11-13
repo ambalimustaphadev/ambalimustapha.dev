@@ -1,13 +1,17 @@
 import type { ExperienceItem } from "@/types";
 
+// Periods are deliberately year-only: start months can't be confirmed, so
+// none are shown (confirmed with Mustapha). Don't add guessed months.
+// The Pediforte certificate is listed once, under data/education.ts.
 export const experience: ExperienceItem[] = [
   {
     organization: "OH Mobility",
-    role: "IT Assistant (Full-Stack Developer)",
+    // Formal title from the offer letter: "IT Assistant (Full-Stack Developer)".
+    role: "IT Assistant — Full-Stack Development",
     period: "2026 – Present",
     kind: "employment",
     description:
-      "Contributing to the development and maintenance of company applications, backend services, API integrations and websites. Working across products including Ohlify and Keepaza, with responsibilities involving backend integration, deployments, troubleshooting and system maintenance.",
+      "Develop and maintain company applications, backend services, API integrations and websites across products including Ohlify and Keepaza. Day-to-day work covers mobile and backend integration, deployments, troubleshooting and keeping production systems running.",
   },
   {
     organization: "Pediforte Coding Academy",
@@ -15,19 +19,19 @@ export const experience: ExperienceItem[] = [
     period: "2024 – 2026",
     kind: "internship",
     description:
-      "Gained practical experience in Flutter and Dart mobile application development, backend engineering and AI agent development. Built technical skills in developing mobile applications, integrating APIs, working with backend systems and building AI-powered application experiences.",
+      "Trained in Flutter and Dart mobile development through a hands-on internship, building practical experience integrating APIs, working with backend systems and building AI-powered app features.",
   },
   {
-    organization: "Personal Projects",
-    role: "Independent Software Developer",
+    organization: "Independent Projects",
+    role: "Mobile & Backend Developer",
     period: "2024 – Present",
     kind: "independent",
     description:
-      "Building independent software products that combine mobile application development, backend engineering and artificial intelligence.",
+      "Design and build my own products end to end: Flutter apps, the Python backends and databases behind them, and AI features where they genuinely help.",
     projects: [
-      { slug: "sabimate", summary: "AI-powered study abroad assistant" },
-      { slug: "finassist", summary: "AI-powered financial assistant" },
-      { slug: "fihone", summary: "Mobile security and device protection app" },
+      { slug: "sabimate", summary: "Study-abroad guidance app with a FastAPI backend" },
+      { slug: "finassist", summary: "Personal finance app with a Flask REST API" },
+      { slug: "fihone", summary: "Device security app with its own backend API" },
     ],
   },
 ];

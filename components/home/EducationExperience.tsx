@@ -4,10 +4,11 @@ import { education } from "@/data/education";
 import { experience } from "@/data/experience";
 import { getProjectBySlug } from "@/data/projects";
 
+// Human-readable label for each kind of entry (shown above the organisation).
 const KIND_LABELS = {
-  employment: "employment",
-  internship: "internship",
-  independent: "independent work",
+  employment: "Employment",
+  internship: "Internship & Training",
+  independent: "Independent Work",
 } as const;
 
 function CustomTitle({ children }: { children: string }) {
@@ -48,7 +49,7 @@ export function EducationExperience({
         {/* One centred content column: the section is about the content, so
             there is no portrait column (the portrait stays in the hero). */}
         <div className="ambali-edu-exp">
-          <CustomTitle>Education</CustomTitle>
+          <CustomTitle>Education &amp; Certifications</CustomTitle>
           {education.map((item, index) => (
             <div
               key={item.qualification}
@@ -57,7 +58,7 @@ export function EducationExperience({
               }`}
             >
               <div className="ambali-edu-card__meta">
-                <h4 className="edu-sub-title">{item.institution}</h4>
+                <p className="edu-sub-title">{item.institution}</p>
                 <h3 className="edu-title">{item.qualification}</h3>
               </div>
               <p className="edu-para">
@@ -68,7 +69,7 @@ export function EducationExperience({
           ))}
           <div className="experiences-wrapper">
             <div className="experiences-wrap-left-content">
-              <CustomTitle>Experiences</CustomTitle>
+              <CustomTitle>Experience</CustomTitle>
               <ol className="ambali-timeline">
                 {experience.map((item, index) => {
                   const projects = (item.projects ?? []).flatMap(({ slug, summary }) => {

@@ -3,12 +3,14 @@ import { skills } from "@/data/skills";
 import { TECH_STACK, type TechStackItem } from "@/data/techStack";
 
 // Icon for each skill group, taken from the brand marks in data/techStack.ts.
+// Groups without a single representative brand use a Font Awesome icon.
 const GROUP_ICONS: Record<string, string> = {
-  Languages: "Dart",
-  Mobile: "Flutter",
-  Backend: "Flask",
-  Databases: "PostgreSQL",
-  Tools: "Git",
+  "Mobile Engineering": "Flutter",
+  "Backend Engineering": "Flask",
+  "Data & Infrastructure": "PostgreSQL",
+};
+const GROUP_FALLBACK_ICONS: Record<string, string> = {
+  "AI Integration": "fa-regular fa-brain",
 };
 
 function iconFor(category: string): TechStackItem | undefined {
@@ -36,9 +38,9 @@ export function Skills() {
                     Build With
                   </h2>
                   <p className="description tmp-scroll-trigger tmp-fade-in animation-order-3">
-                    From Flutter and Dart on mobile to Python, Flask and PostgreSQL on the
-                    backend — the languages, frameworks and tools I use to design, build and
-                    ship software.
+                    Grouped by where I do my strongest work: Flutter on mobile, Python services
+                    and PostgreSQL on the backend, and AI features integrated through that
+                    backend. Every technology here is used in a project you can read about.
                   </p>
                 </div>
               </div>
@@ -55,7 +57,14 @@ export function Skills() {
                         }`}
                       >
                         <div className="card-icon">
-                          {icon && <TechLogo item={icon} className="ambali-skill-icon" />}
+                          {icon ? (
+                            <TechLogo item={icon} className="ambali-skill-icon" />
+                          ) : GROUP_FALLBACK_ICONS[group.category] ? (
+                            <i
+                              className={`${GROUP_FALLBACK_ICONS[group.category]} ambali-skill-icon`}
+                              aria-hidden="true"
+                            />
+                          ) : null}
                         </div>
                         <h3 className="card-title">{group.category}</h3>
                         <p className="card-para">{group.items.join(", ")}</p>

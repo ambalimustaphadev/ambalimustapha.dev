@@ -62,7 +62,7 @@ export function ChatWidget() {
         <i className="fas fa-times" />
       </label>
       <div className="wrapper">
-        <div className="head-text">Let&apos;s chat with me?</div>
+        <div className="head-text">Let&apos;s work together</div>
         <div className="chat-box">
           <div className="desc-text" role="status" aria-live="polite">
             {status === "sent"

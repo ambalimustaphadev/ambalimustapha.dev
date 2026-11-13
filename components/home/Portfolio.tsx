@@ -21,8 +21,8 @@ export function Portfolio({ projects }: { projects: Project[] }) {
             Selected Projects
           </h2>
           <p className="description section-sm tmp-scroll-trigger tmp-fade-in animation-order-3">
-            From AI-powered applications to mobile products and backend systems, explore some of
-            the solutions I&apos;ve designed, engineered and brought to life.
+            Mobile apps and the backend systems behind them, each with a case study covering the
+            problem, the architecture and the decisions I made along the way.
           </p>
         </div>
         {/* Wrappers kept for the template's background glow and image styling;
@@ -56,11 +56,13 @@ export function Portfolio({ projects }: { projects: Project[] }) {
                       </div>
                       <div className="portfolio-card-content-wrap">
                         <div className="content-left">
+                          <p className="ambali-featured-project__category">{project.category}</p>
                           <h3 className="portfolio-card-title">
                             <Link href={href}>{project.title}</Link>
                           </h3>
+                          <p className="ambali-featured-project__desc">{project.description}</p>
                           <div className="tag-items">
-                            <ul>
+                            <ul aria-label={`${project.title} technologies`}>
                               {getCardStatus(project) && (
                                 <li>
                                   <span className="tag-item ambali-status-tag">
@@ -68,7 +70,9 @@ export function Portfolio({ projects }: { projects: Project[] }) {
                                   </span>
                                 </li>
                               )}
-                              {project.technologies.slice(0, 2).map((tech) => (
+                              {/* First three: ordered in data/projects.ts so the
+                                  mobile and backend stack lead. */}
+                              {project.technologies.slice(0, 3).map((tech) => (
                                 <li key={tech}>
                                   <span className="tag-item">{tech}</span>
                                 </li>
@@ -77,7 +81,8 @@ export function Portfolio({ projects }: { projects: Project[] }) {
                           </div>
                         </div>
                         <TmpButton href={href} className="btn-border btn-md">
-                          View Project
+                          View Case Study
+                          <span className="visually-hidden">: {project.title}</span>
                         </TmpButton>
                       </div>
                     </div>

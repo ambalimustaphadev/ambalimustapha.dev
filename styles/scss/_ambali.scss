@@ -186,22 +186,12 @@ button.scrollToTop {
   }
 }
 
-// Typed role line ("A Mobile Application Developer." is ~13em wide): one fixed
-// size per breakpoint, smaller than the name, so the longest phrase stays clear
-// of the face beside the portrait (≥992px) and fits phone screens. Every
-// phrase stays on one line at the same size, so the hero never jumps.
+// Role line ("Software Developer"): a step below the name so the hierarchy
+// reads name → role, and short enough to stay clear of the portrait.
 .banner-one-main-wrapper .inner .title .ambali-hero__role {
   display: block;
-  font-size: 0.65em;
+  font-size: 0.72em;
   line-height: 1.25;
-
-  @media (min-width: 992px) {
-    font-size: 0.56em;
-  }
-
-  @media (max-width: 575px) {
-    font-size: min(0.74em, calc((100vw - 40px) / 13));
-  }
 }
 
 // Narrower desktops: nudge the face right so the one-line name stays on the
@@ -243,8 +233,50 @@ button.scrollToTop {
 // which leaves an empty band under the image in a narrower column. Let the
 // image's own aspect ratio set the height instead. (/projects is unaffected.)
 .ambali-featured-project {
+  // Category → title → description → tags → action; the action sits at the
+  // bottom so buttons line up across cards with different description lengths.
+  display: flex;
+  flex-direction: column;
+
   .img-box.v2 {
     height: auto;
+  }
+
+  .portfolio-card-content-wrap {
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 18px;
+
+    .content-left {
+      width: 100%;
+    }
+
+    .tmp-btn {
+      margin-top: auto;
+    }
+  }
+
+  .portfolio-card-title {
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+
+  .ambali-featured-project__category {
+    margin: 20px 0 0;
+    color: var(--color-primary);
+    font-family: var(--font-secondary);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ambali-featured-project__desc {
+    margin-bottom: 16px;
+    color: var(--color-gray);
+    font-size: 16px;
+    line-height: 1.65;
   }
 
   // Narrower columns: wrap whole tags onto a new line (as the template already
@@ -301,6 +333,15 @@ button.scrollToTop {
   height: 30px;
 }
 
+// Font Awesome fallback (groups with no single brand mark, e.g. AI Integration).
+i.ambali-skill-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  font-size: 26px;
+}
+
 // ---------------------------------------------------------------------------
 // Contact form states (the template used toasts; the form reports inline)
 // ---------------------------------------------------------------------------
@@ -350,6 +391,58 @@ button.scrollToTop {
 // ---------------------------------------------------------------------------
 // Inner pages
 // ---------------------------------------------------------------------------
+// About section "Mobile & Backend" card label: a <p> (it precedes the section
+// heading), matching the template's h3 it replaced: `.h3` supplies the
+// responsive size, this rule the heading font, weight and spacing.
+.design-card .card-info .ambali-design-card__title {
+  margin-bottom: 5px;
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  line-height: 1.14;
+}
+
+// Long contact values (the email address) wrap instead of widening the row.
+.ft-link .ft-link-wrap {
+  min-width: 0;
+
+  a {
+    overflow-wrap: anywhere;
+  }
+}
+
+// /about "My Story" (components/about/AboutStory.tsx): readable prose column.
+.ambali-about-story__body {
+  max-width: 680px;
+
+  p {
+    margin-bottom: 18px;
+    color: var(--color-body);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  h3 {
+    margin: 32px 0 10px;
+    font-size: 24px;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    p {
+      font-size: 16px;
+    }
+
+    h3 {
+      font-size: 21px;
+    }
+  }
+}
+
 // /projects: breadcrumb → intro → filters → grid → CTA in one even flow,
 // instead of a 50px intro margin plus a full 120px section gap above the tabs.
 .ambali-projects-listing {
@@ -369,6 +462,20 @@ button.scrollToTop {
 
 .ambali-projects-intro {
   margin-bottom: 32px;
+}
+
+.ambali-projects-empty {
+  margin: -24px 0 40px;
+  color: var(--color-gray);
+  text-align: center;
+
+  button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
 }
 
 .ambali-project-filters {
@@ -460,6 +567,28 @@ button.scrollToTop {
   justify-content: space-between;
   gap: 16px;
   margin-top: 60px;
+}
+
+// Related case studies under a project (ProjectDetails.tsx); reuses the
+// experience section's compact project links.
+.ambali-related-projects {
+  margin-top: 70px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+
+  .mini-title {
+    margin-bottom: 20px;
+  }
+
+  .ambali-exp-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+}
+
+.ambali-related-projects + .ambali-project-nav {
+  margin-top: 40px;
 }
 
 .ambali-writing-empty .tag-items ul {
@@ -693,7 +822,7 @@ button.scrollToTop {
     }
   }
 
-  // Counters: 2×2 grid (see Facts.tsx) with tighter gutters and cards.
+  // Counters: two side by side (see Facts.tsx) with tighter gutters and cards.
   .counter-funfacts-area {
     .row.g-5 {
       --bs-gutter-x: 1rem;
@@ -1128,6 +1257,11 @@ button.scrollToTop {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+// Degree and certificate cards (data/education.ts) are separate entries.
+.education-experience .ambali-edu-exp .ambali-edu-card + .ambali-edu-card {
+  margin-top: 16px;
 }
 
 @media (min-width: 992px) {
