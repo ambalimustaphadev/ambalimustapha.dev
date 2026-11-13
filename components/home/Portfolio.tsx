@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ProjectThumb } from "@/components/ui/ProjectThumb";
 import { TmpButton } from "@/components/ui/TmpButton";
+import { getCardStatus } from "@/lib/project-status";
 import type { Project } from "@/types";
 
 /**
@@ -60,9 +61,13 @@ export function Portfolio({ projects }: { projects: Project[] }) {
                           </h3>
                           <div className="tag-items">
                             <ul>
-                              <li>
-                                <span className="tag-item ambali-status-tag">{project.status}</span>
-                              </li>
+                              {getCardStatus(project) && (
+                                <li>
+                                  <span className="tag-item ambali-status-tag">
+                                    {getCardStatus(project)}
+                                  </span>
+                                </li>
+                              )}
                               {project.technologies.slice(0, 2).map((tech) => (
                                 <li key={tech}>
                                   <span className="tag-item">{tech}</span>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ProjectThumb } from "@/components/ui/ProjectThumb";
+import { getCardStatus } from "@/lib/project-status";
 import type { Project } from "@/types";
 
 /**
@@ -52,8 +53,12 @@ export function ProjectListing({
                         </Link>
                       </h2>
                       <p className="ambali-project-meta">
-                        <span className="ambali-status-tag">{project.status}</span>
-                        <span aria-hidden="true"> · </span>
+                        {getCardStatus(project) && (
+                          <>
+                            <span className="ambali-status-tag">{getCardStatus(project)}</span>
+                            <span aria-hidden="true"> · </span>
+                          </>
+                        )}
                         {project.category}
                         <span aria-hidden="true"> · </span>
                         {project.year}
