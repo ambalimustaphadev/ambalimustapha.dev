@@ -30,11 +30,11 @@ export function Hero() {
           <div className="row align-items-center">
             <div className="col-lg-6 order-lg-1">
               <div className="inner">
-                {/* Specialisation first, then name and role: one clear identity
-                    instead of a rotation of overlapping job titles. */}
-                <span className="sub-title tmp-scroll-trigger tmp-fade-in animation-order-1">
-                  Mobile &amp; Backend Engineering
-                </span>
+                {/* Name and role: one clear identity instead of a rotation of
+                    overlapping job titles. */}
+                <p className="ambali-hero__greeting tmp-scroll-trigger tmp-fade-in animation-order-1">
+                  Hello,
+                </p>
                 <h1 className="title tmp-scroll-trigger tmp-fade-in animation-order-2">
                   {/* Each line is kept whole on wide screens so the heading reads
                       as the template's two lines despite the longer name. */}

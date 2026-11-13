@@ -186,6 +186,33 @@ button.scrollToTop {
   }
 }
 
+// "Hello," above the name: small and pink so it introduces the name without
+// competing with it. The template's 30px top margin on the title is dropped
+// here, so the gap is the greeting's margin plus the title's own line spacing
+// (about 12px on desktop, 9px on phones).
+.banner-one-main-wrapper .inner .ambali-hero__greeting {
+  margin: 0 0 4px;
+  color: var(--color-primary);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+
+  @media (max-width: 991px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 575px) {
+    margin-bottom: 6px;
+    font-size: 18px;
+  }
+}
+
+.banner-one-main-wrapper .inner .ambali-hero__greeting + .title {
+  margin-top: 0;
+}
+
 // Role line ("Software Developer"): a step below the name so the hierarchy
 // reads name → role, and short enough to stay clear of the portrait.
 .banner-one-main-wrapper .inner .title .ambali-hero__role {
@@ -194,11 +221,41 @@ button.scrollToTop {
   line-height: 1.25;
 }
 
-// Narrower desktops: nudge the face right so the one-line name stays on the
-// face's shadow side, as in the template.
-@media (min-width: 992px) and (max-width: 1399px) {
+// Desktop: the template fixes the hero at 950px tall, which pushes the call to
+// action below the fold on shorter laptop screens. Fit it to the viewport
+// instead (never shorter than 640px, never taller than 950px). The portrait is
+// sized from the hero's height, so it scales down with it.
+@media (min-width: 992px) {
+  .tmp-banner-one-area.style-2.ambali-hero {
+    min-height: min(950px, max(640px, 100vh));
+    min-height: min(950px, max(640px, 100svh));
+  }
+}
+
+// Desktop: keep the portrait clear of the one-line name. The portrait is a
+// fixed size (the hero is 950px tall), while the name ends at a fixed point in
+// the container, so the portrait sits at 65% of the width but never closer to
+// the text than the clearance below. That clearance is measured from the
+// container's left edge (half the leftover width) to the portrait's centre:
+// the name's width plus room for the face before it.
+@media (min-width: 992px) {
   .ambali-hero__photo {
-    left: 69%;
+    --hero-container: 960px;
+    --hero-face-clearance: 780px;
+    left: max(65%, calc((100% - var(--hero-container)) / 2 + var(--hero-face-clearance)));
+  }
+}
+
+@media (min-width: 1200px) {
+  .ambali-hero__photo {
+    --hero-container: 1140px;
+    --hero-face-clearance: 990px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .ambali-hero__photo {
+    --hero-container: 1320px;
   }
 }
 
