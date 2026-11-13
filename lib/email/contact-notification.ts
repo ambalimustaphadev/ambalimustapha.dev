@@ -126,7 +126,7 @@ export function buildContactNotificationHtml({
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td style="font-family:${FONT_STACK}; font-size:24px; line-height:28px; font-weight:800; letter-spacing:-0.5px; color:#ffffff;">MA<span style="color:${COLOR.accent};">.</span></td>
-                <td align="right" style="font-family:${FONT_STACK}; font-size:12px; line-height:16px; color:${COLOR.headerMuted};">Portfolio contact form</td>
+                <td align="right" style="font-family:${FONT_STACK}; font-size:12px; line-height:16px; color:${COLOR.headerMuted};">${SIGNATURE_NAME}</td>
               </tr>
             </table>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">

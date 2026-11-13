@@ -1,12 +1,15 @@
+import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { CONTACT_EMAIL } from "@/lib/constants";
+import { CONTACT_EMAIL, SITE_NAME } from "@/lib/constants";
 import {
   buildContactNotificationHtml,
   buildContactNotificationText,
 } from "@/lib/email/contact-notification";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const NOTIFICATION_SUBJECT = "New portfolio enquiry";
 
 const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 254; // RFC 5321 maximum mailbox length
@@ -142,7 +145,7 @@ export async function POST(request: Request) {
 
   // Defense in depth: email is already validated against a regex with no
   // whitespace allowed, but the name is free text, so strip anything that
-  // could otherwise inject extra lines into the subject or email body.
+  // could otherwise inject extra lines into the email body.
   const trimmedName = sanitizeForHeader(name);
   const trimmedEmail = email.trim();
   const trimmedMessage = message.trim();
@@ -163,10 +166,14 @@ export async function POST(request: Request) {
 
   try {
     const { error } = await resend.emails.send({
-      from: `Portfolio contact form <${fromAddress}>`,
+      from: `${SITE_NAME} <${fromAddress}>`,
       to: toAddress,
       replyTo: trimmedEmail,
-      subject: `New message from your portfolio — ${trimmedName}`,
+      subject: NOTIFICATION_SUBJECT,
+      // The subject is identical for every enquiry, so Gmail would otherwise
+      // stack them into one conversation. A unique X-Entity-Ref-ID keeps each
+      // enquiry as its own thread (https://resend.com/docs/dashboard/emails/custom-headers).
+      headers: { "X-Entity-Ref-ID": randomUUID() },
       // All user input is HTML-escaped inside the template builder.
       html: buildContactNotificationHtml(notification),
       text: buildContactNotificationText(notification),
