@@ -1,19 +1,12 @@
 import Link from "next/link";
-import { ServicePackages } from "@/components/home/ServicePackages";
 import { getProjectBySlug } from "@/data/projects";
 import { services } from "@/data/services";
 
-/**
- * Demo 17 "What I Do" section (components/common/Services5.jsx). With
- * `showPackages` (homepage only), the packages & starting prices follow the
- * capability cards inside the same section.
- */
+/** Demo 17 "What I Do" section (components/common/Services5.jsx). */
 export function Services({
   parentClass = "tmp-service-area tmp-section-gapBottom",
-  showPackages = false,
 }: {
   parentClass?: string;
-  showPackages?: boolean;
 }) {
   return (
     <div className={parentClass} id="service">
@@ -77,7 +70,6 @@ export function Services({
             );
           })}
         </div>
-        {showPackages && <ServicePackages />}
       </div>
     </div>
   );

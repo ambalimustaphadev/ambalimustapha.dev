@@ -10,7 +10,13 @@ import { usePrefersReducedMotion, useScrolledPast, useScrollSpy } from "@/lib/ho
 import { NAV_LINKS } from "@/lib/constants";
 import type { NavLink } from "@/types";
 
-const SECTION_IDS = NAV_LINKS.flatMap((link) => (link.sectionId ? [link.sectionId] : []));
+// Homepage sections the scroll-spy tracks without a menu item, so no item is
+// highlighted while they are on screen (instead of the item above them).
+const UNLISTED_SECTION_IDS = ["pricing"];
+const SECTION_IDS = [
+  ...NAV_LINKS.flatMap((link) => (link.sectionId ? [link.sectionId] : [])),
+  ...UNLISTED_SECTION_IDS,
+];
 
 /** Inner-page active state: plain route links match their path (and sub-paths). */
 function matchesPath(link: NavLink, pathname: string) {

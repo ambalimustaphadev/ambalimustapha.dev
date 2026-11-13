@@ -1,12 +1,25 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { ProjectThumb } from "@/components/ui/ProjectThumb";
 import type { Project } from "@/types";
 
-/** Reeni project grid (components/projects/Projects.jsx, `latest-portfolio-card v5`). */
-export function ProjectListing({ projects }: { projects: Project[] }) {
+/**
+ * Reeni project grid (components/projects/Projects.jsx, `latest-portfolio-card v5`).
+ * `header` (optional) renders above the grid, e.g. an intro and category tabs.
+ */
+export function ProjectListing({
+  projects,
+  header,
+  className = "tmp-latest-portfolio tmp-section-gap",
+}: {
+  projects: Project[];
+  header?: ReactNode;
+  className?: string;
+}) {
   return (
-    <section className="tmp-latest-portfolio tmp-section-gap">
+    <section className={className}>
       <div className="container">
+        {header}
         <div className="row">
           {projects.map((project) => {
             const href = `/projects/${project.slug}`;

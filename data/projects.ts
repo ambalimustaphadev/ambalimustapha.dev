@@ -528,7 +528,8 @@ export const projects: Project[] = [
 ];
 
 /** The three curated picks shown on the homepage, in this exact order. */
-const HOMEPAGE_ORDER = ["regiforte", "fihone", "portfolio"];
+// Every other project stays on /projects.
+const HOMEPAGE_ORDER = ["sabimate", "finassist", "fihone"];
 
 /** Curated homepage projects — always these three, always in this order. */
 export function getHomepageProjects(): Project[] {

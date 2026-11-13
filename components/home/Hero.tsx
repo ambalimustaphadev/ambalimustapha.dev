@@ -3,12 +3,17 @@ import { TmpButton } from "@/components/ui/TmpButton";
 import { Typer } from "@/components/ui/Typer";
 import { SITE_NAME } from "@/lib/constants";
 
+// Each role carries its own article ("An AI…"), so the whole phrase types in.
 const ROLES = [
-  "Flutter Developer.",
-  "Mobile Developer.",
-  "Backend Developer.",
-  "AI Enthusiast.",
+  "A Mobile Application Developer.",
+  "A Backend Engineer.",
+  "An AI Application Developer.",
+  "A Full-Stack Developer.",
 ] as const;
+
+// Stable text for assistive technology; the typed phrase is decorative.
+const ROLES_SUMMARY =
+  "a mobile application developer, backend engineer, AI application developer and full-stack developer.";
 
 /**
  * Demo 09 hero (components/homes/home-9/Hero.jsx): full-height cinematic
@@ -45,8 +50,10 @@ export function Hero() {
                   {/* Each line is kept whole on wide screens so the heading reads
                       as the template's two lines despite the longer name. */}
                   <span className="ambali-hero__line">I&rsquo;m {SITE_NAME}</span> <br />
-                  <span className="ambali-hero__line">
-                    A{" "}
+                  <span className="visually-hidden">, {ROLES_SUMMARY}</span>
+                  {/* Role line is sized so the longest phrase fits beside the
+                      portrait and within phones (see .ambali-hero__role). */}
+                  <span className="ambali-hero__line ambali-hero__role" aria-hidden="true">
                     <span className="header-caption">
                       <span className="cd-headline clip is-full-width">
                         <Typer strings={ROLES} />
@@ -55,8 +62,9 @@ export function Hero() {
                   </span>
                 </h1>
                 <p className="disc tmp-scroll-trigger tmp-fade-in animation-order-3">
-                  I build mobile apps and backend systems with Flutter and Python, focusing on
-                  clean architecture, scalable APIs, and software that solves real problems.
+                  I build intelligent digital products, from high-performance mobile applications to
+                  scalable backend systems and AI-powered solutions. I turn complex ideas into
+                  reliable software designed to solve real problems.
                 </p>
                 <div className="button-area-banner-one tmp-scroll-trigger tmp-fade-in animation-order-4">
                   <TmpButton href="/projects">View Portfolio</TmpButton>

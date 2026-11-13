@@ -186,6 +186,24 @@ button.scrollToTop {
   }
 }
 
+// Typed role line ("A Mobile Application Developer." is ~13em wide): one fixed
+// size per breakpoint, smaller than the name, so the longest phrase stays clear
+// of the face beside the portrait (≥992px) and fits phone screens. Every
+// phrase stays on one line at the same size, so the hero never jumps.
+.banner-one-main-wrapper .inner .title .ambali-hero__role {
+  display: block;
+  font-size: 0.65em;
+  line-height: 1.25;
+
+  @media (min-width: 992px) {
+    font-size: 0.56em;
+  }
+
+  @media (max-width: 575px) {
+    font-size: min(0.74em, calc((100vw - 40px) / 13));
+  }
+}
+
 // Narrower desktops: nudge the face right so the one-line name stays on the
 // face's shadow side, as in the template.
 @media (min-width: 992px) and (max-width: 1399px) {
@@ -218,6 +236,26 @@ button.scrollToTop {
   aspect-ratio: 1920 / 1572;
   height: auto;
   object-fit: cover;
+}
+
+// Homepage featured projects (3-column grid, components/home/Portfolio.tsx):
+// the template fixes `.img-box.v2` at 400/447px tall for its 2-column cards,
+// which leaves an empty band under the image in a narrower column. Let the
+// image's own aspect ratio set the height instead. (/projects is unaffected.)
+.ambali-featured-project {
+  .img-box.v2 {
+    height: auto;
+  }
+
+  // Narrower columns: wrap whole tags onto a new line (as the template already
+  // does on phones) instead of breaking a tag's text or overflowing the card.
+  .tag-items ul {
+    flex-wrap: wrap;
+  }
+
+  .tag-item {
+    white-space: nowrap;
+  }
 }
 
 .ambali-project-placeholder {
@@ -312,8 +350,58 @@ button.scrollToTop {
 // ---------------------------------------------------------------------------
 // Inner pages
 // ---------------------------------------------------------------------------
-.ambali-page-intro {
-  max-width: 720px;
+// /projects: breadcrumb → intro → filters → grid → CTA in one even flow,
+// instead of a 50px intro margin plus a full 120px section gap above the tabs.
+.ambali-projects-listing {
+  padding-top: 64px;
+  padding-bottom: 100px;
+
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    padding-top: 56px;
+    padding-bottom: 80px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    padding-top: 44px;
+    padding-bottom: 60px;
+  }
+}
+
+.ambali-projects-intro {
+  margin-bottom: 32px;
+}
+
+.ambali-project-filters {
+  margin-bottom: 56px;
+
+  @media only screen and (max-width: 767px) {
+    margin-bottom: 40px;
+  }
+}
+
+// Closing "Get in Touch" panel on /projects — same surface and radius as the
+// homepage contact card.
+.ambali-projects-cta {
+  padding: 80px 60px;
+  border-radius: 20px;
+  background: var(--color-gray-2);
+  text-align: center;
+
+  .title {
+    margin-bottom: 16px;
+  }
+
+  .description {
+    margin-bottom: 32px;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    padding: 56px 40px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    padding: 40px 20px;
+  }
 }
 
 .ambali-project-meta {
@@ -477,9 +565,16 @@ button.scrollToTop {
     }
   }
 
-  // Featured card: a quiet accent edge, not a different card style.
+  // Featured card: told apart by the badge, a faint pink wash at the top and a
+  // soft accent edge, rather than a full-strength pink outline that pulled
+  // focus from the other packages. The edge strengthens on hover like the rest.
   .ambali-service-card--featured {
-    border-color: rgba(255, 1, 79, 0.45);
+    border-color: rgba(255, 1, 79, 0.22);
+    background-image: linear-gradient(180deg, rgba(255, 1, 79, 0.07) 0%, rgba(255, 1, 79, 0) 40%);
+
+    &:hover {
+      border-color: rgba(255, 1, 79, 0.45);
+    }
   }
 
   .ambali-service-card__head {
@@ -543,19 +638,8 @@ button.scrollToTop {
   }
 }
 
-// Packages block inside the homepage Services section: separated from the
-// capability cards by the theme's section rhythm (120 / 80 / 60px).
+// Homepage packages & pricing section (#pricing, ServicePackages.tsx).
 .ambali-service-packages {
-  margin-top: 120px;
-
-  @media only screen and (min-width: 768px) and (max-width: 991px) {
-    margin-top: 80px;
-  }
-
-  @media only screen and (max-width: 767px) {
-    margin-top: 60px;
-  }
-
   // Narrow card columns — four across (≥1400px, see ServicePackages.tsx) and
   // two across on tablets (768–991px): slightly tighter padding and titles so
   // "Development" next to the Featured badge and the CTA labels don't break.
