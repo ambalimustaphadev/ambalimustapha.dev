@@ -777,6 +777,62 @@ i.ambali-skill-icon {
   margin-top: 60px;
 }
 
+// Case-study screen recording (ProjectVideo.tsx), before the gallery. A
+// portrait recording at phone size beside its description; stacked on phones.
+// Never wider than the recording's own pixels (--video-w).
+.ambali-project-video {
+  margin-top: 70px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+
+  .mini-title {
+    margin-bottom: 24px;
+  }
+}
+
+.ambali-project-video__body {
+  display: grid;
+  align-items: center;
+  gap: 24px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: 40px;
+  }
+}
+
+.ambali-project-video__frame {
+  width: 100%;
+  max-width: min(var(--video-w), 300px);
+  margin-inline: auto;
+
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    background: #000;
+  }
+}
+
+.ambali-project-video__text {
+  .docs {
+    margin-bottom: 12px;
+  }
+}
+
+.ambali-project-video__meta {
+  margin: 0;
+  color: var(--color-body);
+  font-size: 14px;
+
+  i {
+    margin-right: 6px;
+    color: var(--color-primary);
+  }
+}
+
 // Screenshot gallery on a case study (ProjectDetails.tsx, `gallery` in
 // data/projects.ts). The images are transparent phone cut-outs at their native
 // resolution, so each is capped at its own pixel width (--shot-w) and never
@@ -867,6 +923,138 @@ i.ambali-skill-icon {
 @media (max-width: 575px) {
   .ambali-project-gallery__item:not(.ambali-project-gallery__item--wide) .ambali-project-gallery__open {
     max-width: min(var(--shot-w), 300px);
+  }
+
+  // Galleries with more than one screenshot become a horizontal carousel:
+  // one screenshot per view, snapping as it is swiped. The strip scrolls
+  // inside its own box, so the page itself never scrolls sideways.
+  .ambali-project-gallery__grid--carousel {
+    position: relative; // offsetLeft of the slides is measured from here
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding-block: 6px; // room for the focus outline
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > .ambali-project-gallery__item {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
+
+    // On short phones, keep a portrait screenshot, its caption and the
+    // controls on one screen: its height is capped at the viewport less
+    // ~170px, converted to a width through the image's own ratio.
+    > .ambali-project-gallery__item:not(.ambali-project-gallery__item--wide) .ambali-project-gallery__open {
+      max-width: min(var(--shot-w), 300px, calc((100svh - 170px) * var(--shot-ratio)));
+    }
+  }
+}
+
+// Carousel controls (ProjectGallery.tsx): shown only where the carousel is.
+.ambali-gallery-nav {
+  display: none;
+
+  @media (max-width: 575px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 18px;
+  }
+}
+
+.ambali-gallery-nav__button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-heading);
+  font-size: 16px;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
+
+.ambali-gallery-nav__status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 72px;
+}
+
+.ambali-gallery-nav__count {
+  margin: 0;
+  color: var(--color-body);
+  font-size: 14px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ambali-gallery-nav__dots {
+  display: flex;
+  gap: 6px;
+
+  span {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: width 0.2s, background 0.2s;
+
+    &.is-active {
+      width: 16px;
+      background: var(--color-primary);
+    }
+  }
+}
+
+.ambali-gallery-nav__progress {
+  width: 72px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+
+  span {
+    display: block;
+    height: 100%;
+    background: var(--color-primary);
+    transition: width 0.2s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambali-gallery-nav__dots span,
+  .ambali-gallery-nav__progress span,
+  .ambali-gallery-nav__button {
+    transition: none;
   }
 }
 

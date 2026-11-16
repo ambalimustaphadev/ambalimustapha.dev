@@ -1,6 +1,12 @@
-import type { Project } from "@/types";
+import type { Project, ProjectScreenshot } from "@/types";
 
 const FINASSIST_IMAGES = "/images/finassist-six-professional-images";
+const SABIMATE_IMAGES = "/images/sabimate";
+
+/** A SabiMate phone screen (all are 568×1154 transparent PNGs). */
+function sabimateScreen(name: string, alt: string, caption: string): ProjectScreenshot {
+  return { src: `${SABIMATE_IMAGES}/sabimate-${name}-phone.png`, alt, caption, width: 568, height: 1154 };
+}
 
 export const projects: Project[] = [
   {
@@ -25,8 +31,40 @@ export const projects: Project[] = [
     status: "In active development",
     featured: true,
     year: 2026,
-    image: "/images/Sabimate1.png",
-    imageAlt: "Sabimate logo with the tagline \"Know before you go\" on a dark teal background",
+    image: `${SABIMATE_IMAGES}/sabimate-homepage-cover.png`,
+    imageAlt:
+      "SabiMate cover with the tagline “Know before you go” and three app screens: onboarding, destination selection and budget",
+    imageSize: { width: 1920, height: 1080 },
+    // The title sits near the cover's left edge, so the cover is shown whole on
+    // its own edge colours (darker teal on the left, lighter on the right).
+    imageBackdrop: "linear-gradient(90deg, #031618, #072e24)",
+    video: {
+      // H.264 copy of the original screen recording (HEVC .MOV, kept out of
+      // /public): two third-party notifications covered and the editor's outro
+      // card trimmed; the recording itself is unchanged.
+      src: `${SABIMATE_IMAGES}/sabimate-demo.mp4`,
+      poster: `${SABIMATE_IMAGES}/sabimate-demo-poster.jpg`,
+      width: 590,
+      height: 1280,
+      durationSeconds: 52,
+      description:
+        "Asked about studying for a master’s degree in Canada in 2027 as an international student from Nigeria, the assistant explains the admission and study-permit requirements with linked sources, then answers a follow-up about proof of funds.",
+    },
+    // The uploaded phone screens, unchanged, in the order a new user meets them.
+    gallery: [
+      sabimateScreen("01-splash", "Splash screen with the SabiMate logo and the tagline “Know before you go”", "Splash screen: the SabiMate brand and tagline."),
+      sabimateScreen("04-onboarding-intro", "Onboarding screen headed “Know before you go”, explaining that SabiMate helps people planning to study abroad make sense of the journey", "Onboarding, 1 of 3: what SabiMate is for."),
+      sabimateScreen("05-onboarding-features", "Onboarding screen headed “Everything you need to figure out”, showing universities, scholarships, requirements, deadlines and costs", "Onboarding, 2 of 3: the areas it researches for you."),
+      sabimateScreen("06-onboarding-destinations", "Onboarding screen headed “Make your next move with clarity”, with a Get Started button", "Onboarding, 3 of 3: compare options and know what to do next."),
+      sabimateScreen("02-sign-up", "Create your account screen with name, email and password fields, password requirements and Google sign-up", "Account creation, with the password rules listed up front."),
+      sabimateScreen("03-sign-in", "Welcome back screen with email and password sign-in and options to continue with Google or Apple", "Sign in with email, Google or Apple."),
+      sabimateScreen("07-profile-basics", "Profile setup step 1 of 6 asking for nationality and current country of residence, both set to Nigeria", "Profile setup, step 1: nationality and country of residence."),
+      sabimateScreen("08-study-preferences", "Profile setup step 3 of 6 with degree level set to Master’s, Mass Communication as the field of interest and a career goal", "Step 3: degree level, field of interest and career goal."),
+      sabimateScreen("09-destination-selection", "Profile setup step 4 of 6: a searchable list of countries with Canada and the United Kingdom selected", "Step 4: preferred study destinations."),
+      sabimateScreen("10-budget-and-funding", "Profile setup step 5 of 6 with first-year budget ranges in naira, a funding plan and a scholarship question", "Step 5: first-year budget and how studies will be funded."),
+      sabimateScreen("11-english-requirements", "Profile setup step 6 of 6 listing English test options, with “I haven’t taken one yet” selected", "Step 6: English test status."),
+      sabimateScreen("12-profile-review", "Review screen summarising each profile answer with an Edit link, and a Start with SabiMate button", "Review every answer, with an Edit link for each, before starting."),
+    ],
     highlight:
       "Built the AI agent on a dedicated backend with persistent student context, keeping research behind feature flags and Redis-enforced quotas.",
     caseStudy: [

@@ -39,6 +39,13 @@ export type Project = {
   imageBackdrop?: string;
   /** Captioned screenshots shown on the case study page, in order. */
   gallery?: ProjectScreenshot[];
+  /**
+   * Keep the cover banner on the case study even though it has a gallery
+   * (by default a gallery replaces the banner there).
+   */
+  caseStudyCover?: boolean;
+  /** A screen recording shown on the case study, before the gallery. */
+  video?: ProjectVideo;
   /** One-line engineering decision surfaced on the project card. */
   highlight?: string;
   githubUrl?: string;
@@ -49,6 +56,19 @@ export type Project = {
 };
 
 export type ProjectDiscipline = "Mobile" | "Backend" | "Web";
+
+export type ProjectVideo = {
+  /** H.264 MP4 under /public. */
+  src: string;
+  /** A frame of the video, shown before it plays. */
+  poster: string;
+  width: number;
+  height: number;
+  /** Length in whole seconds, shown next to the video. */
+  durationSeconds: number;
+  /** What the recording shows; also linked to the video for screen readers. */
+  description: string;
+};
 
 export type ProjectScreenshot = {
   src: string;

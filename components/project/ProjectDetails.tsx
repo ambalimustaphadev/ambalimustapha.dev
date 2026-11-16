@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ProjectGallery } from "@/components/project/ProjectGallery";
+import { ProjectVideo } from "@/components/project/ProjectVideo";
 import { ProjectThumb } from "@/components/ui/ProjectThumb";
 import { TmpButton } from "@/components/ui/TmpButton";
 import { getPrimaryProjects } from "@/data/projects";
@@ -42,29 +43,30 @@ function relatedProjects(current: Project, limit = 2): Project[] {
  * Reeni project details layout (components/projects/ProjectDetails.jsx) for a case study.
  *
  * Projects with a screen gallery show their screens instead of the cover
- * banner (the cover already appears on the project cards), so the page opens on
- * the overview and details, then the screens, then the full case study.
+ * banner (the cover already appears on the project cards) unless
+ * `caseStudyCover` is set, so the page opens on the overview and details, then
+ * the screen recording (if any), the screens, and the full case study.
  */
 export function ProjectDetails({ project }: { project: Project }) {
   const related = relatedProjects(project);
   const gallery = project.gallery ?? [];
   const hasScreens = gallery.length > 0;
 
-  const banner = (
-    <div className="col-lg-12">
-      <div
-        className="project-details-thumnail-wrap ambali-project-hero"
-        style={project.imageBackdrop ? { background: project.imageBackdrop } : undefined}
-      >
-        <ProjectThumb
-          project={project}
-          className="ambali-project-hero__image"
-          sizes="(min-width: 1320px) 1290px, 100vw"
-          preload
-        />
-      </div>
+  const coverBanner = (
+    <div
+      className="project-details-thumnail-wrap ambali-project-hero"
+      style={project.imageBackdrop ? { background: project.imageBackdrop } : undefined}
+    >
+      <ProjectThumb
+        project={project}
+        className="ambali-project-hero__image"
+        sizes="(min-width: 1320px) 1290px, 100vw"
+        preload
+      />
     </div>
   );
+
+  const banner = <div className="col-lg-12">{coverBanner}</div>;
 
   const overview = (
     <>
@@ -157,6 +159,7 @@ export function ProjectDetails({ project }: { project: Project }) {
     return (
       <div className="project-details-area-wrapper tmp-section-gap ambali-project-details--screens">
         <div className="container">
+          {project.caseStudyCover && coverBanner}
           <div className="ambali-project-layout">
             <div className="ambali-project-layout__intro project-details-content-wrap">
               <h2 className="title">{project.title}</h2>
@@ -174,6 +177,7 @@ export function ProjectDetails({ project }: { project: Project }) {
             </div>
             <div className="ambali-project-layout__details">{detailsPanel}</div>
             <div className="ambali-project-layout__main">
+              {project.video && <ProjectVideo title={project.title} video={project.video} />}
               <section className="ambali-project-gallery" aria-labelledby="project-gallery-title">
                 <h2 className="mini-title" id="project-gallery-title">
                   Inside {project.title}
