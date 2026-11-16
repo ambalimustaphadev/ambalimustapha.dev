@@ -5,7 +5,6 @@ import { About } from "@/components/home/About";
 import { AboutStory } from "@/components/about/AboutStory";
 import { Services } from "@/components/home/Services";
 import { Skills } from "@/components/home/Skills";
-import { Facts } from "@/components/home/Facts";
 import { EducationExperience } from "@/components/home/EducationExperience";
 import { Contact } from "@/components/home/Contact";
 
@@ -25,7 +24,6 @@ export default function AboutPage() {
       <About parentClass="about-us-area tmp-section-gap" cta="cv" />
       <AboutStory />
       <Services />
-      <Facts />
       <Skills />
       <EducationExperience />
       <Contact parentClass="get-in-touch-area tmp-section-gap" />

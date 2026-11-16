@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
 import { Services } from "@/components/home/Services";
 import { About } from "@/components/home/About";
-import { Facts } from "@/components/home/Facts";
 import { Skills } from "@/components/home/Skills";
 import { EducationExperience } from "@/components/home/EducationExperience";
 import { Portfolio } from "@/components/home/Portfolio";
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 // Section order matches the primary navigation (NAV_LINKS in lib/constants.ts):
-// Home → About (+ facts & skills) → Services → Portfolio → Resume → Writing →
+// Home → About (+ skills) → Services → Portfolio → Resume → Writing →
 // Pricing (not in the nav) → Contact.
 // Each section only carries the top/bottom gap classes needed for its
 // neighbours, so adjacent sections are never double- or un-spaced.
@@ -25,7 +24,6 @@ export default function HomePage() {
     <>
       <Hero />
       <About parentClass="about-us-area tmp-section-gapBottom" />
-      <Facts />
       <Skills />
       <Services parentClass="tmp-service-area tmp-section-gapTop" />
       <Portfolio projects={getHomepageProjects()} />

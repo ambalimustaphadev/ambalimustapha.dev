@@ -27,9 +27,10 @@ export function ServicePackages({
             Starting Prices
           </h2>
           <p className="description section-sm tmp-scroll-trigger tmp-fade-in animation-order-3">
-            I design and develop modern mobile applications, scalable backend systems,
-            intelligent AI-powered solutions and high-performance websites. From initial concept
-            to deployment, I help turn ideas into functional digital products.
+            I build Flutter mobile apps, backends and APIs, websites, and AI features for new or
+            existing products, for individuals, startups and businesses. The prices below are
+            where each kind of project starts. The final cost depends on the scope and complexity
+            of what you need, and I&apos;ll confirm a quote once we&apos;ve talked it through.
           </p>
         </div>
         {/* Four across from 1400px (xxl), two columns from 768px, stacked on

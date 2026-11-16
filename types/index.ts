@@ -10,6 +10,8 @@ export type CaseStudySection = {
   heading: string;
   paragraphs?: string[];
   bullets?: string[];
+  /** Titled points within the section, shown after its paragraphs and bullets. */
+  subsections?: { heading: string; paragraphs: string[] }[];
 };
 
 export type Project = {
@@ -27,6 +29,16 @@ export type Project = {
   image?: string;
   /** Alt text for `image` when it isn't a screenshot (defaults to "<title> screenshot"). */
   imageAlt?: string;
+  /** Intrinsic pixel size of `image` (defaults to 1200×900). */
+  imageSize?: { width: number; height: number };
+  /**
+   * Shows `image` whole inside the card and banner frames (instead of cropping
+   * it to fill them) on this CSS background, which should match the image's
+   * edges. For artwork with text near the edges, such as a designed cover.
+   */
+  imageBackdrop?: string;
+  /** Captioned screenshots shown on the case study page, in order. */
+  gallery?: ProjectScreenshot[];
   /** One-line engineering decision surfaced on the project card. */
   highlight?: string;
   githubUrl?: string;
@@ -37,6 +49,16 @@ export type Project = {
 };
 
 export type ProjectDiscipline = "Mobile" | "Backend" | "Web";
+
+export type ProjectScreenshot = {
+  src: string;
+  /** What the screenshot shows, for screen readers. */
+  alt: string;
+  /** Short visible caption. */
+  caption: string;
+  width: number;
+  height: number;
+};
 
 export type SkillGroup = {
   category: string;

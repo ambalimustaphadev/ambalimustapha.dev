@@ -30,8 +30,8 @@ export function Hero() {
           <div className="row align-items-center">
             <div className="col-lg-6 order-lg-1">
               <div className="inner">
-                {/* Name and role: one clear identity instead of a rotation of
-                    overlapping job titles. */}
+                {/* Greeting → name → title → specialisation: one clear identity
+                    instead of a rotation of overlapping job titles. */}
                 <p className="ambali-hero__greeting tmp-scroll-trigger tmp-fade-in animation-order-1">
                   Hello,
                 </p>
@@ -44,11 +44,15 @@ export function Hero() {
                     <span>Software Developer</span>
                   </span>
                 </h1>
-                <p className="disc tmp-scroll-trigger tmp-fade-in animation-order-3">
-                  I build reliable mobile applications and the scalable backend systems behind
-                  them, with hands-on experience integrating AI capabilities into real products.
+                <p className="ambali-hero__specialty tmp-scroll-trigger tmp-fade-in animation-order-3">
+                  Mobile &amp; Backend Engineering
                 </p>
-                <div className="button-area-banner-one tmp-scroll-trigger tmp-fade-in animation-order-4">
+                <p className="disc tmp-scroll-trigger tmp-fade-in animation-order-4">
+                  I build mobile apps with Flutter and the backends behind them: APIs, databases
+                  and the logic that connects them. I&rsquo;ve also built AI features into real
+                  products.
+                </p>
+                <div className="button-area-banner-one tmp-scroll-trigger tmp-fade-in animation-order-5">
                   <TmpButton href="/projects">View Portfolio</TmpButton>
                 </div>
               </div>

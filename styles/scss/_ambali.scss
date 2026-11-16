@@ -221,6 +221,42 @@ button.scrollToTop {
   line-height: 1.25;
 }
 
+// Specialisation under the title: a small, tracked, uppercase label in the
+// heading colour, so it reads as a qualifier of "Software Developer" rather
+// than a second title, and stays distinct from the grey description below.
+.banner-one-main-wrapper .inner .ambali-hero__specialty {
+  margin: 14px 0 0;
+  color: var(--color-heading);
+  font-family: var(--font-primary);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+
+  @media (min-width: 1200px) {
+    font-size: 19px;
+  }
+
+  @media (max-width: 991px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 575px) {
+    margin-top: 10px;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+
+  + .disc {
+    margin-top: 18px;
+
+    @media (max-width: 767px) {
+      margin-top: 12px;
+    }
+  }
+}
+
 // Desktop: the template fixes the hero at 950px tall, which pushes the call to
 // action below the fold on shorter laptop screens. Fit it to the viewport
 // instead (never shorter than 640px, never taller than 950px). The portrait is
@@ -470,6 +506,13 @@ i.ambali-skill-icon {
   font-family: var(--font-secondary);
   font-weight: 700;
   line-height: 1.14;
+
+  // The odometer theme switches the digits to Helvetica once it initialises;
+  // keep them in the title's font so "6 Projects" reads as one phrase.
+  .odometer.odometer-auto-theme {
+    font-family: inherit;
+    line-height: inherit;
+  }
 }
 
 // Long contact values (the email address) wrap instead of widening the row.
@@ -628,6 +671,100 @@ i.ambali-skill-icon {
   }
 }
 
+// Titled points inside a case-study section (e.g. engineering highlights).
+.ambali-case-study-subsection {
+  margin-top: 22px;
+
+  .ambali-case-study-subsection__title {
+    margin: 0 0 8px;
+    color: var(--color-heading);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .docs {
+    margin-bottom: 0;
+  }
+}
+
+// Case studies with a screen gallery (no cover banner): overview and details
+// first, then the screens, then the full case study. The page heading already
+// sits in the breadcrumb banner, so the gap below it is roughly halved.
+.project-details-area-wrapper.ambali-project-details--screens {
+  padding-top: 56px;
+
+  @media (max-width: 991px) {
+    padding-top: 48px;
+  }
+
+  @media (max-width: 767px) {
+    padding-top: 36px;
+  }
+}
+
+// The written case study after the gallery, divided from it the same way the
+// gallery is divided from the overview (its first section adds 40px).
+.ambali-project-case-study {
+  margin-top: 70px;
+  border-top: 1px solid var(--color-border);
+}
+
+// Gallery layout grid (ProjectDetails.tsx). From 992px: the overview, then the
+// screens and case study in a 2/3 column, with the details panel in a 1/3
+// column spanning both rows so its sticky positioning works as on the other
+// case studies. Below 992px everything stacks in source order.
+.ambali-project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+
+  // Stacked: separate the details panel from the tags above it.
+  @media (max-width: 991px) {
+    .ambali-project-layout__details {
+      margin-top: 40px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "intro details"
+      "main details";
+    column-gap: var(--bs-gutter-x, 1.5rem);
+
+    .ambali-project-layout__intro {
+      grid-area: intro;
+    }
+
+    .ambali-project-layout__details {
+      grid-area: details;
+    }
+
+    .ambali-project-layout__main {
+      grid-area: main;
+    }
+  }
+}
+
+// Tech stack as compact pills (the project cards' tag style), wrapping freely.
+.tag-items.ambali-tech-tags ul {
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+  }
+
+  span.tag-item {
+    padding: 3px 12px;
+    border-width: 1px;
+    white-space: nowrap;
+  }
+}
+
 .project-details-info a {
   color: var(--color-primary);
 }
@@ -638,6 +775,222 @@ i.ambali-skill-icon {
   justify-content: space-between;
   gap: 16px;
   margin-top: 60px;
+}
+
+// Screenshot gallery on a case study (ProjectDetails.tsx, `gallery` in
+// data/projects.ts). The images are transparent phone cut-outs at their native
+// resolution, so each is capped at its own pixel width (--shot-w) and never
+// enlarged. One column on phones, two from 576px, three from 992px; a
+// landscape image (two phones side by side) spans two columns.
+.ambali-project-gallery {
+  margin-top: 70px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+
+  .mini-title {
+    margin-bottom: 24px;
+  }
+}
+
+.ambali-project-gallery__grid {
+  --gallery-gap: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 40px var(--gallery-gap);
+
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  // Desktop: the gallery sits in the main column beside the details panel.
+  // Columns about one phone wide (~255px, capped by max-width): the two-phone
+  // image spanning two of them shows below its own width, with its phones the
+  // same size as the single ones.
+  @media (min-width: 992px) {
+    --gallery-gap: 30px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 825px;
+    margin-inline: auto;
+  }
+}
+
+.ambali-project-gallery__item {
+  margin: 0;
+
+  @media (min-width: 576px) {
+    &--wide {
+      grid-column: span 2;
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    margin-top: 14px;
+    color: var(--color-body);
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
+// Each screenshot is a button that opens the preview (ProjectGallery.tsx).
+.ambali-project-gallery__open {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: var(--shot-w);
+  margin-inline: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 36px;
+  background: none;
+  cursor: zoom-in;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  &:hover .ambali-project-gallery__hint,
+  &:focus-visible .ambali-project-gallery__hint {
+    opacity: 1;
+  }
+}
+
+// Phones: a single phone at full column width would be ~750px tall.
+@media (max-width: 575px) {
+  .ambali-project-gallery__item:not(.ambali-project-gallery__item--wide) .ambali-project-gallery__open {
+    max-width: min(var(--shot-w), 300px);
+  }
+}
+
+// Shown on hover and keyboard focus only, so it never sits over the app
+// screen otherwise; the zoom-in cursor and the button label carry the cue.
+.ambali-project-gallery__hint {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+// Screenshot preview: a full-screen native <dialog>. The image is fitted
+// whole; when zoomed it takes an explicit width and the viewport scrolls.
+.ambali-lightbox {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  // The dialog covers the whole screen, so it carries the dark overlay itself
+  // rather than relying only on ::backdrop.
+  background: rgba(3, 3, 3, 0.94);
+  color: var(--color-heading);
+  overflow: hidden;
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background: rgba(3, 3, 3, 0.6);
+  }
+}
+
+.ambali-lightbox__bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+}
+
+.ambali-lightbox__caption {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: #d0d0d0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.ambali-lightbox__button {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 17px;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+.ambali-lightbox__viewport {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  padding: 0 16px 16px;
+  overflow: hidden;
+  // Lets the image fit itself to this box with container units.
+  container-type: size;
+
+  &.is-zoomed {
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+// Fitted: as wide as the box allows without exceeding its height, from the
+// screenshot's own ratio (--ratio, set inline), so it has its final size even
+// before it loads. Zoomed: an inline width, with the height from the ratio.
+// `margin: auto` centres it without clipping once it overflows.
+.ambali-lightbox__image {
+  flex: none;
+  // Also never wider than the image's own pixels (--natural-w).
+  width: min(100cqw, 100cqh * var(--ratio), var(--natural-w));
+  // The template caps every image at 100% wide, which would block zooming.
+  max-width: none;
+  height: auto;
+  aspect-ratio: var(--ratio);
+  margin: auto;
+  cursor: zoom-in;
+
+  .is-zoomed & {
+    cursor: zoom-out;
+  }
 }
 
 // Related case studies under a project (ProjectDetails.tsx); reuses the
@@ -915,7 +1268,7 @@ i.ambali-skill-icon {
     }
   }
 
-  // Skills: the facts section's bottom gap already separates the panel, so
+  // Skills: the previous section's bottom gap already separates the panel, so
   // the template's extra 70px top margin only added empty space.
   .my-skill-area-style-two.mt--70 {
     margin-top: 0 !important;

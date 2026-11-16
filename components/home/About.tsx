@@ -47,11 +47,13 @@ export function About({
                   </div>
                 </div>
                 <div className="card-info">
-                  {/* A label, not a heading: it sits before the section's h2. */}
-                  <p className="card-title h3 ambali-design-card__title">Mobile &amp; Backend</p>
-                  <p className="card-para">
-                    <Odometer value={DOCUMENTED_PROJECTS} /> projects with case studies
+                  {/* A label, not a heading: it sits before the section's h2.
+                      These two cards are the only place the site's figures
+                      appear (the hero carries "Mobile & Backend"). */}
+                  <p className="card-title h3 ambali-design-card__title">
+                    <Odometer value={DOCUMENTED_PROJECTS} /> Projects
                   </p>
+                  <p className="card-para">each with a case study</p>
                 </div>
               </div>
             </div>

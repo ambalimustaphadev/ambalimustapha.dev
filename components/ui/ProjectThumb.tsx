@@ -31,10 +31,16 @@ export function ProjectThumb({
         className={`${className} ambali-project-image`}
         src={project.image}
         alt={project.imageAlt ?? `${project.title} screenshot`}
-        width={1200}
-        height={900}
+        width={project.imageSize?.width ?? 1200}
+        height={project.imageSize?.height ?? 900}
         sizes={sizes}
         preload={preload}
+        // Inline so it wins over the template's per-card `object-fit: cover`.
+        style={
+          project.imageBackdrop
+            ? { objectFit: "contain", background: project.imageBackdrop }
+            : undefined
+        }
       />
     );
   }

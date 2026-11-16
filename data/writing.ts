@@ -16,7 +16,7 @@ export const posts: WritingPost[] = [
     category: "Mobile Development",
     cover: {
       src: "/images/blog/flutter-mobile-engineering.webp",
-      alt: "Illustration of a smartphone showing a mobile app interface, surrounded by connected interface panels on a dark background with pink accent light",
+      alt: "Illustration of a phone showing an app with a gradient card and a bar chart, linked to panels with a tree diagram, a checklist, a padlock, a location pin and a sync icon",
       width: 1640,
       height: 1176,
     },
@@ -31,7 +31,7 @@ export const posts: WritingPost[] = [
     category: "AI & Agentic Engineering",
     cover: {
       src: "/images/blog/ai-agent-engineering.webp",
-      alt: "Illustration of a central processing core connected by lines to tool and data nodes, representing an AI agent orchestrating tools, on a dark background with pink accents",
+      alt: "Illustration of a glowing central hub connected to icons for a database, a document, the web, code, a calculator and a security shield, with a message card on each side",
       width: 1640,
       height: 1176,
     },
@@ -46,7 +46,7 @@ export const posts: WritingPost[] = [
     category: "Software Engineering",
     cover: {
       src: "/images/blog/software-engineering.webp",
-      alt: "Illustration of a developer workspace with a code editor, an architecture diagram and a terminal window on a dark background with pink accent light",
+      alt: "Illustration of overlapping windows: a flow diagram, a code editor, a terminal and a panel with a green and a red status row",
       width: 1640,
       height: 1176,
     },

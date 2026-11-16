@@ -125,12 +125,14 @@ export function ContactForm({ initialMessage = "" }: { initialMessage?: string }
   return (
     <div className="contact-form">
       <form className="tmp-dynamic-form" onSubmit={handleSubmit} noValidate>
-        {/* Honeypot field — hidden from real users, catches simple bots */}
+        {/* Honeypot field — hidden from real users, catches simple bots. No
+            visible <label>: its text still showed up as a stray "Company" in
+            the page's text (reader mode, text extraction, search snippets). */}
         <div className="ambali-honeypot" aria-hidden="true">
-          <label htmlFor={`${formId}-company`}>Company</label>
           <input
             id={`${formId}-company`}
             name="company"
+            aria-label="Company"
             type="text"
             tabIndex={-1}
             autoComplete="off"

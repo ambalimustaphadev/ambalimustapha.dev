@@ -7,7 +7,6 @@ import type { WritingPost } from "@/types";
 /** Article card in the template's blog-card-style-two design (homepage + /writing). */
 export function BlogCard({ post, animationOrder = 1 }: { post: WritingPost; animationOrder?: number }) {
   const href = `/writing/${post.slug}`;
-  const [day, month, year] = formatPostDate(post.date).split(" ");
 
   return (
     <article
@@ -15,11 +14,14 @@ export function BlogCard({ post, animationOrder = 1 }: { post: WritingPost; anim
     >
       <div className="blog-card-img">
         <div className="img-box">
+          {/* The link repeats the title link, so it is hidden from assistive
+              tech and the tab order; the alt text still describes the cover
+              for search engines and when the image fails to load. */}
           <Link href={href} tabIndex={-1} aria-hidden="true">
             <Image
               className="w-100 ambali-blog-card__image"
               src={post.cover.src}
-              alt=""
+              alt={post.cover.alt}
               width={post.cover.width}
               height={post.cover.height}
               sizes="(min-width: 1200px) 410px, (min-width: 768px) 50vw, 100vw"
@@ -27,7 +29,7 @@ export function BlogCard({ post, animationOrder = 1 }: { post: WritingPost; anim
           </Link>
         </div>
         <span>
-          <time dateTime={post.date}>{`${day} ${month.slice(0, 3)} ${year}`}</time>
+          <time dateTime={post.date}>{formatPostDate(post.date)}</time>
         </span>
       </div>
       <div className="blog-content-wrap">

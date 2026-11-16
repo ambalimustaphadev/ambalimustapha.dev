@@ -1,5 +1,7 @@
 import type { Project } from "@/types";
 
+const FINASSIST_IMAGES = "/images/finassist-six-professional-images";
+
 export const projects: Project[] = [
   {
     title: "Sabimate",
@@ -112,69 +114,128 @@ export const projects: Project[] = [
     status: "In development",
     featured: true,
     year: 2026,
-    image: "/images/FinAssist1.png",
-    imageAlt: "FinAssist logo on a dark green background",
+    image: `${FINASSIST_IMAGES}/01-finassist-homepage-cover.png`,
+    imageAlt:
+      "FinAssist cover with three app screens: the welcome screen, an AI chat and the currency converter",
+    imageSize: { width: 1600, height: 1100 },
+    // The title text sits close to the cover's left edge, so the cover is shown
+    // whole rather than cropped to the card's shape, on its own edge colours
+    // (darker on the left, lighter on the right).
+    imageBackdrop: "linear-gradient(90deg, #060f0d, #061b15)",
+    // Phones cut out of the presentation slides pixel for pixel (no resampling;
+    // 03, 05 and 06 from the copies with the account details masked).
+    gallery: [
+      {
+        src: `${FINASSIST_IMAGES}/02-finassist-ai-chat-phone.png`,
+        alt: "FinAssist chat screen: the assistant asks which currency a 6,000 subscription is in, then confirms Netflix was added at ₦6,000 per month",
+        caption: "AI chat: the assistant asks for the missing currency, then adds the subscription.",
+        width: 444,
+        height: 931,
+      },
+      {
+        src: `${FINASSIST_IMAGES}/03-finassist-conversation-history-phone.png`,
+        alt: "FinAssist navigation panel with a New chat button, a search field and a list of earlier conversations",
+        caption: "Conversation history: start a new chat or reopen an earlier one.",
+        width: 444,
+        height: 931,
+      },
+      {
+        src: `${FINASSIST_IMAGES}/04-finassist-currency-converter-phone.png`,
+        alt: "FinAssist currency converter set to convert US dollars to Nigerian naira, with a Convert button",
+        caption: "Currency converter, one of the app's tools.",
+        width: 444,
+        height: 931,
+      },
+      {
+        src: `${FINASSIST_IMAGES}/05-finassist-profile-settings-phone.png`,
+        alt: "FinAssist profile screen listing personal information, password, security, notifications, appearance, and language and currency settings",
+        caption: "Profile and settings: account, security and app preferences.",
+        width: 444,
+        height: 931,
+      },
+      {
+        src: `${FINASSIST_IMAGES}/06-finassist-light-theme-phones.png`,
+        alt: "FinAssist chat and profile screens side by side in the light theme",
+        caption: "Light theme: the chat and profile screens.",
+        width: 741,
+        height: 730,
+      },
+    ],
     highlight:
       "Kept the numbers deterministic: the backend calculates, and the assistant receives the result as structured context to explain it rather than recompute it.",
     caseStudy: [
       {
         heading: "Overview",
         paragraphs: [
-          "FinAssist is an AI-powered financial assistant that pairs practical financial tools with a conversational assistant. Instead of leaving people to interpret a number on their own, it lets them run a calculation and then ask what that result actually means for them.",
-          "The app combines an AI chat experience, a backend-calculated currency converter and a tracker for recurring subscriptions. The central idea is simple: reliable calculations come from code, and the AI's job is to explain them clearly and answer follow-up questions.",
+          "FinAssist is an AI-powered financial assistant built with Flutter and Python Flask. It combines conversational AI with practical financial tools, helping users calculate, understand and manage everyday financial information.",
+          "Its core principle is simple: the backend handles the calculations, while AI helps users understand the results.",
         ],
       },
       {
-        heading: "The problem",
+        heading: "The Problem",
         paragraphs: [
-          "Plenty of apps give you a calculator. Far fewer help you understand the answer. A conversion rate or a monthly total is just a figure until you know what it implies for your plans, and most people are left to work that out alone.",
-          "FinAssist aims to close that gap by keeping the tools and the explanation in one place, so someone can calculate, understand and ask a follow-up question without switching between disconnected apps.",
+          "Financial tools often provide numbers without helping users understand what they mean. FinAssist brings calculations and conversational explanations together, allowing users to ask questions and follow up without switching between different apps.",
         ],
       },
       {
-        heading: "What I built",
+        heading: "What I Built",
         bullets: [
-          "Flutter mobile app using Riverpod for state management",
-          "Account registration and sign-in with JWT access and refresh tokens",
-          "AI chat assistant powered through a Python Flask backend",
-          "Server-side conversation history with a secure local cache on the device",
-          "Attaching documents and images to a chat message",
-          "Currency converter calculated on the backend, with a supported-currency list",
-          "\"Ask FinAssist\": handing a tool result into chat as structured context",
-          "Subscription tracker: add, edit and remove subscriptions with renewal schedules and totals",
-          "Push notifications with Firebase Cloud Messaging",
-          "Profile and preference management",
+          "Cross-platform Flutter app with Riverpod state management.",
+          "Authentication using JWT access and refresh tokens.",
+          "AI chat with server-side conversation history.",
+          "Document and image attachments in chat.",
+          "Backend-powered currency conversion.",
+          "Subscription tracking with renewal schedules and totals.",
+          "Structured tool-to-chat integration through Ask FinAssist.",
+          "Push notifications using Firebase Cloud Messaging.",
+          "Profile and preference management.",
         ],
       },
       {
-        heading: "Engineering and architecture",
-        paragraphs: [
-          "The Flutter app handles the interface: chat, the tools, the subscription tracker, input forms and result cards. It talks to a Python Flask backend over a REST API, behind a repository layer so screens depend on interfaces rather than on HTTP details.",
-          "Financial figures are never produced by the AI. The currency converter sends explicit inputs to the backend, the backend performs the conversion using an external exchange-rate source, and the app displays exactly what the API returns, including which source supplied the rate.",
-          "When a user taps \"Ask FinAssist\" on a result, the app packages it as a versioned, structured tool context — the tool name, the inputs and the backend's result — and attaches it to the existing conversation. The assistant receives the user's question together with that context, so it can explain the figures the tool produced and answer follow-ups instead of calculating its own numbers.",
-          "Conversations are stored on the server and cached locally in secure storage, documents can be uploaded and attached to a message, and push notifications are delivered through Firebase Cloud Messaging. The app is covered by around 380 tests, including the hand-off from tools into chat.",
+        heading: "Engineering Highlights",
+        subsections: [
+          {
+            heading: "Reliable financial calculations",
+            paragraphs: [
+              "Currency conversions run on the Flask backend using an external exchange-rate source. The AI does not generate financial figures; it explains results returned by the backend.",
+            ],
+          },
+          {
+            heading: "Tool-to-chat integration",
+            paragraphs: [
+              "Ask FinAssist passes versioned, structured tool results into the user's existing conversation. This allows the assistant to explain calculations and answer follow-up questions using the actual results.",
+            ],
+          },
+          {
+            heading: "Application architecture",
+            paragraphs: [
+              "The Flutter frontend communicates with a Flask REST API through a repository layer. Conversations are stored server-side, with a secure local cache on the device.",
+            ],
+          },
         ],
       },
       {
-        heading: "Challenges",
+        heading: "Challenges & Decisions",
         paragraphs: [
-          "Passing a calculation into chat had to be precise. The context needed a stable, versioned shape that both sides understand, and it had to attach to the user's current conversation rather than starting a separate chatbot for every tool.",
-          "Keeping the app's inputs consistent with what the backend calculates — formats, currencies and validation — mattered more than in a typical form, because the explanation is only as trustworthy as the figure behind it.",
-          "Designing a simple interface around several features (chat, tools and tracking) without making any of them feel bolted on took a few iterations, and led to trimming the set of tools to the ones that were genuinely ready.",
+          "One of the main challenges was connecting financial tools to the existing chat experience without losing the accuracy of their results.",
+          "I addressed this with a shared, structured context format, keeping calculations deterministic and using AI specifically for explanations rather than arithmetic.",
+          "The app uses Flutter for a shared Android and iOS codebase and Flask for a lightweight backend.",
         ],
       },
       {
-        heading: "Technical decisions",
+        heading: "Current Status",
         paragraphs: [
-          "Calculations run as deterministic backend services with explicit inputs instead of relying on a language model for arithmetic, which keeps the numbers predictable and testable. The AI is reserved for what it's good at: explaining results in plain language.",
-          "Rather than building a separate chatbot for each tool, every tool hands its result into the same conversational experience through a shared, structured context. Flutter keeps a single codebase for Android and iOS, and Flask keeps the backend lightweight while the product evolves.",
+          "FinAssist is in development. The chat, conversation history, document attachments, currency converter, subscription tracker and push notifications are built.",
+          "Additional calculators and a financial dashboard are being developed or reworked.",
+          "FinAssist is not a bank or licensed financial adviser. Its explanations and projections are not financial advice.",
         ],
-      },
-      {
-        heading: "Current status",
-        paragraphs: [
-          "FinAssist is in development. Chat with conversation history, document attachments, the currency converter with \"Ask FinAssist\", the subscription tracker and push notifications are built in the app.",
-          "Loan, savings, affordability, debt-payoff and investment-growth calculators were prototyped and are being reworked before they return, and a financial dashboard and document analysis are still planned. FinAssist is not a bank, investment platform or licensed financial adviser, and its projections and explanations are not financial advice.",
+        subsections: [
+          {
+            heading: "Testing",
+            paragraphs: [
+              "Approximately 380 tests covering application functionality, including tool-to-chat integration.",
+            ],
+          },
         ],
       },
     ],
