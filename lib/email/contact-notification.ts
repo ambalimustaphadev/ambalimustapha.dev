@@ -11,8 +11,8 @@ export type ContactNotification = {
 
 const SIGNATURE_NAME = "Mustapha Ambali";
 const SIGNATURE_ROLE = "Software Developer";
-const SIGNATURE_URL = "https://www.ambalimustapha.dev";
-const SIGNATURE_URL_LABEL = "www.ambalimustapha.dev";
+const SIGNATURE_URL = "https://ambalimustapha.dev";
+const SIGNATURE_URL_LABEL = "ambalimustapha.dev";
 
 // Mirrors the site's dark theme and primary accent (styles/scss/default/_variables.scss).
 const COLOR = {

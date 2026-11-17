@@ -4,7 +4,7 @@ import { ProjectVideo } from "@/components/project/ProjectVideo";
 import { ProjectThumb } from "@/components/ui/ProjectThumb";
 import { TmpButton } from "@/components/ui/TmpButton";
 import { getPrimaryProjects } from "@/data/projects";
-import type { Project } from "@/types";
+import type { CaseStudyPoint, CaseStudySection, Project } from "@/types";
 
 function CheckList({ items, className }: { items: string[]; className?: string }) {
   return (
@@ -22,6 +22,20 @@ function CheckList({ items, className }: { items: string[]; className?: string }
         ))}
       </ul>
     </div>
+  );
+}
+
+/** Labelled lines, label beside text from 768px and stacked below it. */
+function PointList({ points }: { points: CaseStudyPoint[] }) {
+  return (
+    <dl className="ambali-case-points">
+      {points.map((point) => (
+        <div key={point.label} className="ambali-case-points__row">
+          <dt>{point.label}</dt>
+          <dd>{point.text}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -45,7 +59,8 @@ function relatedProjects(current: Project, limit = 2): Project[] {
  * Projects with a screen gallery show their screens instead of the cover
  * banner (the cover already appears on the project cards) unless
  * `caseStudyCover` is set, so the page opens on the overview and details, then
- * the screen recording (if any), the screens, and the full case study.
+ * the lead case-study sections (`leadSections`, e.g. overview and problem),
+ * the screen recording (if any), the screens, and the rest of the case study.
  */
 export function ProjectDetails({ project }: { project: Project }) {
   const related = relatedProjects(project);
@@ -77,9 +92,11 @@ export function ProjectDetails({ project }: { project: Project }) {
     </>
   );
 
-  const caseStudy = (
+  // Case-study sections; on the gallery layout the first `leadSections` are
+  // shown before the media and the rest after it.
+  const renderSections = (sections: CaseStudySection[]) => (
     <>
-      {project.caseStudy.map((section) => (
+      {sections.map((section) => (
         <div key={section.heading} className="ambali-case-study-section">
           <h3 className="mini-title">{section.heading}</h3>
           {section.paragraphs?.map((paragraph) => (
@@ -90,20 +107,31 @@ export function ProjectDetails({ project }: { project: Project }) {
           {section.bullets && section.bullets.length > 0 && (
             <CheckList items={section.bullets} />
           )}
+          {section.points && section.points.length > 0 && <PointList points={section.points} />}
           {section.subsections?.map((sub) => (
             <div key={sub.heading} className="ambali-case-study-subsection">
               <h4 className="ambali-case-study-subsection__title">{sub.heading}</h4>
-              {sub.paragraphs.map((paragraph) => (
+              {sub.paragraphs?.map((paragraph) => (
                 <p key={paragraph} className="docs">
                   {paragraph}
                 </p>
               ))}
+              {sub.points && sub.points.length > 0 && <PointList points={sub.points} />}
             </div>
+          ))}
+          {section.closing?.map((paragraph) => (
+            <p key={paragraph} className="docs ambali-case-study-section__closing">
+              {paragraph}
+            </p>
           ))}
         </div>
       ))}
     </>
   );
+  const caseStudy = renderSections(project.caseStudy);
+  const leadCount = hasScreens ? (project.leadSections ?? 0) : 0;
+  const leadSections = project.caseStudy.slice(0, leadCount);
+  const restSections = project.caseStudy.slice(leadCount);
 
   const detailsPanel = (
     <aside className="signle-side-bar project-details-area tmponhover">
@@ -117,6 +145,11 @@ export function ProjectDetails({ project }: { project: Project }) {
         <div className="project-details-info">
           Category: <span>{project.category}</span>
         </div>
+        {project.role && (
+          <div className="project-details-info">
+            Role: <span>{project.role}</span>
+          </div>
+        )}
         <div className="project-details-info">
           Year: <span>{project.year}</span>
         </div>
@@ -130,7 +163,26 @@ export function ProjectDetails({ project }: { project: Project }) {
         )}
         <div className="project-details-info">
           Code:{" "}
-          {project.githubUrl ? (
+          {/* All private: one line instead of repeating it per repository. */}
+          {project.repositories?.length && !project.repositories.some((repo) => repo.public) ? (
+            <span>Private repository, available on request</span>
+          ) : project.repositories?.length ? (
+            <ul className="ambali-code-repos">
+              {project.repositories.map((repo) => (
+                <li key={repo.url}>
+                  {repo.label}:
+                  {repo.public ? (
+                    <a href={repo.url} target="_blank" rel="noopener noreferrer">
+                      View on GitHub <i className="fa-regular fa-arrow-up-right" aria-hidden="true" />
+                      <span className="visually-hidden"> ({repo.label.toLowerCase()} repository, opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    <span>Private repository, available on request</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : project.githubUrl ? (
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               GitHub <i className="fa-regular fa-arrow-up-right" aria-hidden="true" />
             </a>
@@ -155,7 +207,7 @@ export function ProjectDetails({ project }: { project: Project }) {
   if (hasScreens) {
     // One grid instead of separate rows, so the sticky details panel runs
     // alongside the overview, screens and case study, as on the other case
-    // studies. Below 992px it stacks: overview, details, screens, case study.
+    // studies. Below 992px it stacks: intro, details, lead sections, media, rest.
     return (
       <div className="project-details-area-wrapper tmp-section-gap ambali-project-details--screens">
         <div className="container">
@@ -177,6 +229,11 @@ export function ProjectDetails({ project }: { project: Project }) {
             </div>
             <div className="ambali-project-layout__details">{detailsPanel}</div>
             <div className="ambali-project-layout__main">
+              {leadSections.length > 0 && (
+                <div className="ambali-project-lead project-details-content-wrap">
+                  {renderSections(leadSections)}
+                </div>
+              )}
               {project.video && <ProjectVideo title={project.title} video={project.video} />}
               <section className="ambali-project-gallery" aria-labelledby="project-gallery-title">
                 <h2 className="mini-title" id="project-gallery-title">
@@ -184,9 +241,11 @@ export function ProjectDetails({ project }: { project: Project }) {
                 </h2>
                 <ProjectGallery title={project.title} shots={gallery} />
               </section>
-              <div className="ambali-project-case-study">
-                <div className="project-details-content-wrap">{caseStudy}</div>
-              </div>
+              {restSections.length > 0 && (
+                <div className="ambali-project-case-study">
+                  <div className="project-details-content-wrap">{renderSections(restSections)}</div>
+                </div>
+              )}
             </div>
           </div>
           <ProjectFooter related={related} />

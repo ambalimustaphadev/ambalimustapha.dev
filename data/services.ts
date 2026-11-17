@@ -12,7 +12,7 @@ export type Service = {
 // Shown in the "What I Do" section. Every capability here is backed by a
 // project page on the site (data/projects.ts): QR scanning and offline-first
 // work by Regiforte, request validation and error handling by the Wallet API,
-// FastAPI/PostgreSQL/Redis/Docker and the AI research workflow by Sabimate,
+// FastAPI/PostgreSQL/Redis/Docker and the AI research workflow by SabiMate,
 // Flask, JWT and structured AI context by FinAssist, device features by Fihone.
 export const services: Service[] = [
   {

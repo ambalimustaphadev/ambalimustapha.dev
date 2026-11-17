@@ -5,13 +5,20 @@ export type ProjectStatus =
   | "Coming soon"
   | "Live";
 
+/** A labelled line in a case study, e.g. { label: "Approach", text: "…" }. */
+export type CaseStudyPoint = { label: string; text: string };
+
 /** One block of case-study content. Rendered in order; only sections with real content should be added. */
 export type CaseStudySection = {
   heading: string;
   paragraphs?: string[];
   bullets?: string[];
-  /** Titled points within the section, shown after its paragraphs and bullets. */
-  subsections?: { heading: string; paragraphs: string[] }[];
+  /** Labelled lines (label beside text), shown after the paragraphs and bullets. */
+  points?: CaseStudyPoint[];
+  /** Titled points within the section, shown after everything above. */
+  subsections?: { heading: string; paragraphs?: string[]; points?: CaseStudyPoint[] }[];
+  /** Paragraphs shown after the subsections, e.g. a closing note. */
+  closing?: string[];
 };
 
 export type Project = {
@@ -46,9 +53,23 @@ export type Project = {
   caseStudyCover?: boolean;
   /** A screen recording shown on the case study, before the gallery. */
   video?: ProjectVideo;
+  /**
+   * On a case study with a gallery, how many case-study sections (from the
+   * start, e.g. overview and problem) are shown before the video and
+   * screenshots; the rest follow them. Defaults to 0 (all after the media).
+   */
+  leadSections?: number;
+  /** Who built it, shown in the details panel, e.g. "Solo developer, mobile app and backend". */
+  role?: string;
   /** One-line engineering decision surfaced on the project card. */
   highlight?: string;
   githubUrl?: string;
+  /**
+   * Separate repositories (e.g. mobile app and backend), listed under Code in
+   * the details panel instead of `githubUrl`. Only public ones are linked;
+   * private ones read "Private repository, available on request".
+   */
+  repositories?: { label: string; url: string; public: boolean }[];
   liveUrl?: string;
   /** Filter tabs on the portfolio grid. */
   disciplines?: ProjectDiscipline[];

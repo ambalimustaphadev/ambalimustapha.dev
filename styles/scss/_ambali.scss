@@ -688,6 +688,56 @@ i.ambali-skill-icon {
   }
 }
 
+// Labelled lines in a case study (PointList in ProjectDetails.tsx): problem,
+// approach and outcome, or a decision and its reason. Label beside the text
+// from 768px, above it on phones; thin rules keep the rows easy to scan.
+.ambali-case-points {
+  margin: 0;
+
+  .ambali-case-points__row {
+    display: grid;
+    gap: 2px;
+    padding: 12px 0;
+    border-top: 1px solid var(--color-border);
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    @media (min-width: 768px) {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      align-items: baseline;
+      gap: 24px;
+    }
+  }
+
+  dt {
+    color: var(--color-primary);
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  // Same text style as the case study's paragraphs (.docs).
+  dd {
+    margin: 0;
+    color: var(--color-body);
+    font-family: var(--font-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+}
+
+.ambali-case-study-subsection .ambali-case-points {
+  margin-top: 4px;
+}
+
+.ambali-case-study-section .docs + .ambali-case-points,
+.ambali-case-study-section .ambali-case-points + .ambali-case-study-section__closing {
+  margin-top: 20px;
+}
+
 // Case studies with a screen gallery (no cover banner): overview and details
 // first, then the screens, then the full case study. The page heading already
 // sits in the breadcrumb banner, so the gap below it is roughly halved.
@@ -767,6 +817,39 @@ i.ambali-skill-icon {
 
 .project-details-info a {
   color: var(--color-primary);
+}
+
+// Several repositories under Code (e.g. mobile app and backend), one per line
+// beneath the label, wrapping freely on narrow panels.
+.project-details-info .ambali-code-repos {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 26px;
+    overflow-wrap: anywhere;
+
+    & + li {
+      margin-top: 6px;
+    }
+  }
+
+  a {
+    margin-left: 10px;
+    font-family: var(--font-secondary);
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  // The template's value spans are inline with a 30px line height; keep
+  // these compact so a wrapped value stays tight.
+  > li > span {
+    line-height: 26px;
+  }
 }
 
 .ambali-project-nav {

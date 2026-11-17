@@ -37,7 +37,7 @@ export function AboutStory({ parentClass = "tmp-section-gapBottom" }: { parentCl
                 Today I work at OH Mobility as an IT Assistant on the full-stack side, building
                 and maintaining mobile apps, backend integrations and websites. Alongside that I
                 build my own products end to end — Flutter apps backed by Python services and
-                PostgreSQL, such as <Link href="/projects/sabimate">Sabimate</Link> and{" "}
+                PostgreSQL, such as <Link href="/projects/sabimate">SabiMate</Link> and{" "}
                 <Link href="/projects/finassist">FinAssist</Link>.
               </p>
               <h3>What I enjoy solving</h3>

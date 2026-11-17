@@ -2,31 +2,41 @@ import type { Project, ProjectScreenshot } from "@/types";
 
 const FINASSIST_IMAGES = "/images/finassist-six-professional-images";
 const SABIMATE_IMAGES = "/images/sabimate";
+const FIHONE_IMAGES = "/images/Fihone_Portfolio_Images";
 
 /** A SabiMate phone screen (all are 568×1154 transparent PNGs). */
 function sabimateScreen(name: string, alt: string, caption: string): ProjectScreenshot {
   return { src: `${SABIMATE_IMAGES}/sabimate-${name}-phone.png`, alt, caption, width: 568, height: 1154 };
 }
 
+/** A Fihone phone screen (all are 726×1439 transparent PNGs). */
+function fihoneScreen(name: string, alt: string, caption: string): ProjectScreenshot {
+  return { src: `${FIHONE_IMAGES}/${name}-phone.png`, alt, caption, width: 726, height: 1439 };
+}
+
 export const projects: Project[] = [
   {
-    title: "Sabimate",
+    title: "SabiMate",
     slug: "sabimate",
     disciplines: ["Mobile", "Backend"],
-    category: "Study-Abroad Guidance App",
+    category: "AI Study-Abroad Guidance Platform",
     description:
-      "A Flutter app and FastAPI backend that help students plan studying abroad, with an AI assistant grounded in each student's own profile.",
+      "A study-abroad guidance platform I built solo: a Flutter app and a FastAPI backend whose AI assistant answers from each student's own profile.",
     // Order matters: cards show the first three, so mobile and backend lead.
     technologies: [
       "Flutter",
       "FastAPI",
       "PostgreSQL",
-      "Redis",
       "Dart",
-      "Python",
       "Riverpod",
+      "GoRouter",
+      "Python",
+      "SQLAlchemy",
+      "Alembic",
+      "Redis",
       "Docker",
-      "OpenAI API",
+      "OpenAI Responses API",
+      "Server-Sent Events",
     ],
     status: "In active development",
     featured: true,
@@ -57,7 +67,7 @@ export const projects: Project[] = [
       sabimateScreen("05-onboarding-features", "Onboarding screen headed “Everything you need to figure out”, showing universities, scholarships, requirements, deadlines and costs", "Onboarding, 2 of 3: the areas it researches for you."),
       sabimateScreen("06-onboarding-destinations", "Onboarding screen headed “Make your next move with clarity”, with a Get Started button", "Onboarding, 3 of 3: compare options and know what to do next."),
       sabimateScreen("02-sign-up", "Create your account screen with name, email and password fields, password requirements and Google sign-up", "Account creation, with the password rules listed up front."),
-      sabimateScreen("03-sign-in", "Welcome back screen with email and password sign-in and options to continue with Google or Apple", "Sign in with email, Google or Apple."),
+      sabimateScreen("03-sign-in", "Welcome back screen with email and password sign-in and options to continue with Google or Apple", "Email sign-in. Google and Apple sign-in are planned."),
       sabimateScreen("07-profile-basics", "Profile setup step 1 of 6 asking for nationality and current country of residence, both set to Nigeria", "Profile setup, step 1: nationality and country of residence."),
       sabimateScreen("08-study-preferences", "Profile setup step 3 of 6 with degree level set to Master’s, Mass Communication as the field of interest and a career goal", "Step 3: degree level, field of interest and career goal."),
       sabimateScreen("09-destination-selection", "Profile setup step 4 of 6: a searchable list of countries with Canada and the United Kingdom selected", "Step 4: preferred study destinations."),
@@ -65,68 +75,136 @@ export const projects: Project[] = [
       sabimateScreen("11-english-requirements", "Profile setup step 6 of 6 listing English test options, with “I haven’t taken one yet” selected", "Step 6: English test status."),
       sabimateScreen("12-profile-review", "Review screen summarising each profile answer with an Edit link, and a Start with SabiMate button", "Review every answer, with an Edit link for each, before starting."),
     ],
+    role: "Solo developer, mobile app and backend",
+    // Both private for now: set `public: true` to show a "View on GitHub" link.
+    repositories: [
+      { label: "Mobile App", url: "https://github.com/ambalimustaphadev/sabimate", public: false },
+      { label: "Backend", url: "https://github.com/ambalimustaphadev/sabimate-backend", public: false },
+    ],
+    leadSections: 3,
     highlight:
-      "Built the AI agent on a dedicated backend with persistent student context, keeping research behind feature flags and Redis-enforced quotas.",
+      "Separated research from everyday chat, with dedicated usage controls and a shared AI provider.",
     caseStudy: [
       {
         heading: "Overview",
         paragraphs: [
-          "Sabimate is an AI-powered education guidance platform designed to help students make better-informed decisions about studying abroad. Choosing where and what to study means weighing admission requirements, countries, costs, scholarships and eligibility at the same time — and that information is spread across dozens of sources.",
-          "Instead of sending students through a maze of pages, Sabimate is built around a conversation. A student describes their academic background, budget and preferred destinations once during onboarding, and the assistant uses that profile to give answers that fit their situation rather than generic advice.",
+          "SabiMate is an AI-powered study-abroad guidance platform. A student builds a profile once (qualifications, grades and grading system, English test results, preferred destinations, budget, funding needs and scholarship interests) and every answer is shaped by it.",
+          "I designed and built it alone: the Flutter app for Android and iOS, the Python backend and database, the AI orchestration and a research system that backs its answers with sources.",
         ],
       },
       {
         heading: "The problem",
         paragraphs: [
-          "International education decisions involve more than finding a university. Students need to know whether their academic profile is competitive, which countries match their preferences, what they should budget for and which opportunities are worth pursuing.",
-          "The answers exist, but they're scattered across university websites, scholarship portals and government pages, and each assumes you already know what to look for. Sabimate brings that into one assistant that understands the student's context and helps them work through their options in plain conversation.",
+          "Planning to study abroad means piecing together admission requirements, tuition, proof-of-funds rules and scholarships from university, government and scholarship websites. Each assumes you already know which rules apply to you.",
+          "SabiMate starts from the student's situation and brings that research into one place.",
+        ],
+      },
+      {
+        heading: "The solution",
+        paragraphs: [
+          "The profile is the foundation. The backend combines it with the conversation so far, so the assistant answers with the student's grades, budget and destinations in mind.",
+          "Questions about programmes, scholarships, admission and funding go through a separate research workflow. It plans searches, retrieves and screens sources, and returns an answer with citations the student can open and check.",
         ],
       },
       {
         heading: "What I built",
-        bullets: [
-          "Flutter mobile app for Android and iOS, using Riverpod and go_router",
-          "Email and password accounts with email verification and password reset",
-          "Multi-step student onboarding: education, grades and grading scale, language tests, preferred countries, budget range, funding and scholarship preferences",
-          "Chat with streamed assistant replies (server-sent events), rendered as markdown with follow-up suggestions",
-          "Persistent conversations, messages and assistant generations",
-          "An assistant pipeline that assembles each reply from the student's profile and conversation history",
-          "A research engine that plans searches, reads official pages and returns cited sources",
-          "Source and citation display in the chat interface",
-          "FastAPI backend with PostgreSQL, Alembic migrations and Redis",
-          "Containerised development environment and automated CI",
+        subsections: [
+          {
+            heading: "Mobile application",
+            paragraphs: [
+              "A Flutter app structured in Clean Architecture layers, with Riverpod for state and GoRouter for navigation. It covers onboarding, authentication, a six-step student profile and persistent conversations. Replies stream in over Server-Sent Events and render as Markdown, with follow-up suggestions and source citations.",
+            ],
+          },
+          {
+            heading: "Backend",
+            paragraphs: [
+              "A FastAPI service that owns accounts, profiles, conversations and the orchestration of every reply. PostgreSQL stores state through async SQLAlchemy, Alembic versions the schema, and Redis enforces rate limits and quotas. Accounts include email verification and password reset.",
+            ],
+          },
+          {
+            heading: "AI assistant and research",
+            paragraphs: [
+              "Each reply starts with context assembly from the profile and conversation history. Model calls go through one adapter on the OpenAI Responses API, routed to fast, standard or reasoning tiers by workload. Research has its own pipeline (planning, hosted web search, source retrieval, evidence screening and citation validation), so its cost and reliability controls never slow down ordinary chat. It researches programmes, scholarships, admission requirements and funding rules.",
+            ],
+          },
         ],
       },
       {
-        heading: "Engineering and architecture",
-        paragraphs: [
-          "The mobile app is built in Flutter and talks to a Python backend written with FastAPI. The backend owns everything that matters for trust and continuity: accounts and sessions, student profiles and preferences, conversations and messages, and the orchestration of every assistant reply. PostgreSQL stores that state through async SQLAlchemy, with schema changes managed by Alembic migrations, and Redis backs the rate limits and usage quotas.",
-          "All model calls go through a single provider adapter built on the OpenAI Responses API, with separate fast, standard and reasoning tiers configured per environment. Application code never calls a model directly, which keeps prompts, retries and timeouts in one place and makes the provider replaceable.",
-          "Normal conversational replies and research are deliberately separate paths. When research is enabled, a planner on the fast tier decides what to search for, the search runs through OpenAI's hosted web search, and official pages can be read through a hardened fetcher before the evidence is screened. Citations are validated before they reach the student, so a source only appears if it actually supports the answer.",
-          "The backend is organised into modules with enforced layer boundaries (checked with import-linter), strict type checking with mypy, and roughly 240 test files covering units and integration against real PostgreSQL and Redis, with fakes standing in for the model and search providers.",
+        heading: "Engineering challenges",
+        subsections: [
+          {
+            heading: "Personalised context",
+            points: [
+              { label: "Problem", text: "Generic advice is useless here, but sending everything with every request is slow and expensive." },
+              { label: "Approach", text: "A dedicated backend step assembles the student's profile, preferences and recent conversation for each reply." },
+              { label: "Why it matters", text: "Answers reflect the student's real situation while request size stays under control." },
+            ],
+          },
+          {
+            heading: "Streaming and persistence",
+            points: [
+              { label: "Problem", text: "Replies should appear as they are written, yet every message must survive a dropped connection." },
+              { label: "Approach", text: "Responses stream over Server-Sent Events while the backend persists each message and generation. Client and server share one message state, including how an interrupted generation is recorded." },
+              { label: "Why it matters", text: "A conversation reloads in a consistent state, even when a reply was cut off." },
+            ],
+          },
+          {
+            heading: "Research reliability",
+            points: [
+              { label: "Problem", text: "Study-abroad advice is only useful if the student can see where each fact comes from." },
+              { label: "Approach", text: "A fast-tier planner decides what to search, hosted web search finds candidates, official pages are retrieved through a hardened fetcher, evidence is screened, and citations are validated against the answer before it is shown." },
+              { label: "Why it matters", text: "Claims are traceable to sources the student can open. This improves reliability; it does not guarantee that every source or conclusion is correct." },
+            ],
+          },
+          {
+            heading: "Usage accounting and rate limiting",
+            points: [
+              { label: "Problem", text: "Every reply and search calls paid external services, so abuse or a retry loop turns directly into cost." },
+              { label: "Approach", text: "Redis enforces per-user rate limits and a daily research quota atomically. Usage is recorded idempotently per search, so a retry is never counted twice, and the limiter fails closed if Redis is unavailable." },
+              { label: "Why it matters", text: "Spending stays bounded and quotas stay accurate under concurrency and retries." },
+            ],
+          },
+          {
+            heading: "Architecture and maintainability",
+            points: [
+              { label: "Problem", text: "AI features change quickly. Without boundaries, prompts and model calls spread through the codebase." },
+              { label: "Approach", text: "The backend is split into modules with layer boundaries enforced by import-linter, typed interfaces checked by mypy, and model access confined to one provider adapter." },
+              { label: "Why it matters", text: "Prompts, retries and timeouts live in one place, the provider can be replaced, and new capabilities don't require reworking the app or data model." },
+            ],
+          },
         ],
       },
       {
-        heading: "Challenges",
-        paragraphs: [
-          "Personalisation is only useful if the assistant reliably uses the student's actual profile. Assembling the right context for every reply — profile, preferences and recent conversation — without bloating each request took careful design of the context-assembly step.",
-          "Research is valuable but expensive and harder to keep accurate, so it needed its own controls: a daily research quota enforced atomically in Redis, idempotent per-search accounting, and validation that every cited source genuinely backs what the assistant says. Reply volume is rate-limited per user as well, and the limiter fails closed rather than letting traffic through if Redis is unavailable.",
-          "Streaming replies over server-sent events while also persisting each message and generation meant the backend and the Flutter client had to agree precisely on message state, including what happens when a stream is interrupted.",
+        heading: "Architecture and technical decisions",
+        points: [
+          { label: "Flutter", text: "One codebase for Android and iOS while the product takes shape." },
+          { label: "FastAPI", text: "A typed Python API that sits naturally beside the AI tooling." },
+          { label: "PostgreSQL", text: "The primary store for accounts, profiles and conversations." },
+          { label: "SQLAlchemy and Alembic", text: "Async data access and versioned schema changes, applied automatically on deployment." },
+          { label: "Redis", text: "Fast atomic counters for rate limits and quotas, kept out of the primary database." },
+          { label: "One model adapter", text: "A single integration point on the Responses API, with fast, standard and reasoning tiers matched to each workload. The extra layer is the cost of a replaceable provider." },
+          { label: "Separate research path", text: "Research is slower and costlier than chat, so it has its own pipeline, quota and flag." },
+          { label: "Feature flags", text: "Control which assistant and research capabilities are enabled in each environment, so they run in development and demos before public release." },
+          { label: "Docker", text: "The same containerised environment for development and deployment." },
         ],
       },
       {
-        heading: "Technical decisions",
+        heading: "Testing and engineering quality",
         paragraphs: [
-          "Flutter gives one codebase for Android and iOS while the product is still taking shape. FastAPI provides a typed, structured Python backend that fits naturally alongside the AI tooling, and PostgreSQL holds user and conversation data that has to persist reliably.",
-          "Model access lives behind one dedicated provider adapter rather than being scattered through the codebase, and every assistant and research capability sits behind its own feature flag. That lets each capability be switched on independently once it has been tested, while keeping cost and scope under control.",
-          "Presentation, business logic and AI orchestration are kept in clearly separate layers, so new capabilities can be added to the assistant without reworking the app or the data model.",
+          "The backend has roughly 240 test files (a file count, not a count of test cases) covering unit and integration tests. Integration tests run against real PostgreSQL and Redis, while fakes replace the model and search providers so tests stay deterministic and never call paid APIs.",
+          "Mypy checks types, import-linter enforces the architecture boundaries, and CI workflows run the checks automatically.",
         ],
       },
       {
         heading: "Current status",
-        paragraphs: [
-          "Sabimate is in active development. Accounts, email verification, the full student onboarding, persisted conversations with streamed replies and source display are built end to end, and the backend is deployed with automated migrations.",
-          "The assistant and research engine are built and tested but remain behind feature flags while they're configured and evaluated for production, so they aren't publicly available yet. Saved items, billing, social sign-in and notifications are still to come, and the curated programme and scholarship data that will feed personalised recommendations is being assembled. Sabimate doesn't claim partnerships with universities or guarantee admissions or scholarships.",
+        points: [
+          { label: "Implemented", text: "Accounts with email verification and password reset, onboarding and profile management, the profile-aware AI assistant, source-backed programme and scholarship research, persistent conversations with streamed replies, and backend deployment with automated migrations." },
+          { label: "Demonstrated", text: "The demo video shows the assistant and research workflow working end to end: a profile-aware answer with linked sources, then a follow-up question." },
+          { label: "Availability", text: "Feature flags enable the assistant and research per environment. They run in development and demo environments and are not yet open to the public." },
+          { label: "Planned", text: "Saved items, billing, social sign-in, notifications, and a curated programme and scholarship database." },
+        ],
+        closing: [
+          "SabiMate has no university partnerships and does not guarantee admission, scholarships or visa outcomes.",
         ],
       },
     ],
@@ -199,6 +277,7 @@ export const projects: Project[] = [
         height: 730,
       },
     ],
+    leadSections: 2,
     highlight:
       "Kept the numbers deterministic: the backend calculates, and the assistant receives the result as structured context to explain it rather than recompute it.",
     caseStudy: [
@@ -283,7 +362,6 @@ export const projects: Project[] = [
     slug: "fihone",
     disciplines: ["Mobile", "Backend"],
     category: "Device Security App",
-    imageAlt: "Fihone app screens showing the shield logo, a device location map and the app's splash screen",
     description:
       "A Flutter app with its own backend API for device registration, activity monitoring and security controls, keeping sensitive logic off the device.",
     technologies: ["Flutter", "Dart", "Backend API", "Authentication", "Location services"],
@@ -291,7 +369,32 @@ export const projects: Project[] = [
     featured: true,
     homepageFeatured: true,
     year: 2026,
-    image: "/images/Fihone1.png",
+    image: `${FIHONE_IMAGES}/00-fihone-homepage-cover.png`,
+    imageAlt:
+      "Fihone cover with the headline “Protect every device.” and three app screens: the security dashboard, the device list and notifications",
+    imageSize: { width: 1800, height: 1350 },
+    // The logo and headline sit near the cover's left edge, so the cover is
+    // shown whole on its own (solid) background colour.
+    imageBackdrop: "#04161d",
+    // The supplied phone screens, in the order a new user meets them. Personal
+    // details were redacted in the package; the street map and area name in
+    // 10 were blurred here (the unredacted original is kept out of /public).
+    gallery: [
+      fihoneScreen("01-onboarding-protect", "Onboarding screen headed “Protect Your Phone Before It's Lost”, with a shield and padlock illustration and a Next button", "Onboarding, 1 of 4: protect your phone before it’s lost."),
+      fihoneScreen("02-onboarding-track", "Onboarding screen headed “Track Every Device”, with a location pin illustration", "Onboarding, 2 of 4: keep track of every linked device."),
+      fihoneScreen("03-onboarding-recover", "Onboarding screen headed “Recover Faster”, describing the Recovery Timeline, Guardians and Security Score", "Onboarding, 3 of 4: Recovery Timeline, Guardians and Security Score."),
+      fihoneScreen("04-onboarding-secure", "Onboarding screen headed “Everything Secure”, mentioning the Privacy Vault, account security, biometric login and cloud sync, with a Get Started button", "Onboarding, 4 of 4: account security and biometric login."),
+      fihoneScreen("05-create-account", "Create Account screen with name, email, phone and password fields, a terms checkbox, a Register button and Google and Apple options", "Create an account, with Google and Apple as alternatives."),
+      fihoneScreen("06-sign-in", "Welcome Back sign-in screen with email and password fields, a forgotten-password link, Sign in with Face ID, and Google and Apple buttons", "Sign in with email and password, Face ID, Google or Apple."),
+      fihoneScreen("07-device-details", "Device Registered screen listing this device’s manufacturer, model, operating system, security patch, encryption, battery, storage and ID, with a Continue button", "Device registration: review the details recorded for this phone."),
+      fihoneScreen("08-security-dashboard", "Home screen with a security score of 88 out of 100 marked Protected, and quick actions for Locate Device, Lost Mode, Recovery Timeline, Guardians, Reports and Vault", "Home: the security score and quick actions."),
+      fihoneScreen("09-device-management", "Your devices screen listing three linked devices marked Protected, Needs Attention and Emergency", "Devices: every linked device and its status."),
+      fihoneScreen("10-device-location-home", "Home screen showing this device online with its battery and Wi‑Fi status, a location map (blurred for privacy) and recent alerts", "Home: this device’s status, location and recent alerts (map blurred for privacy)."),
+      fihoneScreen("11-notifications", "Notifications screen with alerts for a completed security scan, a new sign-in, a location update, a device leaving its usual area and a Recovery Timeline update", "Notifications: scans, sign-ins, location and recovery updates."),
+      fihoneScreen("12-activity-timeline", "Activity timeline listing a security scan, a sign-in, a guardian being added, location permission confirmed, a password change and a device registration", "Activity: a timeline of account and device events."),
+      fihoneScreen("13-profile-and-settings", "Profile screen with placeholder account details, counts of devices, guardians and recoveries, and links to profile, devices, privacy, security, reports, analytics and support", "Profile: the account summary and settings."),
+    ],
+    leadSections: 2,
     highlight:
       "Built the mobile client and backend as separate systems from day one, keeping auth and device data off the device.",
     caseStudy: [
@@ -344,6 +447,7 @@ export const projects: Project[] = [
         heading: "Current status",
         paragraphs: [
           "Fihone is still in active development. Core authentication, device registration, and activity monitoring are being built and tested incrementally rather than all at once, and the app isn't publicly released yet.",
+          "The screens above are from the current build: onboarding, sign-up and sign-in, device registration, the home dashboard with its security score, the device list, notifications, the activity timeline and the profile. Personal details and the location shown in them have been redacted or replaced.",
         ],
       },
     ],

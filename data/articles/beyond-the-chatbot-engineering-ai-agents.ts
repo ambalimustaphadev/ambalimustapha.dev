@@ -41,7 +41,7 @@ export const content: ArticleBlock[] = [
   },
   {
     type: "p",
-    text: "In Sabimate, a study-abroad assistant I'm building, students complete a profile during onboarding — their education and grades, language test results, preferred countries and budget range. That profile is assembled into the context for every reply. Without it, the assistant can only offer the kind of general advice people can already find anywhere; with it, it can respond to their situation.",
+    text: "In SabiMate, a study-abroad assistant I'm building, students complete a profile during onboarding — their education and grades, language test results, preferred countries and budget range. That profile is assembled into the context for every reply. Without it, the assistant can only offer the kind of general advice people can already find anywhere; with it, it can respond to their situation.",
   },
   {
     type: "p",
@@ -98,7 +98,7 @@ def run_tool_call(name: str, raw_args: str, user: User) -> dict:
   },
   {
     type: "p",
-    text: "Sabimate's backend routes every model call through one provider adapter, so the rest of the code never talks to the model directly. Ordinary conversational replies and research are deliberately separate paths. Research has its own planner that decides what to search for, a step that reads and screens sources, and a check that every citation shown to the student comes from material that was actually retrieved. Each of those capabilities sits behind its own feature flag, and stays switched off until it has been properly tested.",
+    text: "SabiMate's backend routes every model call through one provider adapter, so the rest of the code never talks to the model directly. Ordinary conversational replies and research are deliberately separate paths. Research has its own planner that decides what to search for, a step that reads and screens sources, and a check that every citation shown to the student comes from material that was actually retrieved. Each of those capabilities sits behind its own feature flag, and stays switched off until it has been properly tested.",
   },
   {
     type: "p",
@@ -143,7 +143,7 @@ def parse_budget(model_output: str) -> Budget | None:
   { type: "h2", text: "The unglamorous parts: cost, latency, failure and visibility" },
   {
     type: "p",
-    text: "Every model call costs money and takes seconds, and that shapes the architecture. Streaming responses makes waiting feel shorter; Sabimate streams replies to the app as they're generated. Routing simpler tasks, such as planning a search, to a smaller and faster model tier keeps both cost and latency down. Per-user rate limits and quotas protect you from runaway usage, and they should fail safely when the system enforcing them is unavailable.",
+    text: "Every model call costs money and takes seconds, and that shapes the architecture. Streaming responses makes waiting feel shorter; SabiMate streams replies to the app as they're generated. Routing simpler tasks, such as planning a search, to a smaller and faster model tier keeps both cost and latency down. Per-user rate limits and quotas protect you from runaway usage, and they should fail safely when the system enforcing them is unavailable.",
   },
   {
     type: "p",
