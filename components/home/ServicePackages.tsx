@@ -1,5 +1,9 @@
+import { SnapCarousel } from "@/components/ui/SnapCarousel";
 import { TmpButton } from "@/components/ui/TmpButton";
 import { servicePackages } from "@/data/servicePricing";
+
+/** Matches the SCSS breakpoint below which the cards become a carousel. */
+const PRICING_CAROUSEL_QUERY = "(max-width: 767px)";
 
 /**
  * Packages & starting prices, in the template's price-plan-card design
@@ -33,10 +37,18 @@ export function ServicePackages({
             of what you need, and I&apos;ll confirm a quote once we&apos;ve talked it through.
           </p>
         </div>
-        {/* Four across from 1400px (xxl), two columns from 768px, stacked on
-            phones. Below 1400px four columns are too narrow: titles break
-            mid-word and CTA labels wrap out of their buttons. */}
-        <div className="row g-4">
+        {/* Four across from 1400px (xxl) and two columns from 768px. Below
+            1400px four columns are too narrow: titles break mid-word and CTA
+            labels wrap out of their buttons. Below 768px, where the cards used
+            to stack, the same row becomes a swipeable carousel (see the SCSS). */}
+        <SnapCarousel
+          className="row g-4"
+          carouselClassName="ambali-pricing-carousel"
+          navClassName="ambali-gallery-nav--md"
+          label="Service packages"
+          itemLabel="package"
+          query={PRICING_CAROUSEL_QUERY}
+        >
           {servicePackages.map((service, index) => (
             <div
               key={service.slug}
@@ -86,7 +98,7 @@ export function ServicePackages({
               </article>
             </div>
           ))}
-        </div>
+        </SnapCarousel>
         {/* Exclusions confirmed by Mustapha: hosting, ongoing maintenance,
             app-store fees and third-party API costs aren't in starting prices. */}
         <p className="ambali-services-pricing__note tmp-scroll-trigger tmp-fade-in animation-order-3">
